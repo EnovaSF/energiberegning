@@ -1014,11 +1014,30 @@ class EnergiBeregning:
         C32 = C59-J32*C130 # NS3031 - Oppvarmingsbehov - november
         C33 = C60-J33*C131 # NS3031 - Oppvarmingsbehov - desember
         C20 = C22+C23+C24+C25+C26+C27+C28+C29+C30+C31+C32+C33 # NS3031 - Oppvarmingsbehov - Årlig energibehov
-        Romoppvarming = C20  # # - Energipost (1a) (Energibehov [kWh/år]) - Romoppvarming
+        Romoppvarming = C20  # # - Energipost (1a) (Energibehov [kWh/år]) - Romoppvarming 
 
-        ### 1b
-        Ventilasjonsvarme = 236
-        ### 3b
+        ### 1-b
+        # 6.1.7 -> Trond Ivar Bøhn: OBS! Denne referansen finnes ikke lenger i NS 3031:2014. Det er nå slik at temperaturvirkningsgraden korrigeres for frostsikringen, ref. NS 3031:2014 tillegg H.9. Men om dette skal gjøres om på, må biblioteksverdier for varmegjenvinning vurderes på nytt
+        C297 = temp_avtrekk                                                # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Temperatur før gjenvinner på avtrekkssiden, θ3
+        C298 = frostsikringstemperatur                                     # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Frostsikringstemperaturen, θ4
+        C296 = C297-(C297-C298)/(tempvirkningsgrad_varmegjenvinner+0.001)  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Minste utetemperatur som ikke innebærer frostsikring av varmegjenvinneren, θ1,min
+        C283 = 0.33*X66*C197*max([0, C296-Q46])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - januar
+        C284 = 0.33*X66*C198*max([0, C296-Q47])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - februar
+        C285 = 0.33*X66*C199*max([0, C296-Q48])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - mars
+        C286 = 0.33*X66*C200*max([0, C296-Q49])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - april
+        C287 = 0.33*X66*C201*max([0, C296-Q50])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - mai
+        C288 = 0.33*X66*C202*max([0, C296-Q51])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - juni
+        C289 = 0.33*X66*C203*max([0, C296-Q52])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - juli
+        C290 = 0.33*X66*C204*max([0, C296-Q53])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - august
+        C291 = 0.33*X66*C205*max([0, C296-Q54])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - september
+        C292 = 0.33*X66*C206*max([0, C296-Q55])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - oktober
+        C293 = 0.33*X66*C207*max([0, C296-Q56])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - november
+        C294 = 0.33*X66*C208*max([0, C296-Q57])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - desember
+        C281 = C283+C284+C285+C286+C287+C288+C289+C290+C291+C292+C293+C294 # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7) - Totalt, Edefrost
+        Ventilasjonsvarme = C281     # # - Energipost (1b) (Energibehov [kWh/år]) Trond Ivar Bøhn: OBS! Dette ser ikke ut til å være ventilasjonsoppvarming, men kun frostsikring. Ventilasjonsvarmetapet inngår derimot i posten romoppvarming! Spm til NVE: Brukes disse enkeltpostene for netto energibehov til noe i Enova-modulen? I så fall burde vel dette ordnes opp i?!
+        print (Ventilasjonsvarme)
+
+        ### 3-b
         Pumper = 43
         ### 6
         Kjoeling = 0
