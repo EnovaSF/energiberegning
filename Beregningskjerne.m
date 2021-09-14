@@ -377,6 +377,7 @@ class EnergiBeregning:
         # return Output(result['abc'], ...)
 
         # Example we may not do it like this but something like described above
+
         ### 2
         J237 = self.energibehov_tappevann # NS3031*- Energibehov for varmt tappevann, spesifikt - Varmtvann
         C238 = self.areal_oppv            # NS3031 - Energibehov for varmt tappevann - Oppvarmed del av BRA
@@ -395,7 +396,7 @@ class EnergiBeregning:
         C277 = J277*C278          # NS3031 - Energibehov for utstyr - Årlig energibehov
         Teknisk_utstyr = C277     # # - Energipost (5) (Energibehov [kWh/år]) - Teknisk_utstyr
 
-        ### 3a
+        ### 3-a
         AE242 = (self.tid_jan)*1000  # - Timer i måneden - januar
         AE243 = (self.tid_feb)*1000  # - Timer i måneden - februar
         AE244 = (self.tid_mar)*1000  # - Timer i måneden - mars
@@ -457,7 +458,7 @@ class EnergiBeregning:
         C242 = C244+C245+C246+C247+C248+C249+C250+C251+C252+C253+C254+C255 # NS3031 - Energibehov for vifter og pumper (Vifter) - Totalt, Efan
         Vifter = C242 # # - Energipost (3a) (Energibehov [kWh/år]) - Vifter
 
-        ### 1a
+        ### 1-a
         C197 = tid_jan # - Timer per måned - januar
         C198 = tid_feb # - Timer per måned - februar
         C199 = tid_mar # - Timer per måned - mars
@@ -863,7 +864,6 @@ class EnergiBeregning:
         AE80 = luftmengde_spesifikk_avtrekksluft                        # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - spesifikk avtrekksluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
         AE77 = term1 if AE81==0 else AE79                               # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Arealkorreksjon for bolig, på spesifikk tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
         AE78 = term1 if AE81==0 else AE80                               # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Arealkorreksjon for bolig, på spesifikk avtrekksluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
-
         AE75 = 0 if AE79==0 else AE77                                   # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Korreksjon for luftmengde = 0, på spesifikk tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
         AE76 = 0 if AE80==0 else AE78                                   # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Korreksjon for luftmengde = 0, på spesifikk avtrekksluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
         AE68 = varmekapasitet_luft                                      # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Luftens varmekapasitet per volum
@@ -1003,7 +1003,7 @@ class EnergiBeregning:
         J33 = 1/Q33 if Q33<0 else C35/(C35+1) if Q33==1 else (1-Q33 ** C35)/(1-Q33 **(C35+1)) # NS3031 - Utnyttingsfaktor for måneden - desember
         C22 = C49-J22*C120 # NS3031 - Oppvarmingsbehov - januar
         C23 = C50-J23*C121 # NS3031 - Oppvarmingsbehov - februar
-        C24 = C51-J24*C122 # N	S3031 - Oppvarmingsbehov - mars
+        C24 = C51-J24*C122 # NS3031 - Oppvarmingsbehov - mars
         C25 = C52-J25*C123 # NS3031 - Oppvarmingsbehov - april
         C26 = C53-J26*C124 # NS3031 - Oppvarmingsbehov - mai
         C27 = C54-J27*C125 # NS3031 - Oppvarmingsbehov - juni
@@ -1014,7 +1014,7 @@ class EnergiBeregning:
         C32 = C59-J32*C130 # NS3031 - Oppvarmingsbehov - november
         C33 = C60-J33*C131 # NS3031 - Oppvarmingsbehov - desember
         C20 = C22+C23+C24+C25+C26+C27+C28+C29+C30+C31+C32+C33 # NS3031 - Oppvarmingsbehov - Årlig energibehov
-        Romoppvarming = C20  # # - Energipost (1a) (Energibehov [kWh/år]) - Romoppvarming 
+        Romoppvarming = C20  # # - Energipost (1a) (Energibehov [kWh/år]) - Romoppvarming
 
         ### 1-b
         # 6.1.7 -> Trond Ivar Bøhn: OBS! Denne referansen finnes ikke lenger i NS 3031:2014. Det er nå slik at temperaturvirkningsgraden korrigeres for frostsikringen, ref. NS 3031:2014 tillegg H.9. Men om dette skal gjøres om på, må biblioteksverdier for varmegjenvinning vurderes på nytt
@@ -1038,7 +1038,101 @@ class EnergiBeregning:
         print (Ventilasjonsvarme)
 
         ### 3-b
-        Pumper = 43
+        ### 3-b 
+        Q228 = temp_settpunkt_kjoeling               # NS3031 - Setpunkttemperatur for kjøling
+
+        Q215 = (J50+J51+J53+J54)*(Q228-Q46)*C197+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - januar 
+        Q216 = (J50+J51+J53+J54)*(Q228-Q46)*C198+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - februar 
+        Q217 = (J50+J51+J53+J54)*(Q228-Q46)*C199+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mars
+        Q218 = (J50+J51+J53+J54)*(Q228-Q46)*C200+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - april
+        Q219 = (J50+J51+J53+J54)*(Q228-Q46)*C201+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mai
+        Q220 = (J50+J51+J53+J54)*(Q228-Q46)*C202+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juni
+        Q221 = (J50+J51+J53+J54)*(Q228-Q46)*C203+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juli
+        Q222 = (J50+J51+J53+J54)*(Q228-Q46)*C204+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - august
+        Q223 = (J50+J51+J53+J54)*(Q228-Q46)*C205+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - september
+        Q224 = (J50+J51+J53+J54)*(Q228-Q46)*C206+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - oktober
+        Q225 = (J50+J51+J53+J54)*(Q228-Q46)*C207+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - november
+        Q226 = (J50+J51+J53+J54)*(Q228-Q46)*C208+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - desember
+        Q213 = Q215+Q216+Q217+Q218+Q219+Q220+Q221+Q222+Q223+Q224+Q225+Q226 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - Total
+
+        J215 = C120 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - januar
+        J216 = C121 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - februar
+        J217 = C122 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - mars
+        J218 = C123 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - april
+        J219 = C124 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - mai
+        J220 = C125 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - juni
+        J221 = C126 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - juli
+        J222 = C127 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - august
+        J223 = C128 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - september
+        J224 = C129 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - oktober
+        J225 = C130 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - november
+        J226 = C131 # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - desember
+
+        AE215 = J215/Q215 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - januar
+        AE216 = J216/Q216 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - februar
+        AE217 = J217/Q217 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - mars
+        AE218 = J218/Q218 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - april
+        AE219 = J219/Q219 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - mai
+        AE220 = J220/Q220 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - juni
+        AE221 = J221/Q221 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - juli
+        AE222 = J222/Q222 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - august
+        AE223 = J223/Q223 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - september
+        AE224 = J224/Q224 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - oktober
+        AE225 = J225/Q225 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - november
+        AE226 = J226/Q226 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - desember
+
+        X215 = 1/AE215 if AE215<0 else (C35/(C35+1) if AE215==1 else (1-AE215**C35)/(1-AE215**(C35+1))) # NS3031 - Utnyttingsfaktor - januar
+        X216 = 1/AE216 if AE216<0 else (C35/(C35+1) if AE216==1 else (1-AE216**C35)/(1-AE216**(C35+1))) # NS3031 - Utnyttingsfaktor - februar
+        X217 = 1/AE217 if AE217<0 else (C35/(C35+1) if AE217==1 else (1-AE217**C35)/(1-AE217**(C35+1))) # NS3031 - Utnyttingsfaktor - mars
+        X218 = 1/AE218 if AE218<0 else (C35/(C35+1) if AE218==1 else (1-AE218**C35)/(1-AE218**(C35+1))) # NS3031 - Utnyttingsfaktor - april
+        X219 = 1/AE219 if AE219<0 else (C35/(C35+1) if AE219==1 else (1-AE219**C35)/(1-AE219**(C35+1))) # NS3031 - Utnyttingsfaktor - mai
+        X220 = 1/AE220 if AE220<0 else (C35/(C35+1) if AE220==1 else (1-AE220**C35)/(1-AE220**(C35+1))) # NS3031 - Utnyttingsfaktor - juni
+        X221 = 1/AE221 if AE221<0 else (C35/(C35+1) if AE221==1 else (1-AE221**C35)/(1-AE221**(C35+1))) # NS3031 - Utnyttingsfaktor - juli
+        X222 = 1/AE222 if AE222<0 else (C35/(C35+1) if AE222==1 else (1-AE222**C35)/(1-AE222**(C35+1))) # NS3031 - Utnyttingsfaktor - august
+        X223 = 1/AE223 if AE223<0 else (C35/(C35+1) if AE223==1 else (1-AE223**C35)/(1-AE223**(C35+1))) # NS3031 - Utnyttingsfaktor - september
+        X224 = 1/AE224 if AE224<0 else (C35/(C35+1) if AE224==1 else (1-AE224**C35)/(1-AE224**(C35+1))) # NS3031 - Utnyttingsfaktor - oktober
+        X225 = 1/AE225 if AE225<0 else (C35/(C35+1) if AE225==1 else (1-AE225**C35)/(1-AE225**(C35+1))) # NS3031 - Utnyttingsfaktor - november
+        X226 = 1/AE226 if AE226<0 else (C35/(C35+1) if AE226==1 else (1-AE226**C35)/(1-AE226**(C35+1))) # NS3031 - Utnyttingsfaktor - desember
+
+        C231 = areal_avkjoelt_andel
+
+        C215 = (0 if J215-X215*Q215<0 else J215-X215*Q215)*C231
+        C216 = (0 if J216-X216*Q216<0 else J216-X216*Q216)*C231
+        C217 = (0 if J217-X217*Q217<0 else J217-X217*Q217)*C231
+        C218 = (0 if J218-X218*Q218<0 else J218-X218*Q218)*C231
+        C219 = (0 if J219-X219*Q219<0 else J219-X219*Q219)*C231
+        C220 = (0 if J220-X220*Q220<0 else J220-X220*Q220)*C231
+        C221 = (0 if J221-X220*Q220<0 else J220-X220*Q220)*C231
+        C222 = (0 if J222-X221*Q221<0 else J221-X221*Q221)*C231
+        C223 = (0 if J223-X222*Q222<0 else J222-X222*Q222)*C231
+        C224 = (0 if J224-X223*Q223<0 else J223-X223*Q223)*C231
+        C225 = (0 if J225-X224*Q224<0 else J224-X224*Q224)*C231
+        C226 = (0 if J226-X225*Q225<0 else J225-X225*Q225)*C231
+        C213 = C215+C216+C217+C218+C219+C220+C221+C222+C223+C224+C225+C226
+
+        J265 = temp_differanse_veskekrets_oppvarming # NS3031* - Energibehov, pumper (Oppvarming) - Temperatur differanse tur-retur væskekrets
+        J266 = varmekapasitet_vann                   # NS3031* - Energibehov, pumper (Oppvarming) - Spesifikk varmekapasitet for vann
+        J267 = densitet_vann                         # NS3031* - Energibehov, pumper (Oppvarming) - Densitet for vann
+        J264 = C20/8760*1000                         # NS3031* - Energibehov, pumper (Oppvarming) - Varmebehov
+        J262 = tid_drift_pumpe_oppv                  # NS3031* - Energibehov, pumper (Oppvarming) - Driftstid i året
+        J261 = pumpeeffekt_spesifikk_oppv            # NS3031* - Energibehov, pumper (Oppvarming) - Spesifikk pumpeeffekt
+        J260 = J264/(J265*J266*J267)*1000            # NS3031* - Energibehov, pumper (Oppvarming) - Sirkulert vannmengde gjennom pumpen
+        J258 = J260*J261*J262                        # NS3031* - Energibehov, pumper (Oppvarming) - Totalt, Ep
+
+        Q265 = temp_differanse_veskekrets_kjoling # NS3031* - Energibehov, pumper (Kjøling) - Temperatur differanse tur-retur væskekrets, kjøling
+        Q266 = varmekapasitet_kuldebaerer                  # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk varmekapasitet for kuldebærer
+        Q267 = densitet_kuldebaerer                        # NS3031* - Energibehov, pumper (Kjøling) - Densitet for kuldebærer
+        Q264 = C213/8760*1000                       # NS3031* - Energibehov, pumper (Kjøling) - Kjølebehov
+
+        Q262 = tid_drift_pumpe_kjoling                 # NS3031* - Energibehov, pumper (Kjøling) - Driftstid i året
+        Q261 = pumpeeffekt_spesifikk_kjoling           # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk pumpeeffekt
+        Q260 = Q264/(Q265*Q266*Q267)*1000            # NS3031* - Energibehov, pumper (Kjøling) - Sirkulert vannmengde gjennom pumpen
+        Q258 = Q260*Q261*Q262                        # NS3031* - Energibehov, pumper (Kjøling) - Totalt, Ep
+
+        C258 = J258+Q258 # NS3031 - Energibehov for vifter og pumper (Pumper) - Totalt, Ep 
+
+        Pumper = C258      # # - Energipost (3b) (Energibehov [kWh/år]) - Pumper
+
         ### 6
         Kjoeling = 0
         Totalt_netto_energibehov = Romoppvarming+Ventilasjonsvarme +\
@@ -1064,416 +1158,403 @@ if __name__ == "__main__":
     """ Example usage """
     calcEngine = EnergiBeregning(
 
-    if 0:
-    	dybde_periodisk_nedtrengning=3.20
-   	energibehov_belysning=17.0
+    areal_oppv=200.0,
+    norm_varmekap=64,
+    kuldebro_normalisert=0.03,
+    temp_settpunkt_oppvarming=21.0,
+    temp_settpunkt_oppvarming_natt=19.0,
 
-	el_solcelle_andel_el_spesifikt_forbruk=0.00
-   	el_er_andel_energi_oppv_ventilasjon=0.40
-   	el_hp_andel_energi_oppv_ventilasjon=0.00
-    	el_Tsol_andel_energi_oppv_ventilasjon=0.00
-    	el_er_andel_energi_tappevann_varme=0.20
-    	el_hp_andel_energi_tappevann_varme=0.00
-    	el_Tsol_andel_energi_tappevann_varme=0.00
-    	systemvirkningsgrad_solcelle=100
-    	systemvirkningsgrad_elektrisk_oppv_ventilasjon=0.92
-    	systemvirkningsgrad_elektrisk_tappevann_varme=0.98
-    	systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon=2.31
-    	systemvirkningsgrad_varmepumpeanlegg_tappevann_varme=2.1
-    	systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon=51.84
-    	systemvirkningsgrad_solfanger_termisk_tappevann_varme=20
-    	effektfaktor_kjoeleanlegg=2.40
+    areal_tak=100.0,
+    areal_vegg_oest=42.5,
+    areal_vegg_vest=42.5,
+    areal_vegg_soer=42.5,
+    areal_vegg_nord=42.5,
+    areal_gulv_mot_det_fri=0.0,
+    areal_vindu_oest=9.5,
+    areal_vindu_vest=9.5,
+    areal_vindu_soer=9.5,
+    areal_vindu_nord=9.5,
+    areal_vindu_tak=0.0,
+    areal_dor=2.0,
 
-    	olje_andel_energi_oppv_ventilasjon=0.30
-    	olje_andel_energi_tappevann_varme=0.50
-    	systemvirkningsgrad_olje_oppv_ventilasjon=0.54
-    	systemvirkningsgrad_olje_tappevann_varme=0.66
+    U_tak=0.18,
+    U_vegg_oest=0.22,
+    U_vegg_vest=0.22,
+    U_vegg_soer=0.22,
+    U_vegg_nord=0.22,
+    U_gulv_mot_det_fri=0.18,
+    U_dor=1.60,
 
-    	gass_andel_energi_oppv_ventilasjon=0.10
-    	gass_andel_energi_tappevann_varme=0.10
-    	systemvirkningsgrad_gass_oppv_ventilasjon=0.72
-    	systemvirkningsgrad_gass_tappevann_varme=0.84
+    U_vindu_oest=1.60,
+    U_vindu_vest=1.60,
+    U_vindu_soer=1.60,
+    U_vindu_nord=1.60,
+    U_vindu_tak =1.60,
 
-    	fjernvarme_andel_energi_oppv_ventilasjon=0.20
-    	fjernvarme_andel_energi_tappevann_varme=0.20
-    	systemvirkningsgrad_fjernvarme_oppv_ventilasjon=0.81
-    	systemvirkningsgrad_fjernvarme_tappevann=0.98
+    varmetapsfaktor_uoppv=0.95,
+    areal_mot_uoppvarmet =0.0,
+    U_mot_uoppvarmet_sone=0.18,
 
-    	bio_andel_energi_oppv_ventilasjon=0.00
-    	bio_andel_energi_tappevann_varme=0.00
-    	systemvirkningsgrad_bio_oppv_ventilasjon=0.74
-    	systemvirkningsgrad_bio_tappevann=0.77
+    areal_gulv_kjeller=100.0,
+    faseforskjell_utetemp_varmetap=2.0,
+    aarsmiddeltemp_inne=21.0,
+    omkrets_gulv=40.00,
+    U_gulvkonstruksjon=0.15,
+    U_kjellerveggskonstruksjon=0.18,
+    tykkelse_grunnmur=0.30,
+    oppfyllingshoyde_kjellervegg=0.01,
+    varmekonduktivitet_kantisol=0.30,
+    kantisol_tykkelse=0.20,
+    kantisol_horisontal_dybde=0.20,
+    kantisol_vertikal_bredde=0.20,
+    dybde_periodisk_nedtrengning=3.20,
+    varmekonduktivitet_grunn=2.00,
 
-    	annet_andel_energi_oppv_ventilasjon=0.00
-    	annet_andel_energi_tappevann_varme=0.00
-    	systemvirkningsgrad_annet_oppv_ventilasjon=0.5
-    	systemvirkningsgrad_annet_tappevann=0.5
+    tempvirkningsgrad_varmegjenvinner=0.70,
+    luftmengde_spesifikk_i_driftstid=1.20,
+    luftmengde_spesifikk_utenfor_driftstid=1.20,
 
-    	CO2_faktor_el=0.357
-    	CO2_faktor_olje=0.273
-    	CO2_faktor_gass=0.202
-    	CO2_faktor_fjernvarme=0.176
-    	CO2_faktor_bio=0.025
-    	CO2_faktor_annet=0.000
+    terrengskjermingskoeff_e=0.07,
+    terrengskjermingskoeff_f=15,
+    lekkasjetall=2.5,
+    etasjehoyde_innvendig=2.6,
+    luftmengde_spesifikk_tilluft=1.2,
+    luftmengde_spesifikk_avtrekksluft=1.2,
 
-    	Primaerenergi_faktor_el=1.50
-    	Primaerenergi_faktor_olje=1.35
-    	Primaerenergi_faktor_gass=1.36
-    	Primaerenergi_faktor_fjernvarme=1.25
-    	Primaerenergi_faktor_bio=1.05
-    	Primaerenergi_faktor_annet=1.00
+    vifteeffekt_spesifikk_i_driftstid=2.5,
+    vifteeffekt_spesifikk_utenfor_driftstid=2.5,
 
-    	Energipris_el=0.80
-    	Energipris_olje=0.90
-    	Energipris_gass=0.75
-    	Energipris_fjernvarme=0.55
-    	Energipris_bio=0.35
-    	Energipris_annet=0.90
+    frostsikringstemperatur=5.0,
 
-    	Energipol_vektingsfaktor_el=1.20
-    	Energipol_vektingsfaktor_olje=1.50
-    	Energipol_vektingsfaktor_gass=1.30
-    	Energipol_vektingsfaktor_fjernvarme=1.05
-    	Energipol_vektingsfaktor_bio=0.80
-    	Energipol_vektingsfaktor_annet=0.90
+    solskjermingsfaktor_horisont_oest=0.90,
+    solskjermingsfaktor_horisont_vest=0.90,
+    solskjermingsfaktor_horisont_soer=0.90,
+    solskjermingsfaktor_horisont_nord=0.90,
+    solskjermingsfaktor_horisont_tak=0.90,
 
+    solskjermingsfaktor_overheng_oest=0.90,
+    solskjermingsfaktor_overheng_vest=0.90,
+    solskjermingsfaktor_overheng_soer=0.90,
+    solskjermingsfaktor_overheng_nord=0.90,
+    solskjermingsfaktor_overheng_tak=0.90,
 
-    tid_drift_pumpe_kjoling=0
-    varmekapasitet_kuldebaerer=4210
-    densitet_kuldebaerer=999.8
-    temp_differanse_veskekrets_kjoling=4.0
-    pumpeeffekt_spesifikk_oppv=0.5
-    pumpeeffekt_spesifikk_kjoling=0.6
-    tid_drift_pumpe_oppv=5300
-    densitet_vann=988
-    varmekapasitet_vann=4180
-    frostsikringstemperatur=5.0
-    areal_avkjoelt_andel=0.00
-    norm_varmekap=64
+    solskjermingsfaktor_finner_oest=0.90,
+    solskjermingsfaktor_finner_vest=0.90,
+    solskjermingsfaktor_finner_soer=0.90,
+    solskjermingsfaktor_finner_nord=0.90,
+    solskjermingsfaktor_finner_tak=0.90,
 
-    utetemp_jan=-3.7
-    utetemp_feb=-4.8
-    utetemp_mar=-0.5
-    utetemp_apr=4.8
-    utetemp_mai=11.7
-    utetemp_jun=16.5
-    utetemp_jul=17.5
-    utetemp_aug=16.9
-    utetemp_sep=11.5
-    utetemp_okt=6.4
-    utetemp_nov=0.5
-    utetemp_des=-2.5
-  
-    areal_gulv_kjeller=100.0
-    varmetapsfaktor_uoppv=0.95
+    arealfraksjon_karm_oest=0.10,
+    arealfraksjon_karm_vest=0.10,
+    arealfraksjon_karm_soer=0.10,
+    arealfraksjon_karm_nord=0.10,
+    arealfraksjon_karm_tak=0.10,
 
-    temp_settpunkt_oppvarming=21.0
-    temp_settpunkt_oppvarming_natt=19.0
-    temp_avtrekk=22.0
+    sol_tidsvariabel_soer_jan=0.06,
+    sol_tidsvariabel_soer_feb=0.15,
+    sol_tidsvariabel_soer_mars=0.23,
+    sol_tidsvariabel_soer_april=0.19,
+    sol_tidsvariabel_soer_mai=0.19,
+    sol_tidsvariabel_soer_juni=0.23,
+    sol_tidsvariabel_soer_juli=0.21,
+    sol_tidsvariabel_soer_aug=0.22,
+    sol_tidsvariabel_soer_sept=0.15,
+    sol_tidsvariabel_soer_okt=0.15,
+    sol_tidsvariabel_soer_nov=0.10,
+    sol_tidsvariabel_soer_des=0.07,
 
-    areal_mot_uoppvarmet =0.0
-    U_mot_uoppvarmet_sone=0.18
+    sol_tidsvariabel_ost_vest_jan=0.02,
+    sol_tidsvariabel_ost_vest_feb=0.08,
+    sol_tidsvariabel_ost_vest_mars=0.16,
+    sol_tidsvariabel_ost_vest_april=0.15,
+    sol_tidsvariabel_ost_vest_mai=0.16,
+    sol_tidsvariabel_ost_vest_juni=0.23,
+    sol_tidsvariabel_ost_vest_juli=0.19,
+    sol_tidsvariabel_ost_vest_aug=0.14,
+    sol_tidsvariabel_ost_vest_sept=0.07,
+    sol_tidsvariabel_ost_vest_okt=0.09,
+    sol_tidsvariabel_ost_vest_nov=0.05,
+    sol_tidsvariabel_ost_vest_des=0.03,
 
-    lekkasjetall=2.5
+    sol_tidsvariabel_nord_jan=0.00,
+    sol_tidsvariabel_nord_feb=0.03,
+    sol_tidsvariabel_nord_mars=0.10,
+    sol_tidsvariabel_nord_april=0.00,
+    sol_tidsvariabel_nord_mai=0.01,
+    sol_tidsvariabel_nord_juni=0.05,
+    sol_tidsvariabel_nord_juli=0.03,
+    sol_tidsvariabel_nord_aug=0.00,
+    sol_tidsvariabel_nord_sept=0.00,
+    sol_tidsvariabel_nord_okt=0.02,
+    sol_tidsvariabel_nord_nov=0.00,
+    sol_tidsvariabel_nord_des=0.00,
 
-    aarsmiddeltemp_inne=21.0
-    aarsmiddeltemp_ute=7.5
+    solfaktor_vindu_oest=0.51,
+    solfaktor_vindu_vest=0.51,
+    solfaktor_vindu_soer=0.51,
+    solfaktor_vindu_nord=0.51,
+    solfaktor_vindu_tak=0.51,
 
-    dybde_periodisk_nedtrengning = 3.20
+    solfaktor_total_glass_skjerming_oest=0.25,
+    solfaktor_total_glass_skjerming_vest=0.25,
+    solfaktor_total_glass_skjerming_soer=0.20,
+    solfaktor_total_glass_skjerming_nord=0.27,
+    solfaktor_total_glass_skjerming_tak=0.20,
 
-    terrengskjermingskoeff_e=0.07
-    terrengskjermingskoeff_f=15
+    #Per mnd. da skoler eller andre bygg kan ha variasjon i tilskudd. f.eks. i ferier=
+    varmetilskudd_lys_jan=2.90,
+    varmetilskudd_lys_feb=2.90,
+    varmetilskudd_lys_mar=2.90,
+    varmetilskudd_lys_apr=2.90,
+    varmetilskudd_lys_mai=2.90,
+    varmetilskudd_lys_jun=2.90,
+    varmetilskudd_lys_jul=2.90,
+    varmetilskudd_lys_aug=2.90,
+    varmetilskudd_lys_sep=2.90,
+    varmetilskudd_lys_okt=2.90,
+    varmetilskudd_lys_nov=2.90,
+    varmetilskudd_lys_des=2.90,
 
-    etasjehoyde_innvendig=2.6
+    varmetilskudd_utstyr_jan=2.40,
+    varmetilskudd_utstyr_feb=2.40,
+    varmetilskudd_utstyr_mar=2.40,
+    varmetilskudd_utstyr_apr=2.40,
+    varmetilskudd_utstyr_mai=2.40,
+    varmetilskudd_utstyr_jun=2.40,
+    varmetilskudd_utstyr_jul=2.40,
+    varmetilskudd_utstyr_aug=2.40,
+    varmetilskudd_utstyr_sep=2.40,
+    varmetilskudd_utstyr_okt=2.40,
+    varmetilskudd_utstyr_nov=2.40,
+    varmetilskudd_utstyr_des=2.40,
 
-    varmekonduktivitet_grunn=2.00
-    U_gulvkonstruksjon=0.15
-    U_kjellerveggskonstruksjon=0.18
-    tykkelse_grunnmur=0.30
-    oppfyllingshoyde_kjellervegg=0.01
-    varmekonduktivitet_kantisol=0.30
-    kantisol_tykkelse=0.20
-    kantisol_horisontal_dybde=0.20
-    kantisol_vertikal_bredde=0.20
+    varmetilskudd_person_jan=1.50,
+    varmetilskudd_person_feb=1.50,
+    varmetilskudd_person_mar=1.50,
+    varmetilskudd_person_apr=1.50,
+    varmetilskudd_person_mai=1.50,
+    varmetilskudd_person_jun=1.50,
+    varmetilskudd_person_jul=1.50,
+    varmetilskudd_person_aug=1.50,
+    varmetilskudd_person_sep=1.50,
+    varmetilskudd_person_okt=1.50,
+    varmetilskudd_person_nov=1.50,
+    varmetilskudd_person_des=1.50,
 
-    faseforskjell_utetemp_varmetap=2.0
+    energibehov_tappevann=30.0,
 
-    temp_amplitudevar=11.2
-    temp_settpunkt_kjoeling=22
+    energibehov_belysning=17.0,
 
-    omkrets_gulv=40.00
+    energibehov_utstyr=23.0,
 
-    kuldebro_normalisert=0.03
+    areal_avkjoelt_andel=0.00,
+    temp_settpunkt_kjoeling=22,
 
-    luftmengde_spesifikk_tilluft=1.2
-    luftmengde_spesifikk_avtrekksluft=1.2
+    pumpeeffekt_spesifikk_oppv=0.5,
+    tid_drift_pumpe_oppv=5300,
+    temp_differanse_veskekrets_oppvarming=20.0,
+    pumpeeffekt_spesifikk_kjoling=0.6,
+    tid_drift_pumpe_kjoling=0,
+    temp_differanse_veskekrets_kjoling=4.0,
 
-    varmekapasitet_luft=0.33
+    el_solcelle_andel_el_spesifikt_forbruk=0.00,
+    el_er_andel_energi_oppv_ventilasjon=0.40,
+    el_hp_andel_energi_oppv_ventilasjon=0.00,
+    el_Tsol_andel_energi_oppv_ventilasjon=0.00,
+    el_er_andel_energi_tappevann_varme=0.20,
+    el_hp_andel_energi_tappevann_varme=0.00,
+    el_Tsol_andel_energi_tappevann_varme=0.00,
+    systemvirkningsgrad_solcelle=100,
+    systemvirkningsgrad_elektrisk_oppv_ventilasjon=0.92,
+    systemvirkningsgrad_elektrisk_tappevann_varme=0.98,
+    systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon=2.31,
+    systemvirkningsgrad_varmepumpeanlegg_tappevann_varme=2.1,
+    systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon=51.84,
+    systemvirkningsgrad_solfanger_termisk_tappevann_varme=20,
+    effektfaktor_kjoeleanlegg=2.40,
 
-    tempvirkningsgrad_varmegjenvinner=0.70
+    olje_andel_energi_oppv_ventilasjon=0.30,
+    olje_andel_energi_tappevann_varme=0.50,
+    systemvirkningsgrad_olje_oppv_ventilasjon=0.54,
+    systemvirkningsgrad_olje_tappevann_varme=0.66,
 
-    U_tak=0.18
-    U_vegg_oest=0.22
-    U_vegg_vest=0.22
-    U_vegg_soer=0.22
-    U_vegg_nord=0.22
-    U_gulv_mot_det_fri=0.18
-    U_dor=1.60
+    gass_andel_energi_oppv_ventilasjon=0.10,
+    gass_andel_energi_tappevann_varme=0.10,
+    systemvirkningsgrad_gass_oppv_ventilasjon=0.72,
+    systemvirkningsgrad_gass_tappevann_varme=0.84,
 
-    U_vindu_oest=1.60
-    U_vindu_vest=1.60
-    U_vindu_soer=1.60
-    U_vindu_nord=1.60
-    U_vindu_tak =1.60
+    fjernvarme_andel_energi_oppv_ventilasjon=0.20,
+    fjernvarme_andel_energi_tappevann_varme=0.20,
+    systemvirkningsgrad_fjernvarme_oppv_ventilasjon=0.81,
+    systemvirkningsgrad_fjernvarme_tappevann=0.98,
 
-    luftmengde_spesifikk_i_driftstid=1.20
-    luftmengde_spesifikk_utenfor_driftstid=1.20
-    vifteeffekt_spesifikk_i_driftstid=2.5
-    vifteeffekt_spesifikk_utenfor_driftstid=2.5
+    bio_andel_energi_oppv_ventilasjon=0.00,
+    bio_andel_energi_tappevann_varme=0.00,
+    systemvirkningsgrad_bio_oppv_ventilasjon=0.74,
+    systemvirkningsgrad_bio_tappevann=0.77,
 
-    tid_jan=0.744
-    tid_feb=0.672
-    tid_mar=0.744
-    tid_apr=0.720
-    tid_mai=0.744
-    tid_jun=0.720
-    tid_jul=0.744
-    tid_aug=0.744
-    tid_sep=0.720
-    tid_okt=0.744
-    tid_nov=0.720
-    tid_des=0.744
+    annet_andel_energi_oppv_ventilasjon=0.00,
+    annet_andel_energi_tappevann_varme=0.00,
+    systemvirkningsgrad_annet_oppv_ventilasjon=0.5,
+    systemvirkningsgrad_annet_tappevann=0.5,
 
-    tid_drift_oppv_belysn_utstyr_jan=496
-    tid_drift_oppv_belysn_utstyr_feb=448
-    tid_drift_oppv_belysn_utstyr_mar=496
-    tid_drift_oppv_belysn_utstyr_apr=480
-    tid_drift_oppv_belysn_utstyr_mai=496
-    tid_drift_oppv_belysn_utstyr_jun=480
-    tid_drift_oppv_belysn_utstyr_jul=496
-    tid_drift_oppv_belysn_utstyr_aug=496
-    tid_drift_oppv_belysn_utstyr_sep=480
-    tid_drift_oppv_belysn_utstyr_okt=496
-    tid_drift_oppv_belysn_utstyr_nov=480
-    tid_drift_oppv_belysn_utstyr_des=496
+    CO2_faktor_el=0.357,
+    CO2_faktor_olje=0.273,
+    CO2_faktor_gass=0.202,
+    CO2_faktor_fjernvarme=0.176,
+    CO2_faktor_bio=0.025,
+    CO2_faktor_annet=0.000,
 
-    tid_drift_vent_jan=744
-    tid_drift_vent_feb=672
-    tid_drift_vent_mar=744
-    tid_drift_vent_apr=720
-    tid_drift_vent_mai=744
-    tid_drift_vent_jun=720
-    tid_drift_vent_jul=744
-    tid_drift_vent_aug=744
-    tid_drift_vent_sep=720
-    tid_drift_vent_okt=744
-    tid_drift_vent_nov=720
-    tid_drift_vent_des=744
+    Primaerenergi_faktor_el=1.50,
+    Primaerenergi_faktor_olje=1.35,
+    Primaerenergi_faktor_gass=1.36,
+    Primaerenergi_faktor_fjernvarme=1.25,
+    Primaerenergi_faktor_bio=1.05,
+    Primaerenergi_faktor_annet=1.00,
 
-    tid_drift_person_jan=744
-    tid_drift_person_feb=672
-    tid_drift_person_mar=744
-    tid_drift_person_apr=720
-    tid_drift_person_mai=744
-    tid_drift_person_jun=720
-    tid_drift_person_jul=744
-    tid_drift_person_aug=744
-    tid_drift_person_sep=720
-    tid_drift_person_okt=744
-    tid_drift_person_nov=720
-    tid_drift_person_des=744
+    Energipris_el=0.80,
+    Energipris_olje=0.90,
+    Energipris_gass=0.75,
+    Energipris_fjernvarme=0.55,
+    Energipris_bio=0.35,
+    Energipris_annet=0.90,
 
-    areal_tak=100.0
-    areal_vegg_oest=42.5
-    areal_vegg_vest=42.5
-    areal_vegg_soer=42.5
-    areal_vegg_nord=42.5
-    areal_gulv_mot_det_fri=0.0
+    Energipol_vektingsfaktor_el=1.20,
+    Energipol_vektingsfaktor_olje=1.50,
+    Energipol_vektingsfaktor_gass=1.30,
+    Energipol_vektingsfaktor_fjernvarme=1.05,
+    Energipol_vektingsfaktor_bio=0.80,
+    Energipol_vektingsfaktor_annet=0.90,
 
-    areal_dor=2.0
+    tid_drift_oppv_belysn_utstyr_jan=496,
+    tid_drift_oppv_belysn_utstyr_feb=448,
+    tid_drift_oppv_belysn_utstyr_mar=496,
+    tid_drift_oppv_belysn_utstyr_apr=480,
+    tid_drift_oppv_belysn_utstyr_mai=496,
+    tid_drift_oppv_belysn_utstyr_jun=480,
+    tid_drift_oppv_belysn_utstyr_jul=496,
+    tid_drift_oppv_belysn_utstyr_aug=496,
+    tid_drift_oppv_belysn_utstyr_sep=480,
+    tid_drift_oppv_belysn_utstyr_okt=496,
+    tid_drift_oppv_belysn_utstyr_nov=480,
+    tid_drift_oppv_belysn_utstyr_des=496,
 
-    areal_vindu_oest=9.5
-    areal_vindu_vest=9.5
-    areal_vindu_soer=9.5
-    areal_vindu_nord=9.5
-    areal_vindu_tak=0.0
+    tid_drift_vent_jan=744,
+    tid_drift_vent_feb=672,
+    tid_drift_vent_mar=744,
+    tid_drift_vent_apr=720,
+    tid_drift_vent_mai=744,
+    tid_drift_vent_jun=720,
+    tid_drift_vent_jul=744,
+    tid_drift_vent_aug=744,
+    tid_drift_vent_sep=720,
+    tid_drift_vent_okt=744,
+    tid_drift_vent_nov=720,
+    tid_drift_vent_des=744,
 
-    arealfraksjon_karm_oest=0.10
-    arealfraksjon_karm_vest=0.10
-    arealfraksjon_karm_soer=0.10
-    arealfraksjon_karm_nord=0.10
-    arealfraksjon_karm_tak=0.10
+    tid_drift_person_jan=744,
+    tid_drift_person_feb=672,
+    tid_drift_person_mar=744,
+    tid_drift_person_apr=720,
+    tid_drift_person_mai=744,
+    tid_drift_person_jun=720,
+    tid_drift_person_jul=744,
+    tid_drift_person_aug=744,
+    tid_drift_person_sep=720,
+    tid_drift_person_okt=744,
+    tid_drift_person_nov=720,
+    tid_drift_person_des=744,
 
-    energibehov_tappevann=30.0
-    areal_oppv=200.0
-    energibehov_belysning = 17
+    utetemp_jan=-3.7,
+    utetemp_feb=-4.8,
+    utetemp_mar=-0.5,
+    utetemp_apr=4.8,
+    utetemp_mai=11.7,
+    utetemp_jun=16.5,
+    utetemp_jul=17.5,
+    utetemp_aug=16.9,
+    utetemp_sep=11.5,
+    utetemp_okt=6.4,
+    utetemp_nov=0.5,
+    utetemp_des=-2.5,
+    aarsmiddeltemp_ute=7.5,
 
-    energibehov_utstyr=23.0
+    straalingsfluks_soer_jan=28.0,
+    straalingsfluks_soer_feb=61.0,
+    straalingsfluks_soer_mars=106.0,
+    straalingsfluks_soer_april=135.0,
+    straalingsfluks_soer_mai=134.0,
+    straalingsfluks_soer_juni=150.0,
+    straalingsfluks_soer_juli=140.0,
+    straalingsfluks_soer_aug=142.0,
+    straalingsfluks_soer_sept=113.0,
+    straalingsfluks_soer_okt=70.0,
+    straalingsfluks_soer_nov=44.0,
+    straalingsfluks_soer_des=28.0,
 
-    straalingsfluks_soer_jan=28.0
-    straalingsfluks_soer_feb=61.0
-    straalingsfluks_soer_mars=106.0
-    straalingsfluks_soer_april=135.0
-    straalingsfluks_soer_mai=134.0
-    straalingsfluks_soer_juni=150.0
-    straalingsfluks_soer_juli=140.0
-    straalingsfluks_soer_aug=142.0
-    straalingsfluks_soer_sept=113.0
-    straalingsfluks_soer_okt=70.0
-    straalingsfluks_soer_nov=44.0
-    straalingsfluks_soer_des=28.0
+    straalingsfluks_ostvest_jan=11.0,
+    straalingsfluks_ostvest_feb=32.0,
+    straalingsfluks_ostvest_mars=55.0,
+    straalingsfluks_ostvest_april=112.0,
+    straalingsfluks_ostvest_mai=124.0,
+    straalingsfluks_ostvest_juni=166.0,
+    straalingsfluks_ostvest_juli=142.0,
+    straalingsfluks_ostvest_aug=109.0,
+    straalingsfluks_ostvest_sept=66.0,
+    straalingsfluks_ostvest_okt=37.0,
+    straalingsfluks_ostvest_nov=18.0,
+    straalingsfluks_ostvest_des=9.0,
 
-    straalingsfluks_ostvest_jan=11.0
-    straalingsfluks_ostvest_feb=32.0
-    straalingsfluks_ostvest_mars=55.0
-    straalingsfluks_ostvest_april=112.0
-    straalingsfluks_ostvest_mai=124.0
-    straalingsfluks_ostvest_juni=166.0
-    straalingsfluks_ostvest_juli=142.0
-    straalingsfluks_ostvest_aug=109.0
-    straalingsfluks_ostvest_sept=66.0
-    straalingsfluks_ostvest_okt=37.0
-    straalingsfluks_ostvest_nov=18.0
-    straalingsfluks_ostvest_des=9.0
+    straalingsfluks_nord_jan=6.0,
+    straalingsfluks_nord_feb=17.0,
+    straalingsfluks_nord_mars=25.0,
+    straalingsfluks_nord_april=50.0,
+    straalingsfluks_nord_mai=75.0,
+    straalingsfluks_nord_juni=98.0,
+    straalingsfluks_nord_juli=83.0,
+    straalingsfluks_nord_aug=54.0,
+    straalingsfluks_nord_sept=36.0,
+    straalingsfluks_nord_okt=16.0,
+    straalingsfluks_nord_nov=7.0,
+    straalingsfluks_nord_des=3.0,
 
-    straalingsfluks_nord_jan=6.0
-    straalingsfluks_nord_feb=17.0
-    straalingsfluks_nord_mars=25.0
-    straalingsfluks_nord_april=50.0
-    straalingsfluks_nord_mai=75.0
-    straalingsfluks_nord_juni=98.0
-    straalingsfluks_nord_juli=83.0
-    straalingsfluks_nord_aug=54.0
-    straalingsfluks_nord_sept=36.0
-    straalingsfluks_nord_okt=16.0
-    straalingsfluks_nord_nov=7.0
-    straalingsfluks_nord_des=3.0
+    straalingsfluks_tak_jan=13.0,
+    straalingsfluks_tak_feb=43.0,
+    straalingsfluks_tak_mars=90.0,
+    straalingsfluks_tak_april=153.0,
+    straalingsfluks_tak_mai=198.0,
+    straalingsfluks_tak_juni=249.0,
+    straalingsfluks_tak_juli=219.0,
+    straalingsfluks_tak_aug=175.0,
+    straalingsfluks_tak_sept=107.0,
+    straalingsfluks_tak_okt=45.0,
+    straalingsfluks_tak_nov=19.0,
+    straalingsfluks_tak_des=8.0,
 
-    straalingsfluks_tak_jan=13.0
-    straalingsfluks_tak_feb=43.0
-    straalingsfluks_tak_mars=90.0
-    straalingsfluks_tak_april=153.0
-    straalingsfluks_tak_mai=198.0
-    straalingsfluks_tak_juni=249.0
-    straalingsfluks_tak_juli=219.0
-    straalingsfluks_tak_aug=175.0
-    straalingsfluks_tak_sept=107.0
-    straalingsfluks_tak_okt=45.0
-    straalingsfluks_tak_nov=19.0
-    straalingsfluks_tak_des=8.0
+    temp_avtrekk=22.0,
 
-    sol_tidsvariabel_ost_vest_jan=0.02
-    sol_tidsvariabel_ost_vest_feb=0.08
-    sol_tidsvariabel_ost_vest_mars=0.16
-    sol_tidsvariabel_ost_vest_april=0.15
-    sol_tidsvariabel_ost_vest_mai=0.16
-    sol_tidsvariabel_ost_vest_juni=0.23
-    sol_tidsvariabel_ost_vest_juli=0.19
-    sol_tidsvariabel_ost_vest_aug=0.14
-    sol_tidsvariabel_ost_vest_sept=0.07
-    sol_tidsvariabel_ost_vest_okt=0.09
-    sol_tidsvariabel_ost_vest_nov=0.05
-    sol_tidsvariabel_ost_vest_des=0.03
+    varmekapasitet_luft=0.33,
+    temp_amplitudevar=11.2,
 
-    sol_tidsvariabel_soer_jan=0.06
-    sol_tidsvariabel_soer_feb=0.15
-    sol_tidsvariabel_soer_mars=0.23
-    sol_tidsvariabel_soer_april=0.19
-    sol_tidsvariabel_soer_mai=0.19
-    sol_tidsvariabel_soer_juni=0.23
-    sol_tidsvariabel_soer_juli=0.21
-    sol_tidsvariabel_soer_aug=0.22
-    sol_tidsvariabel_soer_sept=0.15
-    sol_tidsvariabel_soer_okt=0.15
-    sol_tidsvariabel_soer_nov=0.10
-    sol_tidsvariabel_soer_des=0.07
+    tid_jan=0.744,
+    tid_feb=0.672,
+    tid_mar=0.744,
+    tid_apr=0.720,
+    tid_mai=0.744,
+    tid_jun=0.720,
+    tid_jul=0.744,
+    tid_aug=0.744,
+    tid_sep=0.720,
+    tid_okt=0.744,
+    tid_nov=0.720,
+    tid_des=0.744,
 
-    sol_tidsvariabel_nord_jan=0.00
-    sol_tidsvariabel_nord_feb=0.03
-    sol_tidsvariabel_nord_mars=0.10
-    sol_tidsvariabel_nord_april=0.00
-    sol_tidsvariabel_nord_mai=0.01
-    sol_tidsvariabel_nord_juni=0.05
-    sol_tidsvariabel_nord_juli=0.03
-    sol_tidsvariabel_nord_aug=0.00
-    sol_tidsvariabel_nord_sept=0.00
-    sol_tidsvariabel_nord_okt=0.02
-    sol_tidsvariabel_nord_nov=0.00
-    sol_tidsvariabel_nord_des=0.00
+    varmekapasitet_vann=4180,
+    densitet_vann=988,
+    varmekapasitet_kuldebaerer=4210,
+    densitet_kuldebaerer=999.8,
 
-    solfaktor_vindu_oest=0.51
-    solfaktor_vindu_vest=0.51
-    solfaktor_vindu_soer=0.51
-    solfaktor_vindu_nord=0.51
-    solfaktor_vindu_tak=0.51
-
-    solfaktor_total_glass_skjerming_oest=0.25
-    solfaktor_total_glass_skjerming_vest=0.25
-    solfaktor_total_glass_skjerming_soer=0.20
-    solfaktor_total_glass_skjerming_nord=0.27
-    solfaktor_total_glass_skjerming_tak=0.20
-
-    solskjermingsfaktor_horisont_oest=0.90
-    solskjermingsfaktor_horisont_vest=0.90
-    solskjermingsfaktor_horisont_soer=0.90
-    solskjermingsfaktor_horisont_nord=0.90
-    solskjermingsfaktor_horisont_tak=0.90
-
-    solskjermingsfaktor_overheng_oest=0.90
-    solskjermingsfaktor_overheng_vest=0.90
-    solskjermingsfaktor_overheng_soer=0.90
-    solskjermingsfaktor_overheng_nord=0.90
-    solskjermingsfaktor_overheng_tak=0.90
-
-    solskjermingsfaktor_finner_oest=0.90
-    solskjermingsfaktor_finner_vest=0.90
-    solskjermingsfaktor_finner_soer=0.90
-    solskjermingsfaktor_finner_nord=0.90
-    solskjermingsfaktor_finner_tak=0.90
-
-    varmetilskudd_person_jan=1.50
-    varmetilskudd_person_feb=1.50
-    varmetilskudd_person_mar=1.50
-    varmetilskudd_person_apr=1.50
-    varmetilskudd_person_mai=1.50
-    varmetilskudd_person_jun=1.50
-    varmetilskudd_person_jul=1.50
-    varmetilskudd_person_aug=1.50
-    varmetilskudd_person_sep=1.50
-    varmetilskudd_person_okt=1.50
-    varmetilskudd_person_nov=1.50
-    varmetilskudd_person_des=1.50
-
-    varmetilskudd_lys_jan=2.90
-    varmetilskudd_lys_feb=2.90
-    varmetilskudd_lys_mar=2.90
-    varmetilskudd_lys_apr=2.90
-    varmetilskudd_lys_mai=2.90
-    varmetilskudd_lys_jun=2.90
-    varmetilskudd_lys_jul=2.90
-    varmetilskudd_lys_aug=2.90
-    varmetilskudd_lys_sep=2.90
-    varmetilskudd_lys_okt=2.90
-    varmetilskudd_lys_nov=2.90
-    varmetilskudd_lys_des=2.90
-
-    varmetilskudd_utstyr_jan=2.40
-    varmetilskudd_utstyr_feb=2.40
-    varmetilskudd_utstyr_mar=2.40
-    varmetilskudd_utstyr_apr=2.40
-    varmetilskudd_utstyr_mai=2.40
-    varmetilskudd_utstyr_jun=2.40
-    varmetilskudd_utstyr_jul=2.40
-    varmetilskudd_utstyr_aug=2.40
-    varmetilskudd_utstyr_sep=2.40
-    varmetilskudd_utstyr_okt=2.40
-    varmetilskudd_utstyr_nov=2.40
-    varmetilskudd_utstyr_des=2.40
-
-    if 1:
-        BygningskategoriErForretningsbygg = 0 # Nima Darabi: OBS! finnes ikke i input? (1 = Forretningsbygg, 0 = Bolig)
-        REF = 123456789 # Nima Darabi: OBS! Hva er verdi for #REF! i Q88
-
+    BygningskategoriErForretningsbygg = 0, # Nima Darabi: OBS! finnes ikke i input? (1 = Forretningsbygg, 0 = Bolig)
+    REF = 123456789 # Nima Darabi: OBS! Hva er verdi for #REF! i Q88
         )
     print(calcEngine.calculate())
-
