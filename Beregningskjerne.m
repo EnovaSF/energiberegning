@@ -1119,13 +1119,13 @@ class EnergiBeregning:
         J260 = J264/(J265*J266*J267)*1000            # NS3031* - Energibehov, pumper (Oppvarming) - Sirkulert vannmengde gjennom pumpen
         J258 = J260*J261*J262                        # NS3031* - Energibehov, pumper (Oppvarming) - Totalt, Ep
 
-        Q265 = temp_differanse_veskekrets_kjoling # NS3031* - Energibehov, pumper (Kjøling) - Temperatur differanse tur-retur væskekrets, kjøling
-        Q266 = varmekapasitet_kuldebaerer                  # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk varmekapasitet for kuldebærer
-        Q267 = densitet_kuldebaerer                        # NS3031* - Energibehov, pumper (Kjøling) - Densitet for kuldebærer
-        Q264 = C213/8760*1000                       # NS3031* - Energibehov, pumper (Kjøling) - Kjølebehov
+        Q265 = temp_differanse_veskekrets_kjoling    # NS3031* - Energibehov, pumper (Kjøling) - Temperatur differanse tur-retur væskekrets, kjøling
+        Q266 = varmekapasitet_kuldebaerer            # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk varmekapasitet for kuldebærer
+        Q267 = densitet_kuldebaerer                  # NS3031* - Energibehov, pumper (Kjøling) - Densitet for kuldebærer
+        Q264 = C213/8760*1000                        # NS3031* - Energibehov, pumper (Kjøling) - Kjølebehov
 
-        Q262 = tid_drift_pumpe_kjoling                 # NS3031* - Energibehov, pumper (Kjøling) - Driftstid i året
-        Q261 = pumpeeffekt_spesifikk_kjoling           # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk pumpeeffekt
+        Q262 = tid_drift_pumpe_kjoling               # NS3031* - Energibehov, pumper (Kjøling) - Driftstid i året
+        Q261 = pumpeeffekt_spesifikk_kjoling         # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk pumpeeffekt
         Q260 = Q264/(Q265*Q266*Q267)*1000            # NS3031* - Energibehov, pumper (Kjøling) - Sirkulert vannmengde gjennom pumpen
         Q258 = Q260*Q261*Q262                        # NS3031* - Energibehov, pumper (Kjøling) - Totalt, Ep
 
@@ -1133,8 +1133,24 @@ class EnergiBeregning:
 
         Pumper = C258      # # - Energipost (3b) (Energibehov [kWh/år]) - Pumper
 
-        ### 6
-        Kjoeling = 0
+	### 6
+	C215 = (0 if J215-X215*Q215<0 else J215-X215*Q215)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - januar
+	C216 = (0 if J216-X216*Q216<0 else J216-X216*Q216)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - februar
+	C217 = (0 if J217-X217*Q217<0 else J217-X217*Q215)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mars
+	C218 = (0 if J218-X218*Q218<0 else J218-X218*Q216)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - april
+	C219 = (0 if J219-X219*Q219<0 else J219-X219*Q215)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mai
+	C220 = (0 if J220-X220*Q220<0 else J220-X220*Q220)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juni
+	C221 = (0 if J221-X221*Q221<0 else J221-X221*Q221)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juli
+	C222 = (0 if J222-X222*Q222<0 else J222-X222*Q222)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - august
+	C223 = (0 if J223-X223*Q223<0 else J223-X223*Q223)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - september
+	C224 = (0 if J224-X224*Q224<0 else J224-X224*Q224)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - oktober
+	C225 = (0 if J225-X225*Q225<0 else J225-X225*Q225)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - november
+	C226 = (0 if J226-X226*Q226<0 else J226-X226*Q226)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - desember
+
+	C213 = C215+C216+C217 + C218+C219+C220 + C221+C222+C223 + C224+C225+C226 
+
+	Kjoeling = C213      # # - Energipost (6) (Energibehov [kWh/år]) - Kjoeling
+
         Totalt_netto_energibehov = Romoppvarming+Ventilasjonsvarme +\
                                    Varmtvann+\
                                    Vifter+Pumper+\
