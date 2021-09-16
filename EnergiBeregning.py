@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 import numpy as np
 
-
 @dataclass
 class Output:
     """ This class holds the calculation result, one field per value """
@@ -14,9 +13,29 @@ class Output:
     Teknisk_utstyr: float
     Kjoeling: float
     Totalt_netto_energibehov: float
+    Elektrisitet: float
+    Olje: float
+    Gass: float
+    Fjernvarme: float
+    Biobrensel: float
+    Annen_energivare: float
+    Totalt_levert_energi: float)
+
 
     def __str__(self):
-        return "Romoppvarming: {0.Romoppvarming}, Ventilasjonsvarme: {0.Ventilasjonsvarme}, Varmtvann: {0.Varmtvann}, Vifter: {0.Vifter}, Pumper: {0.Pumper}, Belysning: {0.Belysning}, Teknisk_utstyr: {0.Teknisk_utstyr}, Kjoeling: {0.Kjoeling}, Totalt_netto_energibehov: {0.Totalt_netto_energibehov}, Totalt_netto_energibehov: {0.Totalt_netto_energibehov}".format(
+        return "Romoppvarming: {0.Romoppvarming}, 
+		Ventilasjonsvarme: {0.Ventilasjonsvarme}, 
+		Varmtvann: {0.Varmtvann}, Vifter: {0.Vifter}, 
+		Pumper: {0.Pumper}, Belysning: {0.Belysning}, 
+		Teknisk_utstyr: {0.Teknisk_utstyr}, Kjoeling: {0.Kjoeling}, 
+		Totalt_netto_energibehov: {0.Totalt_netto_energibehov}, 
+		Elektrisitet: {0.Elektrisitet}, 
+		Olje: {0.Olje}, 
+		Gass: {0.Gass}, 
+		Fjernvarme: {0.Fjernvarme}, 
+		Biobrensel: {0.Biobrensel},
+		Annen_energivare: {0.Annen_energivare}, 
+		Totalt_levert_energi: {0.Totalt_levert_energi}".format(
             self)
 
 
@@ -1243,13 +1262,19 @@ class EnergiBeregning:
 
         Elektrisitet = C306                          # # - Energivare (1) (Levert energi [kWh/år]) - Elektrisitet
 
-        # energivare 2
-        Q321 =systemvirkningsgrad_olje_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q322 = systemvirkningsgrad_olje_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for tappevann
-        J321 = olje_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme oljebasert system
-        J322 = olje_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - AAndel av netto energibehov for oppvarming av tappevann oljebasert system
-        C321 = ((C20+C281)*J321/Q321+C237*J322/Q322)     # NS3031 - Beregning av behov for levert olje - Levert energi i form av olje
-        Olje = C321                                      # # - Energivare (2) (Levert energi [kWh/år]) - Elektrisitet
+	Totalt_netto_energibehov = Romoppvarming+Ventilasjonsvarme +\
+	                           Varmtvann+\
+	                           Vifter+Pumper+\
+	                           Belysning+\
+	                           Teknisk_utstyr+\
+	                           Kjoeling
+
+	Totalt_levert_energi = Elektrisitet+\
+	                       Olje+\
+	                       Gass+\
+	                       Fjernvarme+\
+	                       Biobrensel+\
+	                       Annen_energivare
 
         return Output(Romoppvarming,
                       Ventilasjonsvarme,
@@ -1259,4 +1284,12 @@ class EnergiBeregning:
                       Belysning,
                       Teknisk_utstyr,
                       Kjoeling,
-                      Totalt_netto_energibehov)
+                      Totalt_netto_energibehov,
+
+		      Elektrisitet,
+	              Olje,
+	              Gass,
+	              Fjernvarme,
+	              Biobrensel,
+	              Annen_energivare,
+		      Totalt_levert_energi)
