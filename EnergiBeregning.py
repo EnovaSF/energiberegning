@@ -382,6 +382,355 @@ class EnergiBeregning:
 
         # Example we may not do it like this but something like described above
 
+        areal_oppv = self.areal_oppv
+        norm_varmekap = self.norm_varmekap
+        kuldebro_normalisert = self.kuldebro_normalisert
+        temp_settpunkt_oppvarming = self.temp_settpunkt_oppvarming
+        temp_settpunkt_oppvarming_natt = self.temp_settpunkt_oppvarming_natt
+        areal_tak = self.areal_tak
+        areal_vegg_oest = self.areal_vegg_oest
+        areal_vegg_vest = self.areal_vegg_vest
+        areal_vegg_soer = self.areal_vegg_soer
+        areal_vegg_nord = self.areal_vegg_nord
+        areal_gulv_mot_det_fri = self.areal_gulv_mot_det_fri
+        areal_vindu_oest = self.areal_vindu_oest
+        areal_vindu_vest = self.areal_vindu_vest
+        areal_vindu_soer = self.areal_vindu_soer
+        areal_vindu_nord = self.areal_vindu_nord
+        areal_vindu_tak = self.areal_vindu_tak
+        areal_dor = self.areal_dor
+        U_tak = self.U_tak
+        U_vegg_oest = self.U_vegg_oest
+        U_vegg_vest = self.U_vegg_vest
+        U_vegg_soer = self.U_vegg_soer
+        U_vegg_nord = self.U_vegg_nord
+        U_gulv_mot_det_fri = self.U_gulv_mot_det_fri
+        U_dor = self.U_dor
+        U_vindu_oest = self.U_vindu_oest
+        U_vindu_vest = self.U_vindu_vest
+        U_vindu_soer = self.U_vindu_soer
+        U_vindu_nord = self.U_vindu_nord
+        U_vindu_tak = self.U_vindu_tak
+        varmetapsfaktor_uoppv = self.varmetapsfaktor_uoppv
+        areal_mot_uoppvarmet = self.areal_mot_uoppvarmet
+        U_mot_uoppvarmet_sone = self.U_mot_uoppvarmet_sone
+        areal_gulv_kjeller = self.areal_gulv_kjeller
+        faseforskjell_utetemp_varmetap = self.faseforskjell_utetemp_varmetap
+        aarsmiddeltemp_inne = self.aarsmiddeltemp_inne
+        omkrets_gulv = self.omkrets_gulv
+        U_gulvkonstruksjon = self.U_gulvkonstruksjon
+        U_kjellerveggskonstruksjon = self.U_kjellerveggskonstruksjon
+        tykkelse_grunnmur = self.tykkelse_grunnmur
+        oppfyllingshoyde_kjellervegg = self.oppfyllingshoyde_kjellervegg
+        varmekonduktivitet_kantisol = self.varmekonduktivitet_kantisol
+        kantisol_tykkelse = self.kantisol_tykkelse
+        kantisol_horisontal_dybde = self.kantisol_horisontal_dybde
+        kantisol_vertikal_bredde = self.kantisol_vertikal_bredde
+        dybde_periodisk_nedtrengning = self.dybde_periodisk_nedtrengning
+        varmekonduktivitet_grunn = self.varmekonduktivitet_grunn
+        tempvirkningsgrad_varmegjenvinner = self.tempvirkningsgrad_varmegjenvinner
+        luftmengde_spesifikk_i_driftstid = self.luftmengde_spesifikk_i_driftstid
+        luftmengde_spesifikk_utenfor_driftstid = self.luftmengde_spesifikk_utenfor_driftstid
+        terrengskjermingskoeff_e = self.terrengskjermingskoeff_e
+        terrengskjermingskoeff_f = self.terrengskjermingskoeff_f
+        lekkasjetall = self.lekkasjetall
+        etasjehoyde_innvendig = self.etasjehoyde_innvendig
+        luftmengde_spesifikk_tilluft = self.luftmengde_spesifikk_tilluft
+        luftmengde_spesifikk_avtrekksluft = self.luftmengde_spesifikk_avtrekksluft
+        vifteeffekt_spesifikk_i_driftstid = self.vifteeffekt_spesifikk_i_driftstid
+        vifteeffekt_spesifikk_utenfor_driftstid = self.vifteeffekt_spesifikk_utenfor_driftstid
+        frostsikringstemperatur = self.frostsikringstemperatur
+        solskjermingsfaktor_horisont_oest = self.solskjermingsfaktor_horisont_oest
+        solskjermingsfaktor_horisont_vest = self.solskjermingsfaktor_horisont_vest
+        solskjermingsfaktor_horisont_soer = self.solskjermingsfaktor_horisont_soer
+        solskjermingsfaktor_horisont_nord = self.solskjermingsfaktor_horisont_nord
+        solskjermingsfaktor_horisont_tak = self.solskjermingsfaktor_horisont_tak
+        solskjermingsfaktor_overheng_oest = self.solskjermingsfaktor_overheng_oest
+        solskjermingsfaktor_overheng_vest = self.solskjermingsfaktor_overheng_vest
+        solskjermingsfaktor_overheng_soer = self.solskjermingsfaktor_overheng_soer
+        solskjermingsfaktor_overheng_nord = self.solskjermingsfaktor_overheng_nord
+        solskjermingsfaktor_overheng_tak = self.solskjermingsfaktor_overheng_tak
+        solskjermingsfaktor_finner_oest = self.solskjermingsfaktor_finner_oest
+        solskjermingsfaktor_finner_vest = self.solskjermingsfaktor_finner_vest
+        solskjermingsfaktor_finner_soer = self.solskjermingsfaktor_finner_soer
+        solskjermingsfaktor_finner_nord = self.solskjermingsfaktor_finner_nord
+        solskjermingsfaktor_finner_tak = self.solskjermingsfaktor_finner_tak
+        arealfraksjon_karm_oest = self.arealfraksjon_karm_oest
+        arealfraksjon_karm_vest = self.arealfraksjon_karm_vest
+        arealfraksjon_karm_soer = self.arealfraksjon_karm_soer
+        arealfraksjon_karm_nord = self.arealfraksjon_karm_nord
+        arealfraksjon_karm_tak = self.arealfraksjon_karm_tak
+        sol_tidsvariabel_soer_jan = self.sol_tidsvariabel_soer_jan
+        sol_tidsvariabel_soer_feb = self.sol_tidsvariabel_soer_feb
+        sol_tidsvariabel_soer_mars = self.sol_tidsvariabel_soer_mars
+        sol_tidsvariabel_soer_april = self.sol_tidsvariabel_soer_april
+        sol_tidsvariabel_soer_mai = self.sol_tidsvariabel_soer_mai
+        sol_tidsvariabel_soer_juni = self.sol_tidsvariabel_soer_juni
+        sol_tidsvariabel_soer_juli = self.sol_tidsvariabel_soer_juli
+        sol_tidsvariabel_soer_aug = self.sol_tidsvariabel_soer_aug
+        sol_tidsvariabel_soer_sept = self.sol_tidsvariabel_soer_sept
+        sol_tidsvariabel_soer_okt = self.sol_tidsvariabel_soer_okt
+        sol_tidsvariabel_soer_nov = self.sol_tidsvariabel_soer_nov
+        sol_tidsvariabel_soer_des = self.sol_tidsvariabel_soer_des
+        sol_tidsvariabel_ost_vest_jan = self.sol_tidsvariabel_ost_vest_jan
+        sol_tidsvariabel_ost_vest_feb = self.sol_tidsvariabel_ost_vest_feb
+        sol_tidsvariabel_ost_vest_mars = self.sol_tidsvariabel_ost_vest_mars
+        sol_tidsvariabel_ost_vest_april = self.sol_tidsvariabel_ost_vest_april
+        sol_tidsvariabel_ost_vest_mai = self.sol_tidsvariabel_ost_vest_mai
+        sol_tidsvariabel_ost_vest_juni = self.sol_tidsvariabel_ost_vest_juni
+        sol_tidsvariabel_ost_vest_juli = self.sol_tidsvariabel_ost_vest_juli
+        sol_tidsvariabel_ost_vest_aug = self.sol_tidsvariabel_ost_vest_aug
+        sol_tidsvariabel_ost_vest_sept = self.sol_tidsvariabel_ost_vest_sept
+        sol_tidsvariabel_ost_vest_okt = self.sol_tidsvariabel_ost_vest_okt
+        sol_tidsvariabel_ost_vest_nov = self.sol_tidsvariabel_ost_vest_nov
+        sol_tidsvariabel_ost_vest_des = self.sol_tidsvariabel_ost_vest_des
+        sol_tidsvariabel_nord_jan = self.sol_tidsvariabel_nord_jan
+        sol_tidsvariabel_nord_feb = self.sol_tidsvariabel_nord_feb
+        sol_tidsvariabel_nord_mars = self.sol_tidsvariabel_nord_mars
+        sol_tidsvariabel_nord_april = self.sol_tidsvariabel_nord_april
+        sol_tidsvariabel_nord_mai = self.sol_tidsvariabel_nord_mai
+        sol_tidsvariabel_nord_juni = self.sol_tidsvariabel_nord_juni
+        sol_tidsvariabel_nord_juli = self.sol_tidsvariabel_nord_juli
+        sol_tidsvariabel_nord_aug = self.sol_tidsvariabel_nord_aug
+        sol_tidsvariabel_nord_sept = self.sol_tidsvariabel_nord_sept
+        sol_tidsvariabel_nord_okt = self.sol_tidsvariabel_nord_okt
+        sol_tidsvariabel_nord_nov = self.sol_tidsvariabel_nord_nov
+        sol_tidsvariabel_nord_des = self.sol_tidsvariabel_nord_des
+        solfaktor_vindu_oest = self.solfaktor_vindu_oest
+        solfaktor_vindu_vest = self.solfaktor_vindu_vest
+        solfaktor_vindu_soer = self.solfaktor_vindu_soer
+        solfaktor_vindu_nord = self.solfaktor_vindu_nord
+        solfaktor_vindu_tak = self.solfaktor_vindu_tak
+        solfaktor_total_glass_skjerming_oest = self.solfaktor_total_glass_skjerming_oest
+        solfaktor_total_glass_skjerming_vest = self.solfaktor_total_glass_skjerming_vest
+        solfaktor_total_glass_skjerming_soer = self.solfaktor_total_glass_skjerming_soer
+        solfaktor_total_glass_skjerming_nord = self.solfaktor_total_glass_skjerming_nord
+        solfaktor_total_glass_skjerming_tak = self.solfaktor_total_glass_skjerming_tak
+        varmetilskudd_lys_jan = self.varmetilskudd_lys_jan
+        varmetilskudd_lys_feb = self.varmetilskudd_lys_feb
+        varmetilskudd_lys_mar = self.varmetilskudd_lys_mar
+        varmetilskudd_lys_apr = self.varmetilskudd_lys_apr
+        varmetilskudd_lys_mai = self.varmetilskudd_lys_mai
+        varmetilskudd_lys_jun = self.varmetilskudd_lys_jun
+        varmetilskudd_lys_jul = self.varmetilskudd_lys_jul
+        varmetilskudd_lys_aug = self.varmetilskudd_lys_aug
+        varmetilskudd_lys_sep = self.varmetilskudd_lys_sep
+        varmetilskudd_lys_okt = self.varmetilskudd_lys_okt
+        varmetilskudd_lys_nov = self.varmetilskudd_lys_nov
+        varmetilskudd_lys_des = self.varmetilskudd_lys_des
+        varmetilskudd_utstyr_jan = self.varmetilskudd_utstyr_jan
+        varmetilskudd_utstyr_feb = self.varmetilskudd_utstyr_feb
+        varmetilskudd_utstyr_mar = self.varmetilskudd_utstyr_mar
+        varmetilskudd_utstyr_apr = self.varmetilskudd_utstyr_apr
+        varmetilskudd_utstyr_mai = self.varmetilskudd_utstyr_mai
+        varmetilskudd_utstyr_jun = self.varmetilskudd_utstyr_jun
+        varmetilskudd_utstyr_jul = self.varmetilskudd_utstyr_jul
+        varmetilskudd_utstyr_aug = self.varmetilskudd_utstyr_aug
+        varmetilskudd_utstyr_sep = self.varmetilskudd_utstyr_sep
+        varmetilskudd_utstyr_okt = self.varmetilskudd_utstyr_okt
+        varmetilskudd_utstyr_nov = self.varmetilskudd_utstyr_nov
+        varmetilskudd_utstyr_des = self.varmetilskudd_utstyr_des
+        varmetilskudd_person_jan = self.varmetilskudd_person_jan
+        varmetilskudd_person_feb = self.varmetilskudd_person_feb
+        varmetilskudd_person_mar = self.varmetilskudd_person_mar
+        varmetilskudd_person_apr = self.varmetilskudd_person_apr
+        varmetilskudd_person_mai = self.varmetilskudd_person_mai
+        varmetilskudd_person_jun = self.varmetilskudd_person_jun
+        varmetilskudd_person_jul = self.varmetilskudd_person_jul
+        varmetilskudd_person_aug = self.varmetilskudd_person_aug
+        varmetilskudd_person_sep = self.varmetilskudd_person_sep
+        varmetilskudd_person_okt = self.varmetilskudd_person_okt
+        varmetilskudd_person_nov = self.varmetilskudd_person_nov
+        varmetilskudd_person_des = self.varmetilskudd_person_des
+        energibehov_tappevann = self.energibehov_tappevann
+        energibehov_belysning = self.energibehov_belysning
+        energibehov_utstyr = self.energibehov_utstyr
+        areal_avkjoelt_andel = self.areal_avkjoelt_andel
+        temp_settpunkt_kjoeling = self.temp_settpunkt_kjoeling
+        pumpeeffekt_spesifikk_oppv = self.pumpeeffekt_spesifikk_oppv
+        tid_drift_pumpe_oppv = self.tid_drift_pumpe_oppv
+        temp_differanse_veskekrets_oppvarming = self.temp_differanse_veskekrets_oppvarming
+        pumpeeffekt_spesifikk_kjoling = self.pumpeeffekt_spesifikk_kjoling
+        tid_drift_pumpe_kjoling = self.tid_drift_pumpe_kjoling
+        temp_differanse_veskekrets_kjoling = self.temp_differanse_veskekrets_kjoling
+        el_solcelle_andel_el_spesifikt_forbruk = self.el_solcelle_andel_el_spesifikt_forbruk
+        el_er_andel_energi_oppv_ventilasjon = self.el_er_andel_energi_oppv_ventilasjon
+        el_hp_andel_energi_oppv_ventilasjon = self.el_hp_andel_energi_oppv_ventilasjon
+        el_Tsol_andel_energi_oppv_ventilasjon = self.el_Tsol_andel_energi_oppv_ventilasjon
+        el_er_andel_energi_tappevann_varme = self.el_er_andel_energi_tappevann_varme
+        el_hp_andel_energi_tappevann_varme = self.el_hp_andel_energi_tappevann_varme
+        el_Tsol_andel_energi_tappevann_varme = self.el_Tsol_andel_energi_tappevann_varme
+        systemvirkningsgrad_solcelle = self.systemvirkningsgrad_solcelle
+        systemvirkningsgrad_elektrisk_oppv_ventilasjon = self.systemvirkningsgrad_elektrisk_oppv_ventilasjon
+        systemvirkningsgrad_elektrisk_tappevann_varme = self.systemvirkningsgrad_elektrisk_tappevann_varme
+        systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon = self.systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon
+        systemvirkningsgrad_varmepumpeanlegg_tappevann_varme = self.systemvirkningsgrad_varmepumpeanlegg_tappevann_varme
+        systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon = self.systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon
+        systemvirkningsgrad_solfanger_termisk_tappevann_varme = self.systemvirkningsgrad_solfanger_termisk_tappevann_varme
+        effektfaktor_kjoeleanlegg = self.effektfaktor_kjoeleanlegg
+        olje_andel_energi_oppv_ventilasjon = self.olje_andel_energi_oppv_ventilasjon
+        olje_andel_energi_tappevann_varme = self.olje_andel_energi_tappevann_varme
+        systemvirkningsgrad_olje_oppv_ventilasjon = self.systemvirkningsgrad_olje_oppv_ventilasjon
+        systemvirkningsgrad_olje_tappevann_varme = self.systemvirkningsgrad_olje_tappevann_varme
+        gass_andel_energi_oppv_ventilasjon = self.gass_andel_energi_oppv_ventilasjon
+        gass_andel_energi_tappevann_varme = self.gass_andel_energi_tappevann_varme
+        systemvirkningsgrad_gass_oppv_ventilasjon = self.systemvirkningsgrad_gass_oppv_ventilasjon
+        systemvirkningsgrad_gass_tappevann_varme = self.systemvirkningsgrad_gass_tappevann_varme
+        fjernvarme_andel_energi_oppv_ventilasjon = self.fjernvarme_andel_energi_oppv_ventilasjon
+        fjernvarme_andel_energi_tappevann_varme = self.fjernvarme_andel_energi_tappevann_varme
+        systemvirkningsgrad_fjernvarme_oppv_ventilasjon = self.systemvirkningsgrad_fjernvarme_oppv_ventilasjon
+        systemvirkningsgrad_fjernvarme_tappevann = self.systemvirkningsgrad_fjernvarme_tappevann
+        bio_andel_energi_oppv_ventilasjon = self.bio_andel_energi_oppv_ventilasjon
+        bio_andel_energi_tappevann_varme = self.bio_andel_energi_tappevann_varme
+        systemvirkningsgrad_bio_oppv_ventilasjon = self.systemvirkningsgrad_bio_oppv_ventilasjon
+        systemvirkningsgrad_bio_tappevann = self.systemvirkningsgrad_bio_tappevann
+        annet_andel_energi_oppv_ventilasjon = self.annet_andel_energi_oppv_ventilasjon
+        annet_andel_energi_tappevann_varme = self.annet_andel_energi_tappevann_varme
+        systemvirkningsgrad_annet_oppv_ventilasjon = self.systemvirkningsgrad_annet_oppv_ventilasjon
+        systemvirkningsgrad_annet_tappevann = self.systemvirkningsgrad_annet_tappevann
+        CO2_faktor_el = self.CO2_faktor_el
+        CO2_faktor_olje = self.CO2_faktor_olje
+        CO2_faktor_gass = self.CO2_faktor_gass
+        CO2_faktor_fjernvarme = self.CO2_faktor_fjernvarme
+        CO2_faktor_bio = self.CO2_faktor_bio
+        CO2_faktor_annet = self.CO2_faktor_annet
+        Primaerenergi_faktor_el = self.Primaerenergi_faktor_el
+        Primaerenergi_faktor_olje = self.Primaerenergi_faktor_olje
+        Primaerenergi_faktor_gass = self.Primaerenergi_faktor_gass
+        Primaerenergi_faktor_fjernvarme = self.Primaerenergi_faktor_fjernvarme
+        Primaerenergi_faktor_bio = self.Primaerenergi_faktor_bio
+        Primaerenergi_faktor_annet = self.Primaerenergi_faktor_annet
+        Energipris_el = self.Energipris_el
+        Energipris_olje = self.Energipris_olje
+        Energipris_gass = self.Energipris_gass
+        Energipris_fjernvarme = self.Energipris_fjernvarme
+        Energipris_bio = self.Energipris_bio
+        Energipris_annet = self.Energipris_annet
+        Energipol_vektingsfaktor_el = self.Energipol_vektingsfaktor_el
+        Energipol_vektingsfaktor_olje = self.Energipol_vektingsfaktor_olje
+        Energipol_vektingsfaktor_gass = self.Energipol_vektingsfaktor_gass
+        Energipol_vektingsfaktor_fjernvarme = self.Energipol_vektingsfaktor_fjernvarme
+        Energipol_vektingsfaktor_bio = self.Energipol_vektingsfaktor_bio
+        Energipol_vektingsfaktor_annet = self.Energipol_vektingsfaktor_annet
+        tid_drift_oppv_belysn_utstyr_jan = self.tid_drift_oppv_belysn_utstyr_jan
+        tid_drift_oppv_belysn_utstyr_feb = self.tid_drift_oppv_belysn_utstyr_feb
+        tid_drift_oppv_belysn_utstyr_mar = self.tid_drift_oppv_belysn_utstyr_mar
+        tid_drift_oppv_belysn_utstyr_apr = self.tid_drift_oppv_belysn_utstyr_apr
+        tid_drift_oppv_belysn_utstyr_mai = self.tid_drift_oppv_belysn_utstyr_mai
+        tid_drift_oppv_belysn_utstyr_jun = self.tid_drift_oppv_belysn_utstyr_jun
+        tid_drift_oppv_belysn_utstyr_jul = self.tid_drift_oppv_belysn_utstyr_jul
+        tid_drift_oppv_belysn_utstyr_aug = self.tid_drift_oppv_belysn_utstyr_aug
+        tid_drift_oppv_belysn_utstyr_sep = self.tid_drift_oppv_belysn_utstyr_sep
+        tid_drift_oppv_belysn_utstyr_okt = self.tid_drift_oppv_belysn_utstyr_okt
+        tid_drift_oppv_belysn_utstyr_nov = self.tid_drift_oppv_belysn_utstyr_nov
+        tid_drift_oppv_belysn_utstyr_des = self.tid_drift_oppv_belysn_utstyr_des
+        tid_drift_vent_jan = self.tid_drift_vent_jan
+        tid_drift_vent_feb = self.tid_drift_vent_feb
+        tid_drift_vent_mar = self.tid_drift_vent_mar
+        tid_drift_vent_apr = self.tid_drift_vent_apr
+        tid_drift_vent_mai = self.tid_drift_vent_mai
+        tid_drift_vent_jun = self.tid_drift_vent_jun
+        tid_drift_vent_jul = self.tid_drift_vent_jul
+        tid_drift_vent_aug = self.tid_drift_vent_aug
+        tid_drift_vent_sep = self.tid_drift_vent_sep
+        tid_drift_vent_okt = self.tid_drift_vent_okt
+        tid_drift_vent_nov = self.tid_drift_vent_nov
+        tid_drift_vent_des = self.tid_drift_vent_des
+        tid_drift_person_jan = self.tid_drift_person_jan
+        tid_drift_person_feb = self.tid_drift_person_feb
+        tid_drift_person_mar = self.tid_drift_person_mar
+        tid_drift_person_apr = self.tid_drift_person_apr
+        tid_drift_person_mai = self.tid_drift_person_mai
+        tid_drift_person_jun = self.tid_drift_person_jun
+        tid_drift_person_jul = self.tid_drift_person_jul
+        tid_drift_person_aug = self.tid_drift_person_aug
+        tid_drift_person_sep = self.tid_drift_person_sep
+        tid_drift_person_okt = self.tid_drift_person_okt
+        tid_drift_person_nov = self.tid_drift_person_nov
+        tid_drift_person_des = self.tid_drift_person_des
+        utetemp_jan = self.utetemp_jan
+        utetemp_feb = self.utetemp_feb
+        utetemp_mar = self.utetemp_mar
+        utetemp_apr = self.utetemp_apr
+        utetemp_mai = self.utetemp_mai
+        utetemp_jun = self.utetemp_jun
+        utetemp_jul = self.utetemp_jul
+        utetemp_aug = self.utetemp_aug
+        utetemp_sep = self.utetemp_sep
+        utetemp_okt = self.utetemp_okt
+        utetemp_nov = self.utetemp_nov
+        utetemp_des = self.utetemp_des
+        aarsmiddeltemp_ute = self.aarsmiddeltemp_ute
+        straalingsfluks_soer_jan = self.straalingsfluks_soer_jan
+        straalingsfluks_soer_feb = self.straalingsfluks_soer_feb
+        straalingsfluks_soer_mars = self.straalingsfluks_soer_mars
+        straalingsfluks_soer_april = self.straalingsfluks_soer_april
+        straalingsfluks_soer_mai = self.straalingsfluks_soer_mai
+        straalingsfluks_soer_juni = self.straalingsfluks_soer_juni
+        straalingsfluks_soer_juli = self.straalingsfluks_soer_juli
+        straalingsfluks_soer_aug = self.straalingsfluks_soer_aug
+        straalingsfluks_soer_sept = self.straalingsfluks_soer_sept
+        straalingsfluks_soer_okt = self.straalingsfluks_soer_okt
+        straalingsfluks_soer_nov = self.straalingsfluks_soer_nov
+        straalingsfluks_soer_des = self.straalingsfluks_soer_des
+        straalingsfluks_ostvest_jan = self.straalingsfluks_ostvest_jan
+        straalingsfluks_ostvest_feb = self.straalingsfluks_ostvest_feb
+        straalingsfluks_ostvest_mars = self.straalingsfluks_ostvest_mars
+        straalingsfluks_ostvest_april = self.straalingsfluks_ostvest_april
+        straalingsfluks_ostvest_mai = self.straalingsfluks_ostvest_mai
+        straalingsfluks_ostvest_juni = self.straalingsfluks_ostvest_juni
+        straalingsfluks_ostvest_juli = self.straalingsfluks_ostvest_juli
+        straalingsfluks_ostvest_aug = self.straalingsfluks_ostvest_aug
+        straalingsfluks_ostvest_sept = self.straalingsfluks_ostvest_sept
+        straalingsfluks_ostvest_okt = self.straalingsfluks_ostvest_okt
+        straalingsfluks_ostvest_nov = self.straalingsfluks_ostvest_nov
+        straalingsfluks_ostvest_des = self.straalingsfluks_ostvest_des
+        straalingsfluks_nord_jan = self.straalingsfluks_nord_jan
+        straalingsfluks_nord_feb = self.straalingsfluks_nord_feb
+        straalingsfluks_nord_mars = self.straalingsfluks_nord_mars
+        straalingsfluks_nord_april = self.straalingsfluks_nord_april
+        straalingsfluks_nord_mai = self.straalingsfluks_nord_mai
+        straalingsfluks_nord_juni = self.straalingsfluks_nord_juni
+        straalingsfluks_nord_juli = self.straalingsfluks_nord_juli
+        straalingsfluks_nord_aug = self.straalingsfluks_nord_aug
+        straalingsfluks_nord_sept = self.straalingsfluks_nord_sept
+        straalingsfluks_nord_okt = self.straalingsfluks_nord_okt
+        straalingsfluks_nord_nov = self.straalingsfluks_nord_nov
+        straalingsfluks_nord_des = self.straalingsfluks_nord_des
+        straalingsfluks_tak_jan = self.straalingsfluks_tak_jan
+        straalingsfluks_tak_feb = self.straalingsfluks_tak_feb
+        straalingsfluks_tak_mars = self.straalingsfluks_tak_mars
+        straalingsfluks_tak_april = self.straalingsfluks_tak_april
+        straalingsfluks_tak_mai = self.straalingsfluks_tak_mai
+        straalingsfluks_tak_juni = self.straalingsfluks_tak_juni
+        straalingsfluks_tak_juli = self.straalingsfluks_tak_juli
+        straalingsfluks_tak_aug = self.straalingsfluks_tak_aug
+        straalingsfluks_tak_sept = self.straalingsfluks_tak_sept
+        straalingsfluks_tak_okt = self.straalingsfluks_tak_okt
+        straalingsfluks_tak_nov = self.straalingsfluks_tak_nov
+        straalingsfluks_tak_des = self.straalingsfluks_tak_des
+        temp_avtrekk = self.temp_avtrekk
+        varmekapasitet_luft = self.varmekapasitet_luft
+        temp_amplitudevar = self.temp_amplitudevar
+        tid_jan = self.tid_jan
+        tid_feb = self.tid_feb
+        tid_mar = self.tid_mar
+        tid_apr = self.tid_apr
+        tid_mai = self.tid_mai
+        tid_jun = self.tid_jun
+        tid_jul = self.tid_jul
+        tid_aug = self.tid_aug
+        tid_sep = self.tid_sep
+        tid_okt = self.tid_okt
+        tid_nov = self.tid_nov
+        tid_des = self.tid_des
+        varmekapasitet_vann = self.varmekapasitet_vann
+        densitet_vann = self.densitet_vann
+        varmekapasitet_kuldebaerer = self.varmekapasitet_kuldebaerer
+        densitet_kuldebaerer = self.densitet_kuldebaerer
+        BygningskategoriErForretningsbygg = self.BygningskategoriErForretningsbygg
+        REF = self.REF
+
         ### energipost 2
         J237 = self.energibehov_tappevann  # NS3031*- Energibehov for varmt tappevann, spesifikt - Varmtvann
         C238 = self.areal_oppv  # NS3031 - Energibehov for varmt tappevann - Oppvarmed del av BRA
@@ -692,7 +1041,7 @@ class EnergiBeregning:
         C154 = X156 # NS3031 - Varmettilskudd fra sol - Solskjermingsfaktor, nord
         C155 = X157 # NS3031 - Varmettilskudd fra sol - Solskjermingsfaktor, tak
 
-        C138 = C197*(X120*J120*C151 + X137*J133*C152 + X137*J146*C153 + AE120*C154*J159 + AE137*J172*C155) # NS3031 - Varmettilskudd fra sol Totalt, (Qsol, i) [kWh] - januar 
+        C138 = C197*(X120*J120*C151 + X137*J133*C152 + X137*J146*C153 + AE120*C154*J159 + AE137*J172*C155) # NS3031 - Varmettilskudd fra sol Totalt, (Qsol, i) [kWh] - januar
         C139 = C198*(X121*J121*C151 + X138*J134*C152 + X138*J147*C153 + AE121*C154*J160 + AE138*J172*C155) # NS3031 - Varmettilskudd fra sol Totalt, (Qsol, i) [kWh] - februar
         C140 = C199*(X122*J122*C151 + X139*J135*C152 + X139*J148*C153 + AE122*C154*J161 + AE139*J172*C155) # NS3031 - Varmettilskudd fra sol Totalt, (Qsol, i) [kWh] - mars
         C141 = C200*(X123*J123*C151 + X140*J136*C152 + X140*J149*C153 + AE123*C154*J162 + AE140*J172*C155) # NS3031 - Varmettilskudd fra sol Totalt, (Qsol, i) [kWh] - april
@@ -770,7 +1119,7 @@ class EnergiBeregning:
         X189 = varmetilskudd_person_nov   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - november (W/m2)
         X190 = varmetilskudd_person_des   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - desember (W/m2)
 
-        X197 = tid_drift_person_jan   # - Timer i driftstid for personer - januar (timer) 
+        X197 = tid_drift_person_jan   # - Timer i driftstid for personer - januar (timer)
         X198 = tid_drift_person_feb   # - Timer i driftstid for personer - februar (timer)
         X199 = tid_drift_person_mar   # - Timer i driftstid for personer - mars (timer)
         X200 = tid_drift_person_apr   # - Timer i driftstid for personer - april (timer)
@@ -819,7 +1168,7 @@ class EnergiBeregning:
         C187 = (J205/1000*J187 + Q205/1000*Q187 + X205/1000*X187 + AE177/1000*np.mean([Q254,AE254]))*C192 # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - september
         C188 = (J206/1000*J188 + Q206/1000*Q188 + X206/1000*X188 + AE177/1000*np.mean([Q254,AE254]))*C192 # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - oktober
         C189 = (J207/1000*J189 + Q207/1000*Q189 + X207/1000*X189 + AE177/1000*np.mean([Q254,AE254]))*C192 # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - november
-        C190 = (J208/1000*J190 + Q208/1000*Q190 + X208/1000*X190 + AE177/1000*np.mean([Q254,AE254]))*C192 # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - desember        
+        C190 = (J208/1000*J190 + Q208/1000*Q190 + X208/1000*X190 + AE177/1000*np.mean([Q254,AE254]))*C192 # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - desember
 
         C120 = C138 + C179 # NS3031 - Varmettilskudd - januar
         C121 = C139 + C180 # NS3031 - Varmettilskudd - februar
@@ -830,8 +1179,8 @@ class EnergiBeregning:
         C126 = C144 + C185 # NS3031 - Varmettilskudd - juli
         C127 = C145 + C186 # NS3031 - Varmettilskudd - august
         C128 = C146 + C187 # NS3031 - Varmettilskudd - september
-        C129 = C147 + C188 # NS3031 - Varmettilskudd - oktober  
-        C130 = C148 + C189 # NS3031 - Varmettilskudd - november 
+        C129 = C147 + C188 # NS3031 - Varmettilskudd - oktober
+        C130 = C148 + C189 # NS3031 - Varmettilskudd - november
         C131 = C149 + C190 # NS3031 - Varmettilskudd - desember
 
         X46 = tid_drift_oppv_belysn_utstyr_jan # - Timer i driftstid for oppvarming - Timer for måneden - januar
@@ -968,7 +1317,7 @@ class EnergiBeregning:
         Q75 = C206 * ((Q81 if Q112==2 else Q82)*(Q78-Q79) + (max([Q84,Q85]) if Q112==2 else Q86) * Q114 * np.cos(2*np.pi*(10-1-Q112)/12)) # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - oktober
         Q76 = C207 * ((Q81 if Q112==2 else Q82)*(Q78-Q79) + (max([Q84,Q85]) if Q112==2 else Q86) * Q114 * np.cos(2*np.pi*(11-1-Q112)/12)) # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - novemeber
         Q77 = C208 * ((Q81 if Q112==2 else Q82)*(Q78-Q79) + (max([Q84,Q85]) if Q112==2 else Q86) * Q114 * np.cos(2*np.pi*(12-1-Q112)/12)) # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - desember
-        Q64 = Q66 + Q67 + Q68 + Q69 + Q70 + Q71 + Q72 + Q73 + Q74 + Q75 + Q76 + Q77 
+        Q64 = Q66 + Q67 + Q68 + Q69 + Q70 + Q71 + Q72 + Q73 + Q74 + Q75 + Q76 + Q77
 
         J67 = 0                     #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Det regnes ikke tillegg for kuldebro mot uoppvarmet rom
         # Nima Darabi: OBS! direkt verditildeling paa J67
@@ -1050,7 +1399,7 @@ class EnergiBeregning:
         J27 = 1/Q27 if Q27<0 else C35/(C35+1) if Q27==1 else (1-Q27 ** C35)/(1-Q27 **(C35+1)) # NS3031 - Utnyttingsfaktor for måneden - juni
         J28 = 1/Q28 if Q28<0 else C35/(C35+1) if Q28==1 else (1-Q28 ** C35)/(1-Q28 **(C35+1)) # NS3031 - Utnyttingsfaktor for måneden - juli
         J29 = 1/Q29 if Q29<0 else C35/(C35+1) if Q29==1 else (1-Q29 ** C35)/(1-Q29 **(C35+1)) # NS3031 - Utnyttingsfaktor for måneden - august
-        J30 = 1/Q30 if Q30<0 else C35/(C35+1) if Q30==1 else (1-Q30 ** C35)/(1-Q30 **(C35+1)) # NS3031 - Utnyttingsfaktor for måneden - september 
+        J30 = 1/Q30 if Q30<0 else C35/(C35+1) if Q30==1 else (1-Q30 ** C35)/(1-Q30 **(C35+1)) # NS3031 - Utnyttingsfaktor for måneden - september
         J31 = 1/Q31 if Q31<0 else C35/(C35+1) if Q31==1 else (1-Q31 ** C35)/(1-Q31 **(C35+1)) # NS3031 - Utnyttingsfaktor for måneden - october
         J32 = 1/Q32 if Q32<0 else C35/(C35+1) if Q32==1 else (1-Q32 ** C35)/(1-Q32 **(C35+1)) # NS3031 - Utnyttingsfaktor for måneden - november
         J33 = 1/Q33 if Q33<0 else C35/(C35+1) if Q33==1 else (1-Q33 ** C35)/(1-Q33 **(C35+1)) # NS3031 - Utnyttingsfaktor for måneden - desember
@@ -1089,13 +1438,12 @@ class EnergiBeregning:
         C281 = C283+C284+C285+C286+C287+C288+C289+C290+C291+C292+C293+C294 # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7) - Totalt, Edefrost
 
         Ventilasjonsvarme = C281     # # - Energipost (1b) (Energibehov [kWh/år]) Trond Ivar Bøhn: OBS! Dette ser ikke ut til å være ventilasjonsoppvarming, men kun frostsikring. Ventilasjonsvarmetapet inngår derimot i posten romoppvarming! Spm til NVE: Brukes disse enkeltpostene for netto energibehov til noe i Enova-modulen? I så fall burde vel dette ordnes opp i?!
-        print (Ventilasjonsvarme)
 
         ### energipost 3-b
         Q228 = temp_settpunkt_kjoeling               # NS3031 - Setpunkttemperatur for kjøling
 
-        Q215 = (J50+J51+J53+J54)*(Q228-Q46)*C197+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - januar 
-        Q216 = (J50+J51+J53+J54)*(Q228-Q46)*C198+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - februar 
+        Q215 = (J50+J51+J53+J54)*(Q228-Q46)*C197+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - januar
+        Q216 = (J50+J51+J53+J54)*(Q228-Q46)*C198+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - februar
         Q217 = (J50+J51+J53+J54)*(Q228-Q46)*C199+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mars
         Q218 = (J50+J51+J53+J54)*(Q228-Q46)*C200+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - april
         Q219 = (J50+J51+J53+J54)*(Q228-Q46)*C201+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mai
@@ -1182,10 +1530,9 @@ class EnergiBeregning:
         Q260 = Q264/(Q265*Q266*Q267)*1000            # NS3031* - Energibehov, pumper (Kjøling) - Sirkulert vannmengde gjennom pumpen
         Q258 = Q260*Q261*Q262                        # NS3031* - Energibehov, pumper (Kjøling) - Totalt, Ep
 
-        C258 = J258+Q258 # NS3031 - Energibehov for vifter og pumper (Pumper) - Totalt, Ep 
+        C258 = J258+Q258 # NS3031 - Energibehov for vifter og pumper (Pumper) - Totalt, Ep
 
         Pumper = C258      # # - Energipost (3b) (Energibehov [kWh/år]) - Pumper
-        print (Pumper)
 
         ### energipost 6
         C215 = (0 if J215-X215*Q215<0 else J215-X215*Q215)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - januar
@@ -1200,9 +1547,9 @@ class EnergiBeregning:
         C224 = (0 if J224-X224*Q224<0 else J224-X224*Q224)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - oktober
         C225 = (0 if J225-X225*Q225<0 else J225-X225*Q225)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - november
         C226 = (0 if J226-X226*Q226<0 else J226-X226*Q226)*C231 # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - desember
-        C213 = C215+C216+C217 + C218+C219+C220 + C221+C222+C223 + C224+C225+C226 
+        C213 = C215+C216+C217 + C218+C219+C220 + C221+C222+C223 + C224+C225+C226
         Kjoeling = C213      # # - Energipost (6) (Energibehov [kWh/år]) - Kjoeling
-        
+
         Totalt_netto_energibehov = Romoppvarming + Ventilasjonsvarme + \
                                    Varmtvann + \
                                    Vifter + Pumper + \
