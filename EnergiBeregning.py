@@ -14,6 +14,7 @@ class Output:
     Teknisk_utstyr: float
     Kjoeling: float
     Totalt_netto_energibehov: float
+
     Elektrisitet: float
     Olje: float
     Gass: float
@@ -1624,18 +1625,18 @@ class EnergiBeregning:
         Gass = C327                                      # # - Energivare (3) (Levert energi [kWh/år]) - Gass
 
         # energivare 4
-        Q333 = systemvirkningsgrad_gass_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q334 = systemvirkningsgrad_gass_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for tappevann
-        J333 = gass_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme fjernvarmebasert system
-        J334 = gass_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann fjernvarmebasert system
-        C333 = ((C20+C281)*J333/Q333+C237*J334/Q334)     # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
-        Fjernvarme = C333                                # # - Energivare (4) (Levert energi [kWh/år]) - Fjernvarme
+        Q333 = systemvirkningsgrad_fjernvarme_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q334 = systemvirkningsgrad_fjernvarme_tappevann       # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for tappevann
+        J333 = fjernvarme_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme fjernvarmebasert system
+        J334 = fjernvarme_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann fjernvarmebasert system
+        C333 = ((C20+C281)*J333/Q333+C237*J334/Q334)           # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
+        Fjernvarme = C333                                      # # - Energivare (4) (Levert energi [kWh/år]) - Fjernvarme
 
         # energivare 5
-        Q339 = systemvirkningsgrad_gass_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q340 = systemvirkningsgrad_gass_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for tappevann
-        J339 = gass_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme biobrenselbasert system
-        J340 = gass_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann biobrenselbasert system
+        Q339 = systemvirkningsgrad_bio_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q340 = systemvirkningsgrad_bio_tappevann         # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for tappevann
+        J339 = bio_andel_energi_oppv_ventilasjon         # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme biobrenselbasert system
+        J340 = bio_andel_energi_tappevann_varme          # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann biobrenselbasert system
         C339 = ((C20+C281)*J339/Q339+C237*J340/Q340)     # NS3031 - Beregning av behov for levert biobrensel - Levert energi i form av biobrensel
         Biobrensel = C339                                # # - Energivare (5) (Levert energi [kWh/år]) - Biobrensel
 
