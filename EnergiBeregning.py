@@ -1,6 +1,7 @@
 from dataclasses import dataclass
 import numpy as np
 
+
 @dataclass
 class Output:
     """ This class holds the calculation result, one field per value """
@@ -19,22 +20,21 @@ class Output:
     Fjernvarme: float
     Biobrensel: float
     Annen_energivare: float
-    Totalt_levert_energi: float)
+    Totalt_levert_energi: float
 
 
     def __str__(self):
-        return "Romoppvarming: {0.Romoppvarming}, 
-		Ventilasjonsvarme: {0.Ventilasjonsvarme}, 
-		Varmtvann: {0.Varmtvann}, Vifter: {0.Vifter}, 
-		Pumper: {0.Pumper}, Belysning: {0.Belysning}, 
-		Teknisk_utstyr: {0.Teknisk_utstyr}, Kjoeling: {0.Kjoeling}, 
-		Totalt_netto_energibehov: {0.Totalt_netto_energibehov}, 
-		Elektrisitet: {0.Elektrisitet}, 
-		Olje: {0.Olje}, 
-		Gass: {0.Gass}, 
-		Fjernvarme: {0.Fjernvarme}, 
-		Biobrensel: {0.Biobrensel},
-		Annen_energivare: {0.Annen_energivare}, 
+        return "Romoppvarming: {0.Romoppvarming},Ventilasjonsvarme: {0.Ventilasjonsvarme}, \
+		Varmtvann: {0.Varmtvann}, Vifter: {0.Vifter}, \
+		Pumper: {0.Pumper}, Belysning: {0.Belysning}, \
+		Teknisk_utstyr: {0.Teknisk_utstyr}, Kjoeling: {0.Kjoeling}, \
+		Totalt_netto_energibehov: {0.Totalt_netto_energibehov}, \
+		Elektrisitet: {0.Elektrisitet}, \
+		Olje: {0.Olje}, \
+		Gass: {0.Gass}, \
+		Fjernvarme: {0.Fjernvarme}, \
+		Biobrensel: {0.Biobrensel},\
+		Annen_energivare: {0.Annen_energivare}, \
 		Totalt_levert_energi: {0.Totalt_levert_energi}".format(
             self)
 
@@ -794,8 +794,7 @@ class EnergiBeregning:
         Q251 = self.tid_drift_vent_okt  # - Timer i driftstid for ventilasjon (Timer for måneden) - oktober
         Q252 = self.tid_drift_vent_nov  # - Timer i driftstid for ventilasjon (Timer for måneden) - november
         Q253 = self.tid_drift_vent_des  # - Timer i driftstid for ventilasjon (Timer for måneden) - desember
-        Q254 = np.mean([Q242, Q243, Q244, Q245, Q246, Q247, Q248, Q249, Q250, Q251, Q252,
-                        Q253])  # - Timer i driftstid for ventilasjon (Timer for måneden) - AVERAGE
+        Q254 = np.mean([Q242, Q243, Q244, Q245, Q246, Q247, Q248, Q249, Q250, Q251, Q252, Q253])  # - Timer i driftstid for ventilasjon (Timer for måneden) - AVERAGE
         X242 = AE242 - Q242  # - Timer i driftstid for ventilasjon (Timer for måneden) - januar
         X243 = AE243 - Q243  # - Timer i driftstid for ventilasjon (Timer for måneden) - februar
         X244 = AE244 - Q244  # - Timer i driftstid for ventilasjon (Timer for måneden) - mars
@@ -808,8 +807,7 @@ class EnergiBeregning:
         X251 = AE251 - Q251  # - Timer i driftstid for ventilasjon (Timer for måneden) - oktober
         X252 = AE252 - Q252  # - Timer i driftstid for ventilasjon (Timer for måneden) - november
         X253 = AE253 - Q253  # - Timer i driftstid for ventilasjon (Timer for måneden) - desember
-        X254 = np.mean([X242, X243, X244, X245, X246, X247, X248, X249, X250, X251, X252,
-                        X253])  # - Timer i driftstid for ventilasjon (Timer for måneden) - AVERAGE
+        X254 = np.mean([X242, X243, X244, X245, X246, X247, X248, X249, X250, X251, X252, X253])  # - Timer i driftstid for ventilasjon (Timer for måneden) - AVERAGE
         J242 = self.areal_oppv  # - Driftstid for ventilasjon - Oppvarmed del av BRA
         J244 = self.vifteeffekt_spesifikk_i_driftstid  # - Driftstid for ventilasjon - Spesifikk vifteeffekt i driftstiden
         J245 = self.vifteeffekt_spesifikk_utenfor_driftstid  # - Driftstid for ventilasjon - Spesifikk vifteeffekt utenfor driftstiden
@@ -1609,14 +1607,54 @@ class EnergiBeregning:
 
         Elektrisitet = C306                          # # - Energivare (1) (Levert energi [kWh/år]) - Elektrisitet
 
-	Totalt_netto_energibehov = Romoppvarming+Ventilasjonsvarme +\
+        # energivare 2
+        Q321 =systemvirkningsgrad_olje_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q322 = systemvirkningsgrad_olje_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for tappevann
+        J321 = olje_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme oljebasert system
+        J322 = olje_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - AAndel av netto energibehov for oppvarming av tappevann oljebasert system
+        C321 = ((C20+C281)*J321/Q321+C237*J322/Q322)     # NS3031 - Beregning av behov for levert olje - Levert energi i form av olje
+        Olje = C321                                      # # - Energivare (2) (Levert energi [kWh/år]) - Olje
+
+        # energivare 3
+        Q327 = systemvirkningsgrad_gass_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Gassbasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q328 = systemvirkningsgrad_gass_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Gassbasert varmesystem for tappevann
+        J327 = gass_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme gassbasert system
+        J328 = gass_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann gassbasert system
+        C327 = ((C20+C281)*J327/Q327+C237*J328/Q328)     # NS3031 - Beregning av behov for levert gass - Levert energi i form av gass
+        Gass = C327                                      # # - Energivare (3) (Levert energi [kWh/år]) - Gass
+
+        # energivare 4
+        Q333 = systemvirkningsgrad_gass_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q334 = systemvirkningsgrad_gass_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for tappevann
+        J333 = gass_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme fjernvarmebasert system
+        J334 = gass_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann fjernvarmebasert system
+        C333 = ((C20+C281)*J333/Q333+C237*J334/Q334)     # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
+        Fjernvarme = C333                                # # - Energivare (4) (Levert energi [kWh/år]) - Fjernvarme
+
+        # energivare 5
+        Q339 = systemvirkningsgrad_gass_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q340 = systemvirkningsgrad_gass_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for tappevann
+        J339 = gass_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme biobrenselbasert system
+        J340 = gass_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann biobrenselbasert system
+        C339 = ((C20+C281)*J339/Q339+C237*J340/Q340)     # NS3031 - Beregning av behov for levert biobrensel - Levert energi i form av biobrensel
+        Biobrensel = C339                                # # - Energivare (5) (Levert energi [kWh/år]) - Biobrensel
+
+        # energivare 6
+        Q345 = systemvirkningsgrad_annet_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - varmesystem basert på andre energivarer for romoppvarming og ventilasjonsvarme
+        Q346 = systemvirkningsgrad_annet_tappevann        # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - varmesystem basert på andre energivarer for tappevann
+        J345 = annet_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme basert på andre energivarer system
+        J346 = annet_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann basert på andre energivarer system
+        C345 = ((C20+C281)*J345/Q345+C237*J346/Q346)      # NS3031 - Beregning av behov for levert andre energivarer - Levert energi i form av andre energivarer
+        Annen_energivare = C345                           # # - Energivare (6) (Levert energi [kWh/år]) - Andre energivarer
+
+        Totalt_netto_energibehov = Romoppvarming+Ventilasjonsvarme +\
 	                           Varmtvann+\
 	                           Vifter+Pumper+\
 	                           Belysning+\
 	                           Teknisk_utstyr+\
 	                           Kjoeling
 
-	Totalt_levert_energi = Elektrisitet+\
+        Totalt_levert_energi = Elektrisitet+\
 	                       Olje+\
 	                       Gass+\
 	                       Fjernvarme+\

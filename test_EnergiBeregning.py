@@ -393,6 +393,7 @@ calc_engine = calc.EnergiBeregning(
     tid_nov=0.720,
     tid_des=0.744,
 
+
     varmekapasitet_vann=4180,
     densitet_vann=988,
     varmekapasitet_kuldebaerer=4210,
@@ -408,6 +409,8 @@ calc_result = calc_engine.calculate()
 
 class TestCalculation(unittest.TestCase):
 
+
+    # energipost
     def test_romoppvarming(self):
         self.assertEqual(11810, round(calc_result.Romoppvarming))  # add assertion here
 
@@ -431,6 +434,28 @@ class TestCalculation(unittest.TestCase):
 
     def test_totalt_netto_energibehov(self):
         self.assertEqual(27549, round(calc_result.Totalt_netto_energibehov))  # add assertion here
+
+    # energivare
+    def test_elektrisitet(self):
+        self.assertEqual(15965, round(calc_result.Elektrisitet))  # add assertion here
+
+    def test_olje(self):
+        self.assertEqual(11238, round(calc_result.Olje))  # add assertion here
+
+    def test_gass(self):
+        self.assertEqual(2387, round(calc_result.Gass))  # add assertion here
+
+    def test_fjernvarmet(self):
+        self.assertEqual(4199, calc_result.Fjernvarme)  # add assertion here
+
+    def test_biobrensel(self):
+        self.assertEqual(0, calc_result.Biobrensel)  # add assertion here
+
+    def test_annen_energivare(self):
+        self.assertEqual(0, round(calc_result.Annen_energivare))  # add assertion here
+
+    def test_totalt_levert_energi(self):
+        self.assertEqual(33789, round(calc_result.Totalt_levert_energi))  # add assertion here
 
 
 if __name__ == '__main__':
