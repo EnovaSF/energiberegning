@@ -418,10 +418,10 @@ class TestCalculation(unittest.TestCase):
         self.assertEqual(236, round(calc_result.Ventilasjonsvarme))  # add assertion here
 
     def test_varmtvann(self):
-        self.assertEqual(6000, calc_result.Varmtvann)  # add assertion here
+        self.assertEqual(6000, round(calc_result.Varmtvann))  # add assertion here
 
     def test_vifter(self):
-        self.assertEqual(1460, calc_result.Vifter)  # add assertion here
+        self.assertEqual(1460, round(calc_result.Vifter))  # add assertion here
 
     def test_pumper(self):
         self.assertEqual(43, round(calc_result.Pumper))  # add assertion here
@@ -430,7 +430,7 @@ class TestCalculation(unittest.TestCase):
         self.assertEqual(4600, round(calc_result.Teknisk_utstyr))  # add assertion here
 
     def test_kjoeling(self):
-        self.assertEqual(0, calc_result.Kjoeling)  # add assertion here
+        self.assertEqual(0, round(calc_result.Kjoeling))  # add assertion here
 
     def test_totalt_netto_energibehov(self):
         self.assertEqual(27549, round(calc_result.Totalt_netto_energibehov))  # add assertion here
@@ -446,10 +446,10 @@ class TestCalculation(unittest.TestCase):
         self.assertEqual(2387, round(calc_result.Gass))  # add assertion here
 
     def test_fjernvarmet(self):
-        self.assertEqual(4199, calc_result.Fjernvarme)  # add assertion here
+        self.assertEqual(4199, round(calc_result.Fjernvarme))  # add assertion here
 
     def test_biobrensel(self):
-        self.assertEqual(0, calc_result.Biobrensel)  # add assertion here
+        self.assertEqual(0, round(calc_result.Biobrensel))  # add assertion here
 
     def test_annen_energivare(self):
         self.assertEqual(0, round(calc_result.Annen_energivare))  # add assertion here
