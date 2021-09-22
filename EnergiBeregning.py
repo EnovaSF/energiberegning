@@ -401,355 +401,47 @@ class EnergiBeregning:
         # return Output(result['abc'], ...)
 
         # Example we may not do it like this but something like described above
-
-        areal_oppv = self.areal_oppv
-        norm_varmekap = self.norm_varmekap
-        kuldebro_normalisert = self.kuldebro_normalisert
-        temp_settpunkt_oppvarming = self.temp_settpunkt_oppvarming
-        temp_settpunkt_oppvarming_natt = self.temp_settpunkt_oppvarming_natt
-        areal_tak = self.areal_tak
-        areal_vegg_oest = self.areal_vegg_oest
-        areal_vegg_vest = self.areal_vegg_vest
-        areal_vegg_soer = self.areal_vegg_soer
-        areal_vegg_nord = self.areal_vegg_nord
-        areal_gulv_mot_det_fri = self.areal_gulv_mot_det_fri
-        areal_vindu_oest = self.areal_vindu_oest
-        areal_vindu_vest = self.areal_vindu_vest
-        areal_vindu_soer = self.areal_vindu_soer
-        areal_vindu_nord = self.areal_vindu_nord
-        areal_vindu_tak = self.areal_vindu_tak
-        areal_dor = self.areal_dor
-        U_tak = self.U_tak
-        U_vegg_oest = self.U_vegg_oest
-        U_vegg_vest = self.U_vegg_vest
-        U_vegg_soer = self.U_vegg_soer
-        U_vegg_nord = self.U_vegg_nord
-        U_gulv_mot_det_fri = self.U_gulv_mot_det_fri
-        U_dor = self.U_dor
-        U_vindu_oest = self.U_vindu_oest
-        U_vindu_vest = self.U_vindu_vest
-        U_vindu_soer = self.U_vindu_soer
-        U_vindu_nord = self.U_vindu_nord
-        U_vindu_tak = self.U_vindu_tak
-        varmetapsfaktor_uoppv = self.varmetapsfaktor_uoppv
-        areal_mot_uoppvarmet = self.areal_mot_uoppvarmet
-        U_mot_uoppvarmet_sone = self.U_mot_uoppvarmet_sone
-        areal_gulv_kjeller = self.areal_gulv_kjeller
-        faseforskjell_utetemp_varmetap = self.faseforskjell_utetemp_varmetap
-        aarsmiddeltemp_inne = self.aarsmiddeltemp_inne
-        omkrets_gulv = self.omkrets_gulv
-        U_gulvkonstruksjon = self.U_gulvkonstruksjon
-        U_kjellerveggskonstruksjon = self.U_kjellerveggskonstruksjon
-        tykkelse_grunnmur = self.tykkelse_grunnmur
-        oppfyllingshoyde_kjellervegg = self.oppfyllingshoyde_kjellervegg
-        varmekonduktivitet_kantisol = self.varmekonduktivitet_kantisol
-        kantisol_tykkelse = self.kantisol_tykkelse
-        kantisol_horisontal_dybde = self.kantisol_horisontal_dybde
-        kantisol_vertikal_bredde = self.kantisol_vertikal_bredde
-        dybde_periodisk_nedtrengning = self.dybde_periodisk_nedtrengning
-        varmekonduktivitet_grunn = self.varmekonduktivitet_grunn
-        tempvirkningsgrad_varmegjenvinner = self.tempvirkningsgrad_varmegjenvinner
-        luftmengde_spesifikk_i_driftstid = self.luftmengde_spesifikk_i_driftstid
-        luftmengde_spesifikk_utenfor_driftstid = self.luftmengde_spesifikk_utenfor_driftstid
-        terrengskjermingskoeff_e = self.terrengskjermingskoeff_e
-        terrengskjermingskoeff_f = self.terrengskjermingskoeff_f
-        lekkasjetall = self.lekkasjetall
-        etasjehoyde_innvendig = self.etasjehoyde_innvendig
-        luftmengde_spesifikk_tilluft = self.luftmengde_spesifikk_tilluft
-        luftmengde_spesifikk_avtrekksluft = self.luftmengde_spesifikk_avtrekksluft
-        vifteeffekt_spesifikk_i_driftstid = self.vifteeffekt_spesifikk_i_driftstid
-        vifteeffekt_spesifikk_utenfor_driftstid = self.vifteeffekt_spesifikk_utenfor_driftstid
-        frostsikringstemperatur = self.frostsikringstemperatur
-        solskjermingsfaktor_horisont_oest = self.solskjermingsfaktor_horisont_oest
-        solskjermingsfaktor_horisont_vest = self.solskjermingsfaktor_horisont_vest
-        solskjermingsfaktor_horisont_soer = self.solskjermingsfaktor_horisont_soer
-        solskjermingsfaktor_horisont_nord = self.solskjermingsfaktor_horisont_nord
-        solskjermingsfaktor_horisont_tak = self.solskjermingsfaktor_horisont_tak
-        solskjermingsfaktor_overheng_oest = self.solskjermingsfaktor_overheng_oest
-        solskjermingsfaktor_overheng_vest = self.solskjermingsfaktor_overheng_vest
-        solskjermingsfaktor_overheng_soer = self.solskjermingsfaktor_overheng_soer
-        solskjermingsfaktor_overheng_nord = self.solskjermingsfaktor_overheng_nord
-        solskjermingsfaktor_overheng_tak = self.solskjermingsfaktor_overheng_tak
-        solskjermingsfaktor_finner_oest = self.solskjermingsfaktor_finner_oest
-        solskjermingsfaktor_finner_vest = self.solskjermingsfaktor_finner_vest
-        solskjermingsfaktor_finner_soer = self.solskjermingsfaktor_finner_soer
-        solskjermingsfaktor_finner_nord = self.solskjermingsfaktor_finner_nord
-        solskjermingsfaktor_finner_tak = self.solskjermingsfaktor_finner_tak
-        arealfraksjon_karm_oest = self.arealfraksjon_karm_oest
-        arealfraksjon_karm_vest = self.arealfraksjon_karm_vest
-        arealfraksjon_karm_soer = self.arealfraksjon_karm_soer
-        arealfraksjon_karm_nord = self.arealfraksjon_karm_nord
-        arealfraksjon_karm_tak = self.arealfraksjon_karm_tak
-        sol_tidsvariabel_soer_jan = self.sol_tidsvariabel_soer_jan
-        sol_tidsvariabel_soer_feb = self.sol_tidsvariabel_soer_feb
-        sol_tidsvariabel_soer_mars = self.sol_tidsvariabel_soer_mars
-        sol_tidsvariabel_soer_april = self.sol_tidsvariabel_soer_april
-        sol_tidsvariabel_soer_mai = self.sol_tidsvariabel_soer_mai
-        sol_tidsvariabel_soer_juni = self.sol_tidsvariabel_soer_juni
-        sol_tidsvariabel_soer_juli = self.sol_tidsvariabel_soer_juli
-        sol_tidsvariabel_soer_aug = self.sol_tidsvariabel_soer_aug
-        sol_tidsvariabel_soer_sept = self.sol_tidsvariabel_soer_sept
-        sol_tidsvariabel_soer_okt = self.sol_tidsvariabel_soer_okt
-        sol_tidsvariabel_soer_nov = self.sol_tidsvariabel_soer_nov
-        sol_tidsvariabel_soer_des = self.sol_tidsvariabel_soer_des
-        sol_tidsvariabel_ost_vest_jan = self.sol_tidsvariabel_ost_vest_jan
-        sol_tidsvariabel_ost_vest_feb = self.sol_tidsvariabel_ost_vest_feb
-        sol_tidsvariabel_ost_vest_mars = self.sol_tidsvariabel_ost_vest_mars
-        sol_tidsvariabel_ost_vest_april = self.sol_tidsvariabel_ost_vest_april
-        sol_tidsvariabel_ost_vest_mai = self.sol_tidsvariabel_ost_vest_mai
-        sol_tidsvariabel_ost_vest_juni = self.sol_tidsvariabel_ost_vest_juni
-        sol_tidsvariabel_ost_vest_juli = self.sol_tidsvariabel_ost_vest_juli
-        sol_tidsvariabel_ost_vest_aug = self.sol_tidsvariabel_ost_vest_aug
-        sol_tidsvariabel_ost_vest_sept = self.sol_tidsvariabel_ost_vest_sept
-        sol_tidsvariabel_ost_vest_okt = self.sol_tidsvariabel_ost_vest_okt
-        sol_tidsvariabel_ost_vest_nov = self.sol_tidsvariabel_ost_vest_nov
-        sol_tidsvariabel_ost_vest_des = self.sol_tidsvariabel_ost_vest_des
-        sol_tidsvariabel_nord_jan = self.sol_tidsvariabel_nord_jan
-        sol_tidsvariabel_nord_feb = self.sol_tidsvariabel_nord_feb
-        sol_tidsvariabel_nord_mars = self.sol_tidsvariabel_nord_mars
-        sol_tidsvariabel_nord_april = self.sol_tidsvariabel_nord_april
-        sol_tidsvariabel_nord_mai = self.sol_tidsvariabel_nord_mai
-        sol_tidsvariabel_nord_juni = self.sol_tidsvariabel_nord_juni
-        sol_tidsvariabel_nord_juli = self.sol_tidsvariabel_nord_juli
-        sol_tidsvariabel_nord_aug = self.sol_tidsvariabel_nord_aug
-        sol_tidsvariabel_nord_sept = self.sol_tidsvariabel_nord_sept
-        sol_tidsvariabel_nord_okt = self.sol_tidsvariabel_nord_okt
-        sol_tidsvariabel_nord_nov = self.sol_tidsvariabel_nord_nov
-        sol_tidsvariabel_nord_des = self.sol_tidsvariabel_nord_des
-        solfaktor_vindu_oest = self.solfaktor_vindu_oest
-        solfaktor_vindu_vest = self.solfaktor_vindu_vest
-        solfaktor_vindu_soer = self.solfaktor_vindu_soer
-        solfaktor_vindu_nord = self.solfaktor_vindu_nord
-        solfaktor_vindu_tak = self.solfaktor_vindu_tak
-        solfaktor_total_glass_skjerming_oest = self.solfaktor_total_glass_skjerming_oest
-        solfaktor_total_glass_skjerming_vest = self.solfaktor_total_glass_skjerming_vest
-        solfaktor_total_glass_skjerming_soer = self.solfaktor_total_glass_skjerming_soer
-        solfaktor_total_glass_skjerming_nord = self.solfaktor_total_glass_skjerming_nord
-        solfaktor_total_glass_skjerming_tak = self.solfaktor_total_glass_skjerming_tak
-        varmetilskudd_lys_jan = self.varmetilskudd_lys_jan
-        varmetilskudd_lys_feb = self.varmetilskudd_lys_feb
-        varmetilskudd_lys_mar = self.varmetilskudd_lys_mar
-        varmetilskudd_lys_apr = self.varmetilskudd_lys_apr
-        varmetilskudd_lys_mai = self.varmetilskudd_lys_mai
-        varmetilskudd_lys_jun = self.varmetilskudd_lys_jun
-        varmetilskudd_lys_jul = self.varmetilskudd_lys_jul
-        varmetilskudd_lys_aug = self.varmetilskudd_lys_aug
-        varmetilskudd_lys_sep = self.varmetilskudd_lys_sep
-        varmetilskudd_lys_okt = self.varmetilskudd_lys_okt
-        varmetilskudd_lys_nov = self.varmetilskudd_lys_nov
-        varmetilskudd_lys_des = self.varmetilskudd_lys_des
-        varmetilskudd_utstyr_jan = self.varmetilskudd_utstyr_jan
-        varmetilskudd_utstyr_feb = self.varmetilskudd_utstyr_feb
-        varmetilskudd_utstyr_mar = self.varmetilskudd_utstyr_mar
-        varmetilskudd_utstyr_apr = self.varmetilskudd_utstyr_apr
-        varmetilskudd_utstyr_mai = self.varmetilskudd_utstyr_mai
-        varmetilskudd_utstyr_jun = self.varmetilskudd_utstyr_jun
-        varmetilskudd_utstyr_jul = self.varmetilskudd_utstyr_jul
-        varmetilskudd_utstyr_aug = self.varmetilskudd_utstyr_aug
-        varmetilskudd_utstyr_sep = self.varmetilskudd_utstyr_sep
-        varmetilskudd_utstyr_okt = self.varmetilskudd_utstyr_okt
-        varmetilskudd_utstyr_nov = self.varmetilskudd_utstyr_nov
-        varmetilskudd_utstyr_des = self.varmetilskudd_utstyr_des
-        varmetilskudd_person_jan = self.varmetilskudd_person_jan
-        varmetilskudd_person_feb = self.varmetilskudd_person_feb
-        varmetilskudd_person_mar = self.varmetilskudd_person_mar
-        varmetilskudd_person_apr = self.varmetilskudd_person_apr
-        varmetilskudd_person_mai = self.varmetilskudd_person_mai
-        varmetilskudd_person_jun = self.varmetilskudd_person_jun
-        varmetilskudd_person_jul = self.varmetilskudd_person_jul
-        varmetilskudd_person_aug = self.varmetilskudd_person_aug
-        varmetilskudd_person_sep = self.varmetilskudd_person_sep
-        varmetilskudd_person_okt = self.varmetilskudd_person_okt
-        varmetilskudd_person_nov = self.varmetilskudd_person_nov
-        varmetilskudd_person_des = self.varmetilskudd_person_des
-        energibehov_tappevann = self.energibehov_tappevann
-        energibehov_belysning = self.energibehov_belysning
-        energibehov_utstyr = self.energibehov_utstyr
-        areal_avkjoelt_andel = self.areal_avkjoelt_andel
-        temp_settpunkt_kjoeling = self.temp_settpunkt_kjoeling
-        pumpeeffekt_spesifikk_oppv = self.pumpeeffekt_spesifikk_oppv
-        tid_drift_pumpe_oppv = self.tid_drift_pumpe_oppv
-        temp_differanse_veskekrets_oppvarming = self.temp_differanse_veskekrets_oppvarming
-        pumpeeffekt_spesifikk_kjoling = self.pumpeeffekt_spesifikk_kjoling
-        tid_drift_pumpe_kjoling = self.tid_drift_pumpe_kjoling
-        temp_differanse_veskekrets_kjoling = self.temp_differanse_veskekrets_kjoling
-        el_solcelle_andel_el_spesifikt_forbruk = self.el_solcelle_andel_el_spesifikt_forbruk
-        el_er_andel_energi_oppv_ventilasjon = self.el_er_andel_energi_oppv_ventilasjon
-        el_hp_andel_energi_oppv_ventilasjon = self.el_hp_andel_energi_oppv_ventilasjon
-        el_Tsol_andel_energi_oppv_ventilasjon = self.el_Tsol_andel_energi_oppv_ventilasjon
-        el_er_andel_energi_tappevann_varme = self.el_er_andel_energi_tappevann_varme
-        el_hp_andel_energi_tappevann_varme = self.el_hp_andel_energi_tappevann_varme
-        el_Tsol_andel_energi_tappevann_varme = self.el_Tsol_andel_energi_tappevann_varme
-        systemvirkningsgrad_solcelle = self.systemvirkningsgrad_solcelle
-        systemvirkningsgrad_elektrisk_oppv_ventilasjon = self.systemvirkningsgrad_elektrisk_oppv_ventilasjon
-        systemvirkningsgrad_elektrisk_tappevann_varme = self.systemvirkningsgrad_elektrisk_tappevann_varme
-        systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon = self.systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon
-        systemvirkningsgrad_varmepumpeanlegg_tappevann_varme = self.systemvirkningsgrad_varmepumpeanlegg_tappevann_varme
-        systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon = self.systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon
-        systemvirkningsgrad_solfanger_termisk_tappevann_varme = self.systemvirkningsgrad_solfanger_termisk_tappevann_varme
-        effektfaktor_kjoeleanlegg = self.effektfaktor_kjoeleanlegg
-        olje_andel_energi_oppv_ventilasjon = self.olje_andel_energi_oppv_ventilasjon
-        olje_andel_energi_tappevann_varme = self.olje_andel_energi_tappevann_varme
-        systemvirkningsgrad_olje_oppv_ventilasjon = self.systemvirkningsgrad_olje_oppv_ventilasjon
-        systemvirkningsgrad_olje_tappevann_varme = self.systemvirkningsgrad_olje_tappevann_varme
-        gass_andel_energi_oppv_ventilasjon = self.gass_andel_energi_oppv_ventilasjon
-        gass_andel_energi_tappevann_varme = self.gass_andel_energi_tappevann_varme
-        systemvirkningsgrad_gass_oppv_ventilasjon = self.systemvirkningsgrad_gass_oppv_ventilasjon
-        systemvirkningsgrad_gass_tappevann_varme = self.systemvirkningsgrad_gass_tappevann_varme
-        fjernvarme_andel_energi_oppv_ventilasjon = self.fjernvarme_andel_energi_oppv_ventilasjon
-        fjernvarme_andel_energi_tappevann_varme = self.fjernvarme_andel_energi_tappevann_varme
-        systemvirkningsgrad_fjernvarme_oppv_ventilasjon = self.systemvirkningsgrad_fjernvarme_oppv_ventilasjon
-        systemvirkningsgrad_fjernvarme_tappevann = self.systemvirkningsgrad_fjernvarme_tappevann
-        bio_andel_energi_oppv_ventilasjon = self.bio_andel_energi_oppv_ventilasjon
-        bio_andel_energi_tappevann_varme = self.bio_andel_energi_tappevann_varme
-        systemvirkningsgrad_bio_oppv_ventilasjon = self.systemvirkningsgrad_bio_oppv_ventilasjon
-        systemvirkningsgrad_bio_tappevann = self.systemvirkningsgrad_bio_tappevann
-        annet_andel_energi_oppv_ventilasjon = self.annet_andel_energi_oppv_ventilasjon
-        annet_andel_energi_tappevann_varme = self.annet_andel_energi_tappevann_varme
-        systemvirkningsgrad_annet_oppv_ventilasjon = self.systemvirkningsgrad_annet_oppv_ventilasjon
-        systemvirkningsgrad_annet_tappevann = self.systemvirkningsgrad_annet_tappevann
-        CO2_faktor_el = self.CO2_faktor_el
-        CO2_faktor_olje = self.CO2_faktor_olje
-        CO2_faktor_gass = self.CO2_faktor_gass
-        CO2_faktor_fjernvarme = self.CO2_faktor_fjernvarme
-        CO2_faktor_bio = self.CO2_faktor_bio
-        CO2_faktor_annet = self.CO2_faktor_annet
-        Primaerenergi_faktor_el = self.Primaerenergi_faktor_el
-        Primaerenergi_faktor_olje = self.Primaerenergi_faktor_olje
-        Primaerenergi_faktor_gass = self.Primaerenergi_faktor_gass
-        Primaerenergi_faktor_fjernvarme = self.Primaerenergi_faktor_fjernvarme
-        Primaerenergi_faktor_bio = self.Primaerenergi_faktor_bio
-        Primaerenergi_faktor_annet = self.Primaerenergi_faktor_annet
-        Energipris_el = self.Energipris_el
-        Energipris_olje = self.Energipris_olje
-        Energipris_gass = self.Energipris_gass
-        Energipris_fjernvarme = self.Energipris_fjernvarme
-        Energipris_bio = self.Energipris_bio
-        Energipris_annet = self.Energipris_annet
-        Energipol_vektingsfaktor_el = self.Energipol_vektingsfaktor_el
-        Energipol_vektingsfaktor_olje = self.Energipol_vektingsfaktor_olje
-        Energipol_vektingsfaktor_gass = self.Energipol_vektingsfaktor_gass
-        Energipol_vektingsfaktor_fjernvarme = self.Energipol_vektingsfaktor_fjernvarme
-        Energipol_vektingsfaktor_bio = self.Energipol_vektingsfaktor_bio
-        Energipol_vektingsfaktor_annet = self.Energipol_vektingsfaktor_annet
-        tid_drift_oppv_belysn_utstyr_jan = self.tid_drift_oppv_belysn_utstyr_jan
-        tid_drift_oppv_belysn_utstyr_feb = self.tid_drift_oppv_belysn_utstyr_feb
-        tid_drift_oppv_belysn_utstyr_mar = self.tid_drift_oppv_belysn_utstyr_mar
-        tid_drift_oppv_belysn_utstyr_apr = self.tid_drift_oppv_belysn_utstyr_apr
-        tid_drift_oppv_belysn_utstyr_mai = self.tid_drift_oppv_belysn_utstyr_mai
-        tid_drift_oppv_belysn_utstyr_jun = self.tid_drift_oppv_belysn_utstyr_jun
-        tid_drift_oppv_belysn_utstyr_jul = self.tid_drift_oppv_belysn_utstyr_jul
-        tid_drift_oppv_belysn_utstyr_aug = self.tid_drift_oppv_belysn_utstyr_aug
-        tid_drift_oppv_belysn_utstyr_sep = self.tid_drift_oppv_belysn_utstyr_sep
-        tid_drift_oppv_belysn_utstyr_okt = self.tid_drift_oppv_belysn_utstyr_okt
-        tid_drift_oppv_belysn_utstyr_nov = self.tid_drift_oppv_belysn_utstyr_nov
-        tid_drift_oppv_belysn_utstyr_des = self.tid_drift_oppv_belysn_utstyr_des
-        tid_drift_vent_jan = self.tid_drift_vent_jan
-        tid_drift_vent_feb = self.tid_drift_vent_feb
-        tid_drift_vent_mar = self.tid_drift_vent_mar
-        tid_drift_vent_apr = self.tid_drift_vent_apr
-        tid_drift_vent_mai = self.tid_drift_vent_mai
-        tid_drift_vent_jun = self.tid_drift_vent_jun
-        tid_drift_vent_jul = self.tid_drift_vent_jul
-        tid_drift_vent_aug = self.tid_drift_vent_aug
-        tid_drift_vent_sep = self.tid_drift_vent_sep
-        tid_drift_vent_okt = self.tid_drift_vent_okt
-        tid_drift_vent_nov = self.tid_drift_vent_nov
-        tid_drift_vent_des = self.tid_drift_vent_des
-        tid_drift_person_jan = self.tid_drift_person_jan
-        tid_drift_person_feb = self.tid_drift_person_feb
-        tid_drift_person_mar = self.tid_drift_person_mar
-        tid_drift_person_apr = self.tid_drift_person_apr
-        tid_drift_person_mai = self.tid_drift_person_mai
-        tid_drift_person_jun = self.tid_drift_person_jun
-        tid_drift_person_jul = self.tid_drift_person_jul
-        tid_drift_person_aug = self.tid_drift_person_aug
-        tid_drift_person_sep = self.tid_drift_person_sep
-        tid_drift_person_okt = self.tid_drift_person_okt
-        tid_drift_person_nov = self.tid_drift_person_nov
-        tid_drift_person_des = self.tid_drift_person_des
-        utetemp_jan = self.utetemp_jan
-        utetemp_feb = self.utetemp_feb
-        utetemp_mar = self.utetemp_mar
-        utetemp_apr = self.utetemp_apr
-        utetemp_mai = self.utetemp_mai
-        utetemp_jun = self.utetemp_jun
-        utetemp_jul = self.utetemp_jul
-        utetemp_aug = self.utetemp_aug
-        utetemp_sep = self.utetemp_sep
-        utetemp_okt = self.utetemp_okt
-        utetemp_nov = self.utetemp_nov
-        utetemp_des = self.utetemp_des
-        aarsmiddeltemp_ute = self.aarsmiddeltemp_ute
-        straalingsfluks_soer_jan = self.straalingsfluks_soer_jan
-        straalingsfluks_soer_feb = self.straalingsfluks_soer_feb
-        straalingsfluks_soer_mars = self.straalingsfluks_soer_mars
-        straalingsfluks_soer_april = self.straalingsfluks_soer_april
-        straalingsfluks_soer_mai = self.straalingsfluks_soer_mai
-        straalingsfluks_soer_juni = self.straalingsfluks_soer_juni
-        straalingsfluks_soer_juli = self.straalingsfluks_soer_juli
-        straalingsfluks_soer_aug = self.straalingsfluks_soer_aug
-        straalingsfluks_soer_sept = self.straalingsfluks_soer_sept
-        straalingsfluks_soer_okt = self.straalingsfluks_soer_okt
-        straalingsfluks_soer_nov = self.straalingsfluks_soer_nov
-        straalingsfluks_soer_des = self.straalingsfluks_soer_des
-        straalingsfluks_ostvest_jan = self.straalingsfluks_ostvest_jan
-        straalingsfluks_ostvest_feb = self.straalingsfluks_ostvest_feb
-        straalingsfluks_ostvest_mars = self.straalingsfluks_ostvest_mars
-        straalingsfluks_ostvest_april = self.straalingsfluks_ostvest_april
-        straalingsfluks_ostvest_mai = self.straalingsfluks_ostvest_mai
-        straalingsfluks_ostvest_juni = self.straalingsfluks_ostvest_juni
-        straalingsfluks_ostvest_juli = self.straalingsfluks_ostvest_juli
-        straalingsfluks_ostvest_aug = self.straalingsfluks_ostvest_aug
-        straalingsfluks_ostvest_sept = self.straalingsfluks_ostvest_sept
-        straalingsfluks_ostvest_okt = self.straalingsfluks_ostvest_okt
-        straalingsfluks_ostvest_nov = self.straalingsfluks_ostvest_nov
-        straalingsfluks_ostvest_des = self.straalingsfluks_ostvest_des
-        straalingsfluks_nord_jan = self.straalingsfluks_nord_jan
-        straalingsfluks_nord_feb = self.straalingsfluks_nord_feb
-        straalingsfluks_nord_mars = self.straalingsfluks_nord_mars
-        straalingsfluks_nord_april = self.straalingsfluks_nord_april
-        straalingsfluks_nord_mai = self.straalingsfluks_nord_mai
-        straalingsfluks_nord_juni = self.straalingsfluks_nord_juni
-        straalingsfluks_nord_juli = self.straalingsfluks_nord_juli
-        straalingsfluks_nord_aug = self.straalingsfluks_nord_aug
-        straalingsfluks_nord_sept = self.straalingsfluks_nord_sept
-        straalingsfluks_nord_okt = self.straalingsfluks_nord_okt
-        straalingsfluks_nord_nov = self.straalingsfluks_nord_nov
-        straalingsfluks_nord_des = self.straalingsfluks_nord_des
-        straalingsfluks_tak_jan = self.straalingsfluks_tak_jan
-        straalingsfluks_tak_feb = self.straalingsfluks_tak_feb
-        straalingsfluks_tak_mars = self.straalingsfluks_tak_mars
-        straalingsfluks_tak_april = self.straalingsfluks_tak_april
-        straalingsfluks_tak_mai = self.straalingsfluks_tak_mai
-        straalingsfluks_tak_juni = self.straalingsfluks_tak_juni
-        straalingsfluks_tak_juli = self.straalingsfluks_tak_juli
-        straalingsfluks_tak_aug = self.straalingsfluks_tak_aug
-        straalingsfluks_tak_sept = self.straalingsfluks_tak_sept
-        straalingsfluks_tak_okt = self.straalingsfluks_tak_okt
-        straalingsfluks_tak_nov = self.straalingsfluks_tak_nov
-        straalingsfluks_tak_des = self.straalingsfluks_tak_des
-        temp_avtrekk = self.temp_avtrekk
-        varmekapasitet_luft = self.varmekapasitet_luft
-        temp_amplitudevar = self.temp_amplitudevar
-        tid_jan = self.tid_jan
-        tid_feb = self.tid_feb
-        tid_mar = self.tid_mar
-        tid_apr = self.tid_apr
-        tid_mai = self.tid_mai
-        tid_jun = self.tid_jun
-        tid_jul = self.tid_jul
-        tid_aug = self.tid_aug
-        tid_sep = self.tid_sep
-        tid_okt = self.tid_okt
-        tid_nov = self.tid_nov
-        tid_des = self.tid_des
-        varmekapasitet_vann = self.varmekapasitet_vann
-        densitet_vann = self.densitet_vann
-        varmekapasitet_kuldebaerer = self.varmekapasitet_kuldebaerer
-        densitet_kuldebaerer = self.densitet_kuldebaerer
-        BygningskategoriErForretningsbygg = self.BygningskategoriErForretningsbygg
-        REF = self.REF
+        if 0:
+            solfaktor_total_glass_skjerming_tak = self.solfaktor_total_glass_skjerming_tak
+            energibehov_tappevann = self.energibehov_tappevann
+            energibehov_belysning = self.energibehov_belysning
+            energibehov_utstyr = self.energibehov_utstyr
+            CO2_faktor_el = self.CO2_faktor_el
+            CO2_faktor_olje = self.CO2_faktor_olje
+            CO2_faktor_gass = self.CO2_faktor_gass
+            CO2_faktor_fjernvarme = self.CO2_faktor_fjernvarme
+            CO2_faktor_bio = self.CO2_faktor_bio
+            CO2_faktor_annet = self.CO2_faktor_annet
+            Primaerenergi_faktor_el = self.Primaerenergi_faktor_el
+            Primaerenergi_faktor_olje = self.Primaerenergi_faktor_olje
+            Primaerenergi_faktor_gass = self.Primaerenergi_faktor_gass
+            Primaerenergi_faktor_fjernvarme = self.Primaerenergi_faktor_fjernvarme
+            Primaerenergi_faktor_bio = self.Primaerenergi_faktor_bio
+            Primaerenergi_faktor_annet = self.Primaerenergi_faktor_annet
+            Energipris_el = self.Energipris_el
+            Energipris_olje = self.Energipris_olje
+            Energipris_gass = self.Energipris_gass
+            Energipris_fjernvarme = self.Energipris_fjernvarme
+            Energipris_bio = self.Energipris_bio
+            Energipris_annet = self.Energipris_annet
+            Energipol_vektingsfaktor_el = self.Energipol_vektingsfaktor_el
+            Energipol_vektingsfaktor_olje = self.Energipol_vektingsfaktor_olje
+            Energipol_vektingsfaktor_gass = self.Energipol_vektingsfaktor_gass
+            Energipol_vektingsfaktor_fjernvarme = self.Energipol_vektingsfaktor_fjernvarme
+            Energipol_vektingsfaktor_bio = self.Energipol_vektingsfaktor_bio
+            Energipol_vektingsfaktor_annet = self.Energipol_vektingsfaktor_annet
+            tid_drift_vent_jan = self.tid_drift_vent_jan
+            tid_drift_vent_feb = self.tid_drift_vent_feb
+            tid_drift_vent_mar = self.tid_drift_vent_mar
+            tid_drift_vent_apr = self.tid_drift_vent_apr
+            tid_drift_vent_mai = self.tid_drift_vent_mai
+            tid_drift_vent_jun = self.tid_drift_vent_jun
+            tid_drift_vent_jul = self.tid_drift_vent_jul
+            tid_drift_vent_aug = self.tid_drift_vent_aug
+            tid_drift_vent_sep = self.tid_drift_vent_sep
+            tid_drift_vent_okt = self.tid_drift_vent_okt
+            tid_drift_vent_nov = self.tid_drift_vent_nov
+            tid_drift_vent_des = self.tid_drift_vent_des
 
         ### energipost 2
         J237 = self.energibehov_tappevann  # NS3031*- Energibehov for varmt tappevann, spesifikt - Varmtvann
@@ -832,147 +524,195 @@ class EnergiBeregning:
         Vifter = C242  # # - Energipost (3a) (Energibehov [kWh/år]) - Vifter
 
         ### energipost 1-a
-        C197 = tid_jan # - Timer per måned - januar
-        C198 = tid_feb # - Timer per måned - februar
-        C199 = tid_mar # - Timer per måned - mars
-        C200 = tid_apr # - Timer per måned - april
-        C201 = tid_mai # - Timer per måned - mai
-        C202 = tid_jun # - Timer per måned - juni
-        C203 = tid_jul # - Timer per måned - juli
-        C204 = tid_aug # - Timer per måned - august
-        C205 = tid_sep # - Timer per måned - september
-        C206 = tid_okt # - Timer per måned - oktober
-        C207 = tid_nov # - Timer per måned - november
-        C208 = tid_des # - Timer per måned - desember
+        C197 = self.tid_jan  # - Timer per måned - januar
+        C198 = self.tid_feb  # - Timer per måned - februar
+        C199 = self.tid_mar  # - Timer per måned - mars
+        C200 = self.tid_apr  # - Timer per måned - april
+        C201 = self.tid_mai  # - Timer per måned - mai
+        C202 = self.tid_jun  # - Timer per måned - juni
+        C203 = self.tid_jul  # - Timer per måned - juli
+        C204 = self.tid_aug  # - Timer per måned - august
+        C205 = self.tid_sep  # - Timer per måned - september
+        C206 = self.tid_okt  # - Timer per måned - oktober
+        C207 = self.tid_nov  # - Timer per måned - november
+        C208 = self.tid_des  # - Timer per måned - desember
 
-        X120 = straalingsfluks_soer_jan   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - januar
-        X121 = straalingsfluks_soer_feb   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - februar
-        X122 = straalingsfluks_soer_mars  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - mars
-        X123 = straalingsfluks_soer_april # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - april
-        X124 = straalingsfluks_soer_mai   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - mai
-        X125 = straalingsfluks_soer_juni  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - juni
-        X126 = straalingsfluks_soer_juli  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - juli
-        X127 = straalingsfluks_soer_aug   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - august
-        X128 = straalingsfluks_soer_sept  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - september
-        X129 = straalingsfluks_soer_okt   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - oktober
-        X130 = straalingsfluks_soer_nov   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - november
-        X131 = straalingsfluks_soer_des   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - desember
+        X120 = self.straalingsfluks_soer_jan  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - januar
+        X121 = self.straalingsfluks_soer_feb  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - februar
+        X122 = self.straalingsfluks_soer_mars  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - mars
+        X123 = self.straalingsfluks_soer_april  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - april
+        X124 = self.straalingsfluks_soer_mai  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - mai
+        X125 = self.straalingsfluks_soer_juni  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - juni
+        X126 = self.straalingsfluks_soer_juli  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - juli
+        X127 = self.straalingsfluks_soer_aug  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - august
+        X128 = self.straalingsfluks_soer_sept  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - september
+        X129 = self.straalingsfluks_soer_okt  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - oktober
+        X130 = self.straalingsfluks_soer_nov  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - november
+        X131 = self.straalingsfluks_soer_des  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - desember
 
-        X137 = straalingsfluks_ostvest_jan   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - januar
-        X138 = straalingsfluks_ostvest_feb   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - februar
-        X139 = straalingsfluks_ostvest_mars  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - mars
-        X140 = straalingsfluks_ostvest_april # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - april
-        X141 = straalingsfluks_ostvest_mai   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - mai
-        X142 = straalingsfluks_ostvest_juni  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - juni
-        X143 = straalingsfluks_ostvest_juli  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - juli
-        X144 = straalingsfluks_ostvest_aug   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - august
-        X145 = straalingsfluks_ostvest_sept  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - september
-        X146 = straalingsfluks_ostvest_okt   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - oktober
-        X147 = straalingsfluks_ostvest_nov   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - november
-        X148 = straalingsfluks_ostvest_des   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - desember
+        X137 = self.straalingsfluks_ostvest_jan  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - januar
+        X138 = self.straalingsfluks_ostvest_feb  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - februar
+        X139 = self.straalingsfluks_ostvest_mars  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - mars
+        X140 = self.straalingsfluks_ostvest_april  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - april
+        X141 = self.straalingsfluks_ostvest_mai  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - mai
+        X142 = self.straalingsfluks_ostvest_juni  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - juni
+        X143 = self.straalingsfluks_ostvest_juli  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - juli
+        X144 = self.straalingsfluks_ostvest_aug  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - august
+        X145 = self.straalingsfluks_ostvest_sept  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - september
+        X146 = self.straalingsfluks_ostvest_okt  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - oktober
+        X147 = self.straalingsfluks_ostvest_nov  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - november
+        X148 = self.straalingsfluks_ostvest_des  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, øst/vest (Tillegg M - NS3031:2007) - desember
 
-        AE120 = straalingsfluks_nord_jan   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - januar
-        AE121 = straalingsfluks_nord_feb   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - februar
-        AE122 = straalingsfluks_nord_mars  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - mars
-        AE123 = straalingsfluks_nord_april # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - april
-        AE124 = straalingsfluks_nord_mai   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - mai
-        AE125 = straalingsfluks_nord_juni  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - juni
-        AE126 = straalingsfluks_nord_juli  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - juli
-        AE127 = straalingsfluks_nord_aug   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - august
-        AE128 = straalingsfluks_nord_sept  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - september
-        AE129 = straalingsfluks_nord_okt   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - oktober
-        AE130 = straalingsfluks_nord_nov   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - november
-        AE131 = straalingsfluks_nord_des   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - desember
+        AE120 = self.straalingsfluks_nord_jan  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - januar
+        AE121 = self.straalingsfluks_nord_feb  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - februar
+        AE122 = self.straalingsfluks_nord_mars  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - mars
+        AE123 = self.straalingsfluks_nord_april  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - april
+        AE124 = self.straalingsfluks_nord_mai  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - mai
+        AE125 = self.straalingsfluks_nord_juni  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - juni
+        AE126 = self.straalingsfluks_nord_juli  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - juli
+        AE127 = self.straalingsfluks_nord_aug  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - august
+        AE128 = self.straalingsfluks_nord_sept  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - september
+        AE129 = self.straalingsfluks_nord_okt  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - oktober
+        AE130 = self.straalingsfluks_nord_nov  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - november
+        AE131 = self.straalingsfluks_nord_des  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, sør (Tillegg M - NS3031:2007) - desember
 
-        AE137 = straalingsfluks_tak_jan   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - januar
-        AE138 = straalingsfluks_tak_feb   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - februar
-        AE139 = straalingsfluks_tak_mars  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - mars
-        AE140 = straalingsfluks_tak_april # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - april
-        AE141 = straalingsfluks_tak_mai   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - mai
-        AE142 = straalingsfluks_tak_juni  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - juni
-        AE143 = straalingsfluks_tak_juli  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - juli
-        AE144 = straalingsfluks_tak_aug   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - august
-        AE145 = straalingsfluks_tak_sept  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - september
-        AE146 = straalingsfluks_tak_okt   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - oktober
-        AE147 = straalingsfluks_tak_nov   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - november
-        AE148 = straalingsfluks_tak_des   # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - desember
+        AE137 = self.straalingsfluks_tak_jan  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - januar
+        AE138 = self.straalingsfluks_tak_feb  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - februar
+        AE139 = self.straalingsfluks_tak_mars  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - mars
+        AE140 = self.straalingsfluks_tak_april  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - april
+        AE141 = self.straalingsfluks_tak_mai  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - mai
+        AE142 = self.straalingsfluks_tak_juni  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - juni
+        AE143 = self.straalingsfluks_tak_juli  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - juli
+        AE144 = self.straalingsfluks_tak_aug  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - august
+        AE145 = self.straalingsfluks_tak_sept  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - september
+        AE146 = self.straalingsfluks_tak_okt  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - oktober
+        AE147 = self.straalingsfluks_tak_nov  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - november
+        AE148 = self.straalingsfluks_tak_des  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - desember
 
-        Q120 = (1-sol_tidsvariabel_ost_vest_jan)  *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_jan  *solfaktor_total_glass_skjerming_oest
-        Q121 = (1-sol_tidsvariabel_ost_vest_feb)  *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_feb  *solfaktor_total_glass_skjerming_oest
-        Q122 = (1-sol_tidsvariabel_ost_vest_mars) *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_mars *solfaktor_total_glass_skjerming_oest
-        Q123 = (1-sol_tidsvariabel_ost_vest_april)*solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_april*solfaktor_total_glass_skjerming_oest
-        Q124 = (1-sol_tidsvariabel_ost_vest_mai)  *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_mai  *solfaktor_total_glass_skjerming_oest
-        Q125 = (1-sol_tidsvariabel_ost_vest_juni) *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_juni *solfaktor_total_glass_skjerming_oest
-        Q126 = (1-sol_tidsvariabel_ost_vest_juli) *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_juli *solfaktor_total_glass_skjerming_oest
-        Q127 = (1-sol_tidsvariabel_ost_vest_aug)  *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_aug  *solfaktor_total_glass_skjerming_oest
-        Q128 = (1-sol_tidsvariabel_ost_vest_sept) *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_sept *solfaktor_total_glass_skjerming_oest
-        Q129 = (1-sol_tidsvariabel_ost_vest_okt)  *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_okt  *solfaktor_total_glass_skjerming_oest
-        Q130 = (1-sol_tidsvariabel_ost_vest_nov)  *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_nov  *solfaktor_total_glass_skjerming_oest
-        Q131 = (1-sol_tidsvariabel_ost_vest_des)  *solfaktor_vindu_oest + sol_tidsvariabel_ost_vest_des  *solfaktor_total_glass_skjerming_oest
+        Q120 = (
+                       1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_oest
+        Q121 = (
+                       1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_oest
+        Q122 = (
+                       1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_oest
+        Q123 = (
+                       1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_oest
+        Q124 = (
+                       1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_oest
+        Q125 = (
+                       1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_oest
+        Q126 = (
+                       1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_oest
+        Q127 = (
+                       1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_oest
+        Q128 = (
+                       1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_oest
+        Q129 = (
+                       1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_oest
+        Q130 = (
+                       1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_oest
+        Q131 = (
+                       1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_oest
 
-        Q133 = (1-sol_tidsvariabel_ost_vest_jan)  *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_jan  *solfaktor_total_glass_skjerming_vest
-        Q134 = (1-sol_tidsvariabel_ost_vest_feb)  *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_feb  *solfaktor_total_glass_skjerming_vest
-        Q135 = (1-sol_tidsvariabel_ost_vest_mars) *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_mars *solfaktor_total_glass_skjerming_vest
-        Q136 = (1-sol_tidsvariabel_ost_vest_april)*solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_april*solfaktor_total_glass_skjerming_vest
-        Q137 = (1-sol_tidsvariabel_ost_vest_mai)  *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_mai  *solfaktor_total_glass_skjerming_vest
-        Q138 = (1-sol_tidsvariabel_ost_vest_juni) *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_juni *solfaktor_total_glass_skjerming_vest
-        Q139 = (1-sol_tidsvariabel_ost_vest_juli) *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_juli *solfaktor_total_glass_skjerming_vest
-        Q140 = (1-sol_tidsvariabel_ost_vest_aug)  *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_aug  *solfaktor_total_glass_skjerming_vest
-        Q141 = (1-sol_tidsvariabel_ost_vest_sept) *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_sept *solfaktor_total_glass_skjerming_vest
-        Q142 = (1-sol_tidsvariabel_ost_vest_okt)  *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_okt  *solfaktor_total_glass_skjerming_vest
-        Q143 = (1-sol_tidsvariabel_ost_vest_nov)  *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_nov  *solfaktor_total_glass_skjerming_vest
-        Q144 = (1-sol_tidsvariabel_ost_vest_des)  *solfaktor_vindu_vest + sol_tidsvariabel_ost_vest_des  *solfaktor_total_glass_skjerming_vest
+        Q133 = (
+                       1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_vest
+        Q134 = (
+                       1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_vest
+        Q135 = (
+                       1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_vest
+        Q136 = (
+                       1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_vest
+        Q137 = (
+                       1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_vest
+        Q138 = (
+                       1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_vest
+        Q139 = (
+                       1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_vest
+        Q140 = (
+                       1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_vest
+        Q141 = (
+                       1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_vest
+        Q142 = (
+                       1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_vest
+        Q143 = (
+                       1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_vest
+        Q144 = (
+                       1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_vest
 
-        Q146 = (1-sol_tidsvariabel_soer_jan)  *solfaktor_vindu_soer + sol_tidsvariabel_soer_jan  *solfaktor_total_glass_skjerming_soer
-        Q147 = (1-sol_tidsvariabel_soer_feb)  *solfaktor_vindu_soer + sol_tidsvariabel_soer_feb  *solfaktor_total_glass_skjerming_soer
-        Q148 = (1-sol_tidsvariabel_soer_mars) *solfaktor_vindu_soer + sol_tidsvariabel_soer_mars *solfaktor_total_glass_skjerming_soer
-        Q149 = (1-sol_tidsvariabel_soer_april)*solfaktor_vindu_soer + sol_tidsvariabel_soer_april*solfaktor_total_glass_skjerming_soer
-        Q150 = (1-sol_tidsvariabel_soer_mai)  *solfaktor_vindu_soer + sol_tidsvariabel_soer_mai  *solfaktor_total_glass_skjerming_soer
-        Q151 = (1-sol_tidsvariabel_soer_juni) *solfaktor_vindu_soer + sol_tidsvariabel_soer_juni *solfaktor_total_glass_skjerming_soer
-        Q152 = (1-sol_tidsvariabel_soer_juli) *solfaktor_vindu_soer + sol_tidsvariabel_soer_juli *solfaktor_total_glass_skjerming_soer
-        Q153 = (1-sol_tidsvariabel_soer_aug)  *solfaktor_vindu_soer + sol_tidsvariabel_soer_aug  *solfaktor_total_glass_skjerming_soer
-        Q154 = (1-sol_tidsvariabel_soer_sept) *solfaktor_vindu_soer + sol_tidsvariabel_soer_sept *solfaktor_total_glass_skjerming_soer
-        Q155 = (1-sol_tidsvariabel_soer_okt)  *solfaktor_vindu_soer + sol_tidsvariabel_soer_okt  *solfaktor_total_glass_skjerming_soer
-        Q156 = (1-sol_tidsvariabel_soer_nov)  *solfaktor_vindu_soer + sol_tidsvariabel_soer_nov  *solfaktor_total_glass_skjerming_soer
-        Q157 = (1-sol_tidsvariabel_soer_des)  *solfaktor_vindu_soer + sol_tidsvariabel_soer_des  *solfaktor_total_glass_skjerming_soer
+        Q146 = (
+                       1 - self.sol_tidsvariabel_soer_jan) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_jan * self.solfaktor_total_glass_skjerming_soer
+        Q147 = (
+                       1 - self.sol_tidsvariabel_soer_feb) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_feb * self.solfaktor_total_glass_skjerming_soer
+        Q148 = (
+                       1 - self.sol_tidsvariabel_soer_mars) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mars * self.solfaktor_total_glass_skjerming_soer
+        Q149 = (
+                       1 - self.sol_tidsvariabel_soer_april) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_april * self.solfaktor_total_glass_skjerming_soer
+        Q150 = (
+                       1 - self.sol_tidsvariabel_soer_mai) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mai * self.solfaktor_total_glass_skjerming_soer
+        Q151 = (
+                       1 - self.sol_tidsvariabel_soer_juni) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juni * self.solfaktor_total_glass_skjerming_soer
+        Q152 = (
+                       1 - self.sol_tidsvariabel_soer_juli) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juli * self.solfaktor_total_glass_skjerming_soer
+        Q153 = (
+                       1 - self.sol_tidsvariabel_soer_aug) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_aug * self.solfaktor_total_glass_skjerming_soer
+        Q154 = (
+                       1 - self.sol_tidsvariabel_soer_sept) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_sept * self.solfaktor_total_glass_skjerming_soer
+        Q155 = (
+                       1 - self.sol_tidsvariabel_soer_okt) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_okt * self.solfaktor_total_glass_skjerming_soer
+        Q156 = (
+                       1 - self.sol_tidsvariabel_soer_nov) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_nov * self.solfaktor_total_glass_skjerming_soer
+        Q157 = (
+                       1 - self.sol_tidsvariabel_soer_des) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_des * self.solfaktor_total_glass_skjerming_soer
 
-        Q159 = (1-sol_tidsvariabel_nord_jan)  *solfaktor_vindu_nord + sol_tidsvariabel_nord_jan  *solfaktor_total_glass_skjerming_nord
-        Q160 = (1-sol_tidsvariabel_nord_feb)  *solfaktor_vindu_nord + sol_tidsvariabel_nord_feb  *solfaktor_total_glass_skjerming_nord
-        Q161 = (1-sol_tidsvariabel_nord_mars) *solfaktor_vindu_nord + sol_tidsvariabel_nord_mars *solfaktor_total_glass_skjerming_nord
-        Q162 = (1-sol_tidsvariabel_nord_april)*solfaktor_vindu_nord + sol_tidsvariabel_nord_april*solfaktor_total_glass_skjerming_nord
-        Q163 = (1-sol_tidsvariabel_nord_mai)  *solfaktor_vindu_nord + sol_tidsvariabel_nord_mai  *solfaktor_total_glass_skjerming_nord
-        Q164 = (1-sol_tidsvariabel_nord_juni) *solfaktor_vindu_nord + sol_tidsvariabel_nord_juni *solfaktor_total_glass_skjerming_nord
-        Q165 = (1-sol_tidsvariabel_nord_juli) *solfaktor_vindu_nord + sol_tidsvariabel_nord_juli *solfaktor_total_glass_skjerming_nord
-        Q166 = (1-sol_tidsvariabel_nord_aug)  *solfaktor_vindu_nord + sol_tidsvariabel_nord_aug  *solfaktor_total_glass_skjerming_nord
-        Q167 = (1-sol_tidsvariabel_nord_sept) *solfaktor_vindu_nord + sol_tidsvariabel_nord_sept *solfaktor_total_glass_skjerming_nord
-        Q168 = (1-sol_tidsvariabel_nord_okt)  *solfaktor_vindu_nord + sol_tidsvariabel_nord_okt  *solfaktor_total_glass_skjerming_nord
-        Q169 = (1-sol_tidsvariabel_nord_nov)  *solfaktor_vindu_nord + sol_tidsvariabel_nord_nov  *solfaktor_total_glass_skjerming_nord
-        Q170 = (1-sol_tidsvariabel_nord_des)  *solfaktor_vindu_nord + sol_tidsvariabel_nord_des  *solfaktor_total_glass_skjerming_nord
+        Q159 = (
+                       1 - self.sol_tidsvariabel_nord_jan) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_jan * self.solfaktor_total_glass_skjerming_nord
+        Q160 = (
+                       1 - self.sol_tidsvariabel_nord_feb) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_feb * self.solfaktor_total_glass_skjerming_nord
+        Q161 = (
+                       1 - self.sol_tidsvariabel_nord_mars) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mars * self.solfaktor_total_glass_skjerming_nord
+        Q162 = (
+                       1 - self.sol_tidsvariabel_nord_april) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_april * self.solfaktor_total_glass_skjerming_nord
+        Q163 = (
+                       1 - self.sol_tidsvariabel_nord_mai) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mai * self.solfaktor_total_glass_skjerming_nord
+        Q164 = (
+                       1 - self.sol_tidsvariabel_nord_juni) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juni * self.solfaktor_total_glass_skjerming_nord
+        Q165 = (
+                       1 - self.sol_tidsvariabel_nord_juli) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juli * self.solfaktor_total_glass_skjerming_nord
+        Q166 = (
+                       1 - self.sol_tidsvariabel_nord_aug) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_aug * self.solfaktor_total_glass_skjerming_nord
+        Q167 = (
+                       1 - self.sol_tidsvariabel_nord_sept) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_sept * self.solfaktor_total_glass_skjerming_nord
+        Q168 = (
+                       1 - self.sol_tidsvariabel_nord_okt) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_okt * self.solfaktor_total_glass_skjerming_nord
+        Q169 = (
+                       1 - self.sol_tidsvariabel_nord_nov) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_nov * self.solfaktor_total_glass_skjerming_nord
+        Q170 = (
+                       1 - self.sol_tidsvariabel_nord_des) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_des * self.solfaktor_total_glass_skjerming_nord
 
-        C157 = areal_vindu_oest # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, øst
-        C158 = areal_vindu_vest # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, vest
-        C159 = areal_vindu_soer # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, sør
-        C160 = areal_vindu_nord # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, nord
-        C161 = areal_vindu_tak  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, tak
+        C157 = self.areal_vindu_oest  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, øst
+        C158 = self.areal_vindu_vest  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, vest
+        C159 = self.areal_vindu_soer  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, sør
+        C160 = self.areal_vindu_nord  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, nord
+        C161 = self.areal_vindu_tak  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, tak
 
-        C163 = arealfraksjon_karm_oest # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, øst
-        C164 = arealfraksjon_karm_vest # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, vest
-        C165 = arealfraksjon_karm_soer # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, sør
-        C166 = arealfraksjon_karm_nord # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, nord
-        C167 = arealfraksjon_karm_tak  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, tak
+        C163 = self.arealfraksjon_karm_oest  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, øst
+        C164 = self.arealfraksjon_karm_vest  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, vest
+        C165 = self.arealfraksjon_karm_soer  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, sør
+        C166 = self.arealfraksjon_karm_nord  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, nord
+        C167 = self.arealfraksjon_karm_tak  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, tak
 
-        AE154 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - januar (Solfaktor x 0,9, dvs. forenklet)
-        AE155 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - februar (Solfaktor x 0,9, dvs. forenklet)
-        AE156 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - mars (Solfaktor x 0,9, dvs. forenklet)
-        AE157 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - april (Solfaktor x 0,9, dvs. forenklet)
-        AE158 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - mai (Solfaktor x 0,9, dvs. forenklet)
-        AE159 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - juni (Solfaktor x 0,9, dvs. forenklet)
-        AE160 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - juli (Solfaktor x 0,9, dvs. forenklet)
-        AE161 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - august (Solfaktor x 0,9, dvs. forenklet)
-        AE162 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - sept (Solfaktor x 0,9, dvs. forenklet)
-        AE163 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - okt (Solfaktor x 0,9, dvs. forenklet)
-        AE164 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - nov (Solfaktor x 0,9, dvs. forenklet)
-        AE165 = solfaktor_vindu_tak*0,9 # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - des (Solfaktor x 0,9, dvs. forenklet)
+        AE154 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - januar (Solfaktor x 0,9, dvs. forenklet)
+        AE155 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - februar (Solfaktor x 0,9, dvs. forenklet)
+        AE156 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - mars (Solfaktor x 0,9, dvs. forenklet)
+        AE157 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - april (Solfaktor x 0,9, dvs. forenklet)
+        AE158 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - mai (Solfaktor x 0,9, dvs. forenklet)
+        AE159 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - juni (Solfaktor x 0,9, dvs. forenklet)
+        AE160 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - juli (Solfaktor x 0,9, dvs. forenklet)
+        AE161 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - august (Solfaktor x 0,9, dvs. forenklet)
+        AE162 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - sept (Solfaktor x 0,9, dvs. forenklet)
+        AE163 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - okt (Solfaktor x 0,9, dvs. forenklet)
+        AE164 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - nov (Solfaktor x 0,9, dvs. forenklet)
+        AE165 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - des (Solfaktor x 0,9, dvs. forenklet)
         AE166 = np.mean([AE154,AE155,AE156,AE157,AE158,AE159,AE160,AE161,AE162,AE163,AE164,AE165]) # Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt (tak)
 
         J172 = C161*AE166*(1-C167) # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, tak
@@ -1029,23 +769,23 @@ class EnergiBeregning:
         J169 = C160*Q169*(1-C166) # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - november
         J170 = C160*Q170*(1-C166) # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - desember
 
-        X159 = solskjermingsfaktor_horisont_oest # - Solskjermingsfaktor - Fhor,øst
-        X160 = solskjermingsfaktor_horisont_vest # - Solskjermingsfaktor - Fhor,vest
-        X161 = solskjermingsfaktor_horisont_soer # - Solskjermingsfaktor - Fhor,sør
-        X162 = solskjermingsfaktor_horisont_nord # - Solskjermingsfaktor - Fhor,nord
-        X163 = solskjermingsfaktor_horisont_tak  # - Solskjermingsfaktor - Fhor,tak
+        X159 = self.solskjermingsfaktor_horisont_oest  # - Solskjermingsfaktor - Fhor,øst
+        X160 = self.solskjermingsfaktor_horisont_vest  # - Solskjermingsfaktor - Fhor,vest
+        X161 = self.solskjermingsfaktor_horisont_soer  # - Solskjermingsfaktor - Fhor,sør
+        X162 = self.solskjermingsfaktor_horisont_nord  # - Solskjermingsfaktor - Fhor,nord
+        X163 = self.solskjermingsfaktor_horisont_tak  # - Solskjermingsfaktor - Fhor,tak
 
-        X164 = solskjermingsfaktor_overheng_oest # - Solskjermingsfaktor - Fov,øst
-        X165 = solskjermingsfaktor_overheng_vest # - Solskjermingsfaktor - Fov,vest
-        X166 = solskjermingsfaktor_overheng_soer # - Solskjermingsfaktor - Fov,sør
-        X167 = solskjermingsfaktor_overheng_nord # - Solskjermingsfaktor - Fov,nord
-        X168 = solskjermingsfaktor_overheng_tak  # - Solskjermingsfaktor - Fov,tak
+        X164 = self.solskjermingsfaktor_overheng_oest  # - Solskjermingsfaktor - Fov,øst
+        X165 = self.solskjermingsfaktor_overheng_vest  # - Solskjermingsfaktor - Fov,vest
+        X166 = self.solskjermingsfaktor_overheng_soer  # - Solskjermingsfaktor - Fov,sør
+        X167 = self.solskjermingsfaktor_overheng_nord  # - Solskjermingsfaktor - Fov,nord
+        X168 = self.solskjermingsfaktor_overheng_tak  # - Solskjermingsfaktor - Fov,tak
 
-        X169 = solskjermingsfaktor_finner_oest # - Solskjermingsfaktor - Ffin,vest
-        X170 = solskjermingsfaktor_finner_vest # - Solskjermingsfaktor - Ffin,vest
-        X171 = solskjermingsfaktor_finner_soer # - Solskjermingsfaktor - Ffin,vest
-        X172 = solskjermingsfaktor_finner_nord # - Solskjermingsfaktor - Ffin,vest
-        X173 = solskjermingsfaktor_finner_tak  # - Solskjermingsfaktor - Ffin,vest
+        X169 = self.solskjermingsfaktor_finner_oest  # - Solskjermingsfaktor - Ffin,vest
+        X170 = self.solskjermingsfaktor_finner_vest  # - Solskjermingsfaktor - Ffin,vest
+        X171 = self.solskjermingsfaktor_finner_soer  # - Solskjermingsfaktor - Ffin,vest
+        X172 = self.solskjermingsfaktor_finner_nord  # - Solskjermingsfaktor - Ffin,vest
+        X173 = self.solskjermingsfaktor_finner_tak  # - Solskjermingsfaktor - Ffin,vest
 
         X153 = X159*X164*X169 # - Solskjermingsfaktor - Solskjermingsfaktor, øst
         X154 = X160*X165*X170 # - Solskjermingsfaktor - Solskjermingsfaktor, vest
@@ -1072,108 +812,113 @@ class EnergiBeregning:
         C148 = C207*(X130*J130*C151 + X147*J143*C152 + X147*J156*C153 + AE130*C154*J169 + AE147*J172*C155) # NS3031 - Varmettilskudd fra sol Totalt, (Qsol, i) [kWh] - novmeber
         C149 = C208*(X131*J131*C151 + X148*J144*C152 + X148*J157*C153 + AE131*C154*J170 + AE148*J172*C155) # NS3031 - Varmettilskudd fra sol Totalt, (Qsol, i) [kWh] - desember
 
-        J179 = varmetilskudd_lys_jan   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- januar (W/m2)
-        J180 = varmetilskudd_lys_feb   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- februar (W/m2)
-        J181 = varmetilskudd_lys_mar   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- mars (W/m2)
-        J182 = varmetilskudd_lys_apr   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- april (W/m2)
-        J183 = varmetilskudd_lys_mai   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- mai (W/m2)
-        J184 = varmetilskudd_lys_jun   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- juni (W/m2)
-        J185 = varmetilskudd_lys_jul   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- juli (W/m2)
-        J186 = varmetilskudd_lys_aug   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- august (W/m2)
-        J187 = varmetilskudd_lys_sep   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- september (W/m2)
-        J188 = varmetilskudd_lys_okt   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- oktober (W/m2)
-        J189 = varmetilskudd_lys_nov   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- november (W/m2)
-        J190 = varmetilskudd_lys_des   # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- desember (W/m2)
+        J179 = self.varmetilskudd_lys_jan  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- januar (W/m2)
+        J180 = self.varmetilskudd_lys_feb  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- februar (W/m2)
+        J181 = self.varmetilskudd_lys_mar  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- mars (W/m2)
+        J182 = self.varmetilskudd_lys_apr  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- april (W/m2)
+        J183 = self.varmetilskudd_lys_mai  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- mai (W/m2)
+        J184 = self.varmetilskudd_lys_jun  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- juni (W/m2)
+        J185 = self.varmetilskudd_lys_jul  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- juli (W/m2)
+        J186 = self.varmetilskudd_lys_aug  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- august (W/m2)
+        J187 = self.varmetilskudd_lys_sep  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- september (W/m2)
+        J188 = self.varmetilskudd_lys_okt  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- oktober (W/m2)
+        J189 = self.varmetilskudd_lys_nov  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- november (W/m2)
+        J190 = self.varmetilskudd_lys_des  # - Spesifikk gjennomsnittlig varmetilskudd fra belysning- desember (W/m2)
 
-        J197 = tid_drift_oppv_belysn_utstyr_jan   # - Timer i driftstid for belysning - januar (timer)
-        J198 = tid_drift_oppv_belysn_utstyr_feb   # - Timer i driftstid for belysning - februar (timer)
-        J199 = tid_drift_oppv_belysn_utstyr_mar   # - Timer i driftstid for belysning - mars (timer)
-        J200 = tid_drift_oppv_belysn_utstyr_apr   # - Timer i driftstid for belysning - april (timer)
-        J201 = tid_drift_oppv_belysn_utstyr_mai   # - Timer i driftstid for belysning - mai (timer)
-        J202 = tid_drift_oppv_belysn_utstyr_jun   # - Timer i driftstid for belysning - juni (timer)
-        J203 = tid_drift_oppv_belysn_utstyr_jul   # - Timer i driftstid for belysning - juli (timer)
-        J204 = tid_drift_oppv_belysn_utstyr_aug   # - Timer i driftstid for belysning - august (timer)
-        J205 = tid_drift_oppv_belysn_utstyr_sep   # - Timer i driftstid for belysning - september (timer)
-        J206 = tid_drift_oppv_belysn_utstyr_okt   # - Timer i driftstid for belysning - oktober (timer)
-        J207 = tid_drift_oppv_belysn_utstyr_nov   # - Timer i driftstid for belysning - november (timer)
-        J208 = tid_drift_oppv_belysn_utstyr_des   # - Timer i driftstid for belysning - desember (timer)
+        J197 = self.tid_drift_oppv_belysn_utstyr_jan  # - Timer i driftstid for belysning - januar (timer)
+        J198 = self.tid_drift_oppv_belysn_utstyr_feb  # - Timer i driftstid for belysning - februar (timer)
+        J199 = self.tid_drift_oppv_belysn_utstyr_mar  # - Timer i driftstid for belysning - mars (timer)
+        J200 = self.tid_drift_oppv_belysn_utstyr_apr  # - Timer i driftstid for belysning - april (timer)
+        J201 = self.tid_drift_oppv_belysn_utstyr_mai  # - Timer i driftstid for belysning - mai (timer)
+        J202 = self.tid_drift_oppv_belysn_utstyr_jun  # - Timer i driftstid for belysning - juni (timer)
+        J203 = self.tid_drift_oppv_belysn_utstyr_jul  # - Timer i driftstid for belysning - juli (timer)
+        J204 = self.tid_drift_oppv_belysn_utstyr_aug  # - Timer i driftstid for belysning - august (timer)
+        J205 = self.tid_drift_oppv_belysn_utstyr_sep  # - Timer i driftstid for belysning - september (timer)
+        J206 = self.tid_drift_oppv_belysn_utstyr_okt  # - Timer i driftstid for belysning - oktober (timer)
+        J207 = self.tid_drift_oppv_belysn_utstyr_nov  # - Timer i driftstid for belysning - november (timer)
+        J208 = self.tid_drift_oppv_belysn_utstyr_des  # - Timer i driftstid for belysning - desember (timer)
 
-        Q179 = varmetilskudd_utstyr_jan   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- januar (W/m2)
-        Q180 = varmetilskudd_utstyr_feb   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- februar (W/m2)
-        Q181 = varmetilskudd_utstyr_mar   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- mars (W/m2)
-        Q182 = varmetilskudd_utstyr_apr   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- april (W/m2)
-        Q183 = varmetilskudd_utstyr_mai   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- mai (W/m2)
-        Q184 = varmetilskudd_utstyr_jun   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- juni (W/m2)
-        Q185 = varmetilskudd_utstyr_jul   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- juli (W/m2)
-        Q186 = varmetilskudd_utstyr_aug   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- august (W/m2)
-        Q187 = varmetilskudd_utstyr_sep   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- september (timer)
-        Q188 = varmetilskudd_utstyr_okt   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- oktober (W/m2)
-        Q189 = varmetilskudd_utstyr_nov   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- november (W/m2)
-        Q190 = varmetilskudd_utstyr_des   # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- desember (W/m2)
+        Q179 = self.varmetilskudd_utstyr_jan  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- januar (W/m2)
+        Q180 = self.varmetilskudd_utstyr_feb  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- februar (W/m2)
+        Q181 = self.varmetilskudd_utstyr_mar  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- mars (W/m2)
+        Q182 = self.varmetilskudd_utstyr_apr  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- april (W/m2)
+        Q183 = self.varmetilskudd_utstyr_mai  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- mai (W/m2)
+        Q184 = self.varmetilskudd_utstyr_jun  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- juni (W/m2)
+        Q185 = self.varmetilskudd_utstyr_jul  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- juli (W/m2)
+        Q186 = self.varmetilskudd_utstyr_aug  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- august (W/m2)
+        Q187 = self.varmetilskudd_utstyr_sep  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- september (timer)
+        Q188 = self.varmetilskudd_utstyr_okt  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- oktober (W/m2)
+        Q189 = self.varmetilskudd_utstyr_nov  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- november (W/m2)
+        Q190 = self.varmetilskudd_utstyr_des  # - Spesifikk gjennomsnittlig varmetilskudd fra utstyr- desember (W/m2)
 
-        Q197 = tid_drift_oppv_belysn_utstyr_jan   # - Timer i driftstid for belysning - januar (timer)
-        Q198 = tid_drift_oppv_belysn_utstyr_feb   # - Timer i driftstid for belysning - februar (timer)
-        Q199 = tid_drift_oppv_belysn_utstyr_mar   # - Timer i driftstid for belysning - mars (timer)
-        Q200 = tid_drift_oppv_belysn_utstyr_apr   # - Timer i driftstid for belysning - april (timer)
-        Q201 = tid_drift_oppv_belysn_utstyr_mai   # - Timer i driftstid for belysning - mai (timer)
-        Q202 = tid_drift_oppv_belysn_utstyr_jun   # - Timer i driftstid for belysning - juni (timer)
-        Q203 = tid_drift_oppv_belysn_utstyr_jul   # - Timer i driftstid for belysning - juli (timer)
-        Q204 = tid_drift_oppv_belysn_utstyr_aug   # - Timer i driftstid for belysning - august (timer)
-        Q205 = tid_drift_oppv_belysn_utstyr_sep   # - Timer i driftstid for belysning - september (timer)
-        Q206 = tid_drift_oppv_belysn_utstyr_okt   # - Timer i driftstid for belysning - oktober (timer)
-        Q207 = tid_drift_oppv_belysn_utstyr_nov   # - Timer i driftstid for belysning - november (timer)
-        Q208 = tid_drift_oppv_belysn_utstyr_des   # - Timer i driftstid for belysning - desember (timer)
+        Q197 = self.tid_drift_oppv_belysn_utstyr_jan  # - Timer i driftstid for belysning - januar (timer)
+        Q198 = self.tid_drift_oppv_belysn_utstyr_feb  # - Timer i driftstid for belysning - februar (timer)
+        Q199 = self.tid_drift_oppv_belysn_utstyr_mar  # - Timer i driftstid for belysning - mars (timer)
+        Q200 = self.tid_drift_oppv_belysn_utstyr_apr  # - Timer i driftstid for belysning - april (timer)
+        Q201 = self.tid_drift_oppv_belysn_utstyr_mai  # - Timer i driftstid for belysning - mai (timer)
+        Q202 = self.tid_drift_oppv_belysn_utstyr_jun  # - Timer i driftstid for belysning - juni (timer)
+        Q203 = self.tid_drift_oppv_belysn_utstyr_jul  # - Timer i driftstid for belysning - juli (timer)
+        Q204 = self.tid_drift_oppv_belysn_utstyr_aug  # - Timer i driftstid for belysning - august (timer)
+        Q205 = self.tid_drift_oppv_belysn_utstyr_sep  # - Timer i driftstid for belysning - september (timer)
+        Q206 = self.tid_drift_oppv_belysn_utstyr_okt  # - Timer i driftstid for belysning - oktober (timer)
+        Q207 = self.tid_drift_oppv_belysn_utstyr_nov  # - Timer i driftstid for belysning - november (timer)
+        Q208 = self.tid_drift_oppv_belysn_utstyr_des  # - Timer i driftstid for belysning - desember (timer)
 
-        X179 = varmetilskudd_person_jan   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - januar (W/m2)
-        X180 = varmetilskudd_person_feb   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - februar (W/m2)
-        X181 = varmetilskudd_person_mar   # - Spesifikk gjennomsnittlig varmetilskudd fra personer- mars (W/m2)
-        X182 = varmetilskudd_person_apr   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - april (W/m2)
-        X183 = varmetilskudd_person_mai   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - mai (W/m2)
-        X184 = varmetilskudd_person_jun   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - juni (W/m2)
-        X185 = varmetilskudd_person_jul   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - juli (W/m2)
-        X186 = varmetilskudd_person_aug   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - august (W/m2)
-        X187 = varmetilskudd_person_sep   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - september (W/m2)
-        X188 = varmetilskudd_person_okt   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - oktober (W/m2)
-        X189 = varmetilskudd_person_nov   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - november (W/m2)
-        X190 = varmetilskudd_person_des   # - Spesifikk gjennomsnittlig varmetilskudd fra personer - desember (W/m2)
+        X179 = self.varmetilskudd_person_jan  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - januar (W/m2)
+        X180 = self.varmetilskudd_person_feb  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - februar (W/m2)
+        X181 = self.varmetilskudd_person_mar  # - Spesifikk gjennomsnittlig varmetilskudd fra personer- mars (W/m2)
+        X182 = self.varmetilskudd_person_apr  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - april (W/m2)
+        X183 = self.varmetilskudd_person_mai  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - mai (W/m2)
+        X184 = self.varmetilskudd_person_jun  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - juni (W/m2)
+        X185 = self.varmetilskudd_person_jul  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - juli (W/m2)
+        X186 = self.varmetilskudd_person_aug  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - august (W/m2)
+        X187 = self.varmetilskudd_person_sep  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - september (W/m2)
+        X188 = self.varmetilskudd_person_okt  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - oktober (W/m2)
+        X189 = self.varmetilskudd_person_nov  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - november (W/m2)
+        X190 = self.varmetilskudd_person_des  # - Spesifikk gjennomsnittlig varmetilskudd fra personer - desember (W/m2)
 
-        X197 = tid_drift_person_jan   # - Timer i driftstid for personer - januar (timer)
-        X198 = tid_drift_person_feb   # - Timer i driftstid for personer - februar (timer)
-        X199 = tid_drift_person_mar   # - Timer i driftstid for personer - mars (timer)
-        X200 = tid_drift_person_apr   # - Timer i driftstid for personer - april (timer)
-        X201 = tid_drift_person_mai   # - Timer i driftstid for personer - mai (timer)
-        X202 = tid_drift_person_jun   # - Timer i driftstid for personer - juni (timer)
-        X203 = tid_drift_person_jul   # - Timer i driftstid for personer - juli (timer)
-        X204 = tid_drift_person_aug   # - Timer i driftstid for personer - august (timer)
-        X205 = tid_drift_person_sep   # - Timer i driftstid for personer - september (timer)
-        X206 = tid_drift_person_okt   # - Timer i driftstid for personer - oktober (timer)
-        X207 = tid_drift_person_nov   # - Timer i driftstid for personer - november (timer)
-        X208 = tid_drift_person_des   # - Timer i driftstid for personer - desember (timer)
+        X197 = self.tid_drift_person_jan  # - Timer i driftstid for personer - januar (timer)
+        X198 = self.tid_drift_person_feb  # - Timer i driftstid for personer - februar (timer)
+        X199 = self.tid_drift_person_mar  # - Timer i driftstid for personer - mars (timer)
+        X200 = self.tid_drift_person_apr  # - Timer i driftstid for personer - april (timer)
+        X201 = self.tid_drift_person_mai  # - Timer i driftstid for personer - mai (timer)
+        X202 = self.tid_drift_person_jun  # - Timer i driftstid for personer - juni (timer)
+        X203 = self.tid_drift_person_jul  # - Timer i driftstid for personer - juli (timer)
+        X204 = self.tid_drift_person_aug  # - Timer i driftstid for personer - august (timer)
+        X205 = self.tid_drift_person_sep  # - Timer i driftstid for personer - september (timer)
+        X206 = self.tid_drift_person_okt  # - Timer i driftstid for personer - oktober (timer)
+        X207 = self.tid_drift_person_nov  # - Timer i driftstid for personer - november (timer)
+        X208 = self.tid_drift_person_des  # - Timer i driftstid for personer - desember (timer)
 
-        C192 = areal_oppv # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - Oppvarmed del av BRA
+        C192 = self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - Oppvarmed del av BRA
 
         X72 = Q254 # NS3031* - Ventilasjonsvarmetap, HV - Antall timer i måneden i driftstiden, ton
         X73 = X254 # NS3031* - Ventilasjonsvarmetap, HV - Antall timer i måneden utenfor driftstiden, tred
-        X76 = luftmengde_spesifikk_i_driftstid # NS3031* - Ventilasjonsvarmetap, HV - Spesifikk luftmengde for ventilasjon ihht. byggkategori i driftstid
-        X77 = luftmengde_spesifikk_utenfor_driftstid # NS3031* - Ventilasjonsvarmetap, HV - Spesifikk luftmengde for ventilasjon ihht. byggkategori utenfor driftstid
-        X78 = BygningskategoriErForretningsbygg# NS3031* - Ventilasjonsvarmetap, HV - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig
-        term1 = (1.6-0.007*(areal_oppv-50)) if areal_oppv<110 else 1.2
+        X76 = self.luftmengde_spesifikk_i_driftstid  # NS3031* - Ventilasjonsvarmetap, HV - Spesifikk luftmengde for ventilasjon ihht. byggkategori i driftstid
+        X77 = self.luftmengde_spesifikk_utenfor_driftstid  # NS3031* - Ventilasjonsvarmetap, HV - Spesifikk luftmengde for ventilasjon ihht. byggkategori utenfor driftstid
+        X78 = self.BygningskategoriErForretningsbygg  # NS3031* - Ventilasjonsvarmetap, HV - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig
+        term1 = (1.6 - 0.007 * (self.areal_oppv - 50)) if self.areal_oppv < 110 else 1.2
         X74 = term1 if X78==0 else X76 # NS3031* - Ventilasjonsvarmetap, HV - Arealkorreksjon for bolig, på spesifikk luftmengde for ventilasjon i driftstid
         X75 = term1 if X78==0 else X77 # NS3031* - Ventilasjonsvarmetap, HV - Arealkorreksjon for bolig, på spesifikk luftmengde for ventilasjon utenfor driftstid
-        X67 = X74*areal_oppv # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjon i driftstiden
-        X68 = X75*areal_oppv # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjon utenfor driftstiden
-        X70 = varmekapasitet_luft # NS3031* - Ventilasjonsvarmetap, HV - Luftens varmekapasitet per volum
-        X69 = tempvirkningsgrad_varmegjenvinner# NS3031* - Ventilasjonsvarmetap, HV - Temperaturvirkningsgrad for varmegjenvinner
+        X67 = X74 * self.areal_oppv  # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjon i driftstiden
+        X68 = X75 * self.areal_oppv  # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjon utenfor driftstiden
+        X70 = self.varmekapasitet_luft  # NS3031* - Ventilasjonsvarmetap, HV - Luftens varmekapasitet per volum
+        X69 = self.tempvirkningsgrad_varmegjenvinner  # NS3031* - Ventilasjonsvarmetap, HV - Temperaturvirkningsgrad for varmegjenvinner
         X66 = (X72*X67+X73*X68)/(X72+X73) # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjonsmengde
         X64 = X70*X66*(1-X69) # NS3031* - Ventilasjonsvarmetap, HV - Totalt, HV
-        X65 = X64/areal_oppv# NS3031* - Ventilasjonsvarmetap, HV - G
+        X65 = X64 / self.areal_oppv  # NS3031* - Ventilasjonsvarmetap, HV - G
 
-        AE180 = 0.37 * np.mean([vifteeffekt_spesifikk_i_driftstid,vifteeffekt_spesifikk_utenfor_driftstid]) # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Temperaturøkning over avtrekksvifte
-        AE179 = 0.37 * np.mean([vifteeffekt_spesifikk_i_driftstid,vifteeffekt_spesifikk_utenfor_driftstid]) # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Temperaturøkning over tilluftsvifte
+        AE180 = 0.37 * np.mean([(self.vifteeffekt_spesifikk_i_driftstid),
+                                (
+                                    self.vifteeffekt_spesifikk_utenfor_driftstid)])  # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Temperaturøkning over avtrekksvifte
+        AE179 = 0.37 * np.mean([(self.vifteeffekt_spesifikk_i_driftstid),
+                                (
+                                    self.vifteeffekt_spesifikk_utenfor_driftstid)])  # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Temperaturøkning over tilluftsvifte
         AE181 = X66                                                                                         # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Gjennomsnittlig ventilasjon
-        AE183 = tempvirkningsgrad_varmegjenvinner                                                           # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmegjenvinnerens temperaturvirkningsgrad
-        AE185 = areal_oppv                                                                                  # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Oppvarmed del av BRA (m2)
-        AE177 = 0 if AE183<=0 else varmekapasitet_luft*(AE181*((1-AE183)*AE179+AE183*AE180))/AE185          # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmetilskudd fra vifter
+        AE183 = self.tempvirkningsgrad_varmegjenvinner  # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmegjenvinnerens temperaturvirkningsgrad
+        AE185 = self.areal_oppv  # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Oppvarmed del av BRA (m2)
+        AE177 = 0 if AE183 <= 0 else self.varmekapasitet_luft * (AE181 * ((
+                                                                                      1 - AE183) * AE179 + AE183 * AE180)) / AE185  # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmetilskudd fra vifter
 
         C179 = (J197/1000*J179 + Q197/1000*Q179 + X197/1000*X179 + AE177/1000*np.mean([Q254,AE254]))*C192 # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - januar
         C180 = (J198/1000*J180 + Q198/1000*Q180 + X198/1000*X180 + AE177/1000*np.mean([Q254,AE254]))*C192 # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - februar
@@ -1201,18 +946,18 @@ class EnergiBeregning:
         C130 = C148 + C189 # NS3031 - Varmettilskudd - november
         C131 = C149 + C190 # NS3031 - Varmettilskudd - desember
 
-        X46 = tid_drift_oppv_belysn_utstyr_jan # - Timer i driftstid for oppvarming - Timer for måneden - januar
-        X47 = tid_drift_oppv_belysn_utstyr_feb # - Timer i driftstid for oppvarming - Timer for måneden - februar
-        X48 = tid_drift_oppv_belysn_utstyr_mar # - Timer i driftstid for oppvarming - Timer for måneden - mars
-        X49 = tid_drift_oppv_belysn_utstyr_apr # - Timer i driftstid for oppvarming - Timer for måneden - april
-        X50 = tid_drift_oppv_belysn_utstyr_mai # - Timer i driftstid for oppvarming - Timer for måneden - mai
-        X51 = tid_drift_oppv_belysn_utstyr_jun # - Timer i driftstid for oppvarming - Timer for måneden - juni
-        X52 = tid_drift_oppv_belysn_utstyr_jul # - Timer i driftstid for oppvarming - Timer for måneden - juli
-        X53 = tid_drift_oppv_belysn_utstyr_aug # - Timer i driftstid for oppvarming - Timer for måneden - august
-        X54 = tid_drift_oppv_belysn_utstyr_sep # - Timer i driftstid for oppvarming - Timer for måneden - september
-        X55 = tid_drift_oppv_belysn_utstyr_okt # - Timer i driftstid for oppvarming - Timer for måneden - oktober
-        X56 = tid_drift_oppv_belysn_utstyr_nov # - Timer i driftstid for oppvarming - Timer for måneden - november
-        X57 = tid_drift_oppv_belysn_utstyr_des # - Timer i driftstid for oppvarming - Timer for måneden - desember
+        X46 = self.tid_drift_oppv_belysn_utstyr_jan  # - Timer i driftstid for oppvarming - Timer for måneden - januar
+        X47 = self.tid_drift_oppv_belysn_utstyr_feb  # - Timer i driftstid for oppvarming - Timer for måneden - februar
+        X48 = self.tid_drift_oppv_belysn_utstyr_mar  # - Timer i driftstid for oppvarming - Timer for måneden - mars
+        X49 = self.tid_drift_oppv_belysn_utstyr_apr  # - Timer i driftstid for oppvarming - Timer for måneden - april
+        X50 = self.tid_drift_oppv_belysn_utstyr_mai  # - Timer i driftstid for oppvarming - Timer for måneden - mai
+        X51 = self.tid_drift_oppv_belysn_utstyr_jun  # - Timer i driftstid for oppvarming - Timer for måneden - juni
+        X52 = self.tid_drift_oppv_belysn_utstyr_jul  # - Timer i driftstid for oppvarming - Timer for måneden - juli
+        X53 = self.tid_drift_oppv_belysn_utstyr_aug  # - Timer i driftstid for oppvarming - Timer for måneden - august
+        X54 = self.tid_drift_oppv_belysn_utstyr_sep  # - Timer i driftstid for oppvarming - Timer for måneden - september
+        X55 = self.tid_drift_oppv_belysn_utstyr_okt  # - Timer i driftstid for oppvarming - Timer for måneden - oktober
+        X56 = self.tid_drift_oppv_belysn_utstyr_nov  # - Timer i driftstid for oppvarming - Timer for måneden - november
+        X57 = self.tid_drift_oppv_belysn_utstyr_des  # - Timer i driftstid for oppvarming - Timer for måneden - desember
 
         AE46 = AE242-X46 # Timer utenfor driftstid for oppvarming - januar
         AE47 = AE243-X47 # Timer utenfor driftstid for oppvarming - februar
@@ -1227,30 +972,30 @@ class EnergiBeregning:
         AE56 = AE252-X56 # Timer utenfor driftstid for oppvarming - november
         AE57 = AE253-X57 # Timer utenfor driftstid for oppvarming - desember
 
-        C84 = U_tak                   # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, tak
-        C85 = U_vegg_oest             # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vegg øst, uten vindu og dør
-        C86 = U_vegg_vest             # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vegg vest, uten vindu og dør
-        C87 = U_vegg_soer             # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vegg sør, uten vindu og dør
-        C88 = U_vegg_nord             # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vegg nord, uten vindu og dør
-        C89 = U_gulv_mot_det_fri      # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, gulv, mot det fri
-        C91 = U_vindu_oest            # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, øst
-        C92 = U_vindu_vest            # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, vest
-        C93 = U_vindu_soer            # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, sør
-        C94 = U_vindu_nord            # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, nord
-        C95 = U_vindu_tak             # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, tak
-        C96 = U_dor                   # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, dør
-        C98 = areal_tak               # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, tak
-        C99 = areal_vegg_oest         # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg øst, uten vindu og dør
-        C100 = areal_vegg_vest        # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg vest, uten vindu og dør
-        C101 = areal_vegg_soer        # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg sør, uten vindu og dør
-        C102 = areal_vegg_nord        # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg nord, uten vindu og dør
-        C103 = areal_gulv_mot_det_fri # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, gulv mot det fri
-        C105 = areal_vindu_oest       # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, øst
-        C106 = areal_vindu_vest       # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, vest
-        C107 = areal_vindu_soer       # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, sør
-        C108 = areal_vindu_nord       # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, nord
-        C109 = areal_vindu_tak        # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, tak
-        C110 = areal_dor              # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, dører
+        C84 = self.U_tak  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, tak
+        C85 = self.U_vegg_oest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vegg øst, uten vindu og dør
+        C86 = self.U_vegg_vest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vegg vest, uten vindu og dør
+        C87 = self.U_vegg_soer  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vegg sør, uten vindu og dør
+        C88 = self.U_vegg_nord  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vegg nord, uten vindu og dør
+        C89 = self.U_gulv_mot_det_fri  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, gulv, mot det fri
+        C91 = self.U_vindu_oest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, øst
+        C92 = self.U_vindu_vest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, vest
+        C93 = self.U_vindu_soer  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, sør
+        C94 = self.U_vindu_nord  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, nord
+        C95 = self.U_vindu_tak  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, tak
+        C96 = self.U_dor  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, dør
+        C98 = self.areal_tak  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, tak
+        C99 = self.areal_vegg_oest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg øst, uten vindu og dør
+        C100 = self.areal_vegg_vest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg vest, uten vindu og dør
+        C101 = self.areal_vegg_soer  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg sør, uten vindu og dør
+        C102 = self.areal_vegg_nord  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg nord, uten vindu og dør
+        C103 = self.areal_gulv_mot_det_fri  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, gulv mot det fri
+        C105 = self.areal_vindu_oest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, øst
+        C106 = self.areal_vindu_vest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, vest
+        C107 = self.areal_vindu_soer  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, sør
+        C108 = self.areal_vindu_nord  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, nord
+        C109 = self.areal_vindu_tak  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, tak
+        C110 = self.areal_dor  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, dører
 
         C71 = C84*C98  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - tak
         C72 = C85*C99  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - vegg øst, uten vindu
@@ -1267,48 +1012,48 @@ class EnergiBeregning:
 
         C66 = C71+C72+C73+C74+C75+C76 + C77+C78+C79+C80+C81+C82 # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Summert UiAi for bygningsdeler
 
-        C68 = areal_oppv           # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD -  Oppvarmet del av BRA
-        C69 = kuldebro_normalisert # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD -  Normalisert kuldebro
+        C68 = self.areal_oppv  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD -  Oppvarmet del av BRA
+        C69 = self.kuldebro_normalisert  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD -  Normalisert kuldebro
         C67 = C68*C69              # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Normalisert kuldebro ganget med oppvarmet areal
         C64 = C66+C67              # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Totalt, HD
 
-        AE81 = BygningskategoriErForretningsbygg                        # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig (1 = Forretningsbygg, 0 = Bolig)
-        AE79 = luftmengde_spesifikk_tilluft                             # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - spesifikk tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
-        AE80 = luftmengde_spesifikk_avtrekksluft                        # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - spesifikk avtrekksluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
+        AE81 = self.BygningskategoriErForretningsbygg  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig (1 = Forretningsbygg, 0 = Bolig)
+        AE79 = self.luftmengde_spesifikk_tilluft  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - spesifikk tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
+        AE80 = self.luftmengde_spesifikk_avtrekksluft  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - spesifikk avtrekksluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
         AE77 = term1 if AE81==0 else AE79                               # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Arealkorreksjon for bolig, på spesifikk tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
         AE78 = term1 if AE81==0 else AE80                               # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Arealkorreksjon for bolig, på spesifikk avtrekksluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
         AE75 = 0 if AE79==0 else AE77                                   # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Korreksjon for luftmengde = 0, på spesifikk tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
         AE76 = 0 if AE80==0 else AE78                                   # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Korreksjon for luftmengde = 0, på spesifikk avtrekksluftsmengde i det mekaniske ventilasjonsanlegget (m3/(h m2))
-        AE68 = varmekapasitet_luft                                      # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Luftens varmekapasitet per volum
-        AE69 = lekkasjetall                                             # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Terrengskjermingskoeffisient, e
-        AE70 = terrengskjermingskoeff_e                                 # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Lekkasjetall, n50
-        AE71 = terrengskjermingskoeff_f                                 # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Luftens varmekapasitet per volum
-        AE72 = areal_oppv*AE75                                          # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/h)
-        AE73 = areal_oppv*AE76                                          # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Avtrekksmengde i det mekaniske ventilasjonsanlegget (m3/h)
-        AE74 = etasjehoyde_innvendig                                    # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Etasjehøyde, innvendig
+        AE68 = self.varmekapasitet_luft  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Luftens varmekapasitet per volum
+        AE69 = self.lekkasjetall  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Terrengskjermingskoeffisient, e
+        AE70 = self.terrengskjermingskoeff_e  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Lekkasjetall, n50
+        AE71 = self.terrengskjermingskoeff_f  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Luftens varmekapasitet per volum
+        AE72 = self.areal_oppv * AE75  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/h)
+        AE73 = self.areal_oppv * AE76  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Avtrekksmengde i det mekaniske ventilasjonsanlegget (m3/h)
+        AE74 = self.etasjehoyde_innvendig  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Etasjehøyde, innvendig
         AE67 = C68*AE74                                                 # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Oppvarmet luftvolum (Nettovolum av en bygnig beregnet innenfor dens innvendige, omsluttende flater)§
         AE66 = (AE69*AE70)/(1+(AE71/AE70)*((AE72-AE73)/(AE67*AE69))**2) # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Luftskifte for infiltrasjon
         AE64 = AE68*AE66*AE67                                           # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Totalt, Hinf
 
-        Q99 =varmekonduktivitet_grunn                                           # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Varmekonduktivitet til grunnen, λ
-        Q100 =dybde_periodisk_nedtrengning                                      # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Periodiske nedtrengningsdybde, δ
-        Q104 = tykkelse_grunnmur                                                # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Tykkelse på grunnmur/ringmur, w [meter]
-        Q105 = U_gulvkonstruksjon                                               # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Varmegjennomgangskoeffisient til selve gulvkonstruksjonen uten hensyn til varmemotstanden i grunnen, Ufl [W/(m2 K)]
-        Q106 = U_kjellerveggskonstruksjon                                       # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Varmegjennomgangskoeffisient til selve veggkonstruksjonen uten hensyn til varmemotstanden i grunnen, Uw [W/(m2 K)]
-        Q107 = kantisol_tykkelse                                                # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Tykkelse på kantisolasjon, diso [meter]
-        Q108 = varmekonduktivitet_kantisol                                      # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Varmekonduktivitet til kantisolasjonen, λiso ([W/(m K)]) (>0)
+        Q99 = self.varmekonduktivitet_grunn  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Varmekonduktivitet til grunnen, λ
+        Q100 = self.dybde_periodisk_nedtrengning  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Periodiske nedtrengningsdybde, δ
+        Q104 = self.tykkelse_grunnmur  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Tykkelse på grunnmur/ringmur, w [meter]
+        Q105 = self.U_gulvkonstruksjon  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Varmegjennomgangskoeffisient til selve gulvkonstruksjonen uten hensyn til varmemotstanden i grunnen, Ufl [W/(m2 K)]
+        Q106 = self.U_kjellerveggskonstruksjon  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Varmegjennomgangskoeffisient til selve veggkonstruksjonen uten hensyn til varmemotstanden i grunnen, Uw [W/(m2 K)]
+        Q107 = self.kantisol_tykkelse  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Tykkelse på kantisolasjon, diso [meter]
+        Q108 = self.varmekonduktivitet_kantisol  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Varmekonduktivitet til kantisolasjonen, λiso ([W/(m K)]) (>0)
         Q101 = Q104+Q99/Q105                                                    # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Ekvivalent tykkelse for gulvet, dt
         Q102 = Q107*(Q99/Q108-1)                                                # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Ekvivalent tykkelse for kantisolasjon, d'
         Q103 = Q99/Q106                                                         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Ekvivalent tykkelse for kjellerveggene, dw
-        Q109 = kantisol_horisontal_dybde                                        # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Horisontal dybde på kantisolasjon, D [meter]
-        Q110 = kantisol_vertikal_bredde                                         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Vertikal bredde på kantisolasjon, D [meter]
-        Q112 = faseforskjell_utetemp_varmetap                                   # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Faseforskjell mellom utetemp og varmetap (2 mnd for gulv og 1 mnd for kjeller)
-        Q114 = temp_amplitudevar                                                # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Amplitudevariasjonen omkring årsmiddeltemperaturen ute
+        Q109 = self.kantisol_horisontal_dybde  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Horisontal dybde på kantisolasjon, D [meter]
+        Q110 = self.kantisol_vertikal_bredde  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Vertikal bredde på kantisolasjon, D [meter]
+        Q112 = self.faseforskjell_utetemp_varmetap  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Faseforskjell mellom utetemp og varmetap (2 mnd for gulv og 1 mnd for kjeller)
+        Q114 = self.temp_amplitudevar  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Amplitudevariasjonen omkring årsmiddeltemperaturen ute
         Q97 = -(Q99/np.pi)*(np.log(Q109/Q101+1)-np.log(Q109/(Q101+Q102)+1))     # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Lineær varmegjennomgangs-koeffisient, horisontal kantisolasjon
         Q98 = -(Q99/np.pi)*(np.log(2*Q110/Q101+1)-np.log(2*Q110/(Q101+Q102)+1)) # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Lineær varmegjennomgangs-koeffisient, vertikal kantisolasjon
-        Q94 = areal_gulv_kjeller                                                # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ag
-        Q95 = omkrets_gulv                                                      # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Omkrets på gulv (omkrets mot det fri), P
-        Q96 = oppfyllingshoyde_kjellervegg                                      # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Oppfyllingshøyden mot kjellervegg, z
+        Q94 = self.areal_gulv_kjeller  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ag
+        Q95 = self.omkrets_gulv  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Omkrets på gulv (omkrets mot det fri), P
+        Q96 = self.oppfyllingshoyde_kjellervegg  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Oppfyllingshøyden mot kjellervegg, z
         Q92 = Q94/(0.5*Q95)                                                     # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Karakteristisk dimensjon for gulvet, B'
         Q93 = 2*Q99/(np.pi*Q96)*(1+((0.5*Q101)/(Q101+Q96)))*np.log(Q96/Q103+1)  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Vegg mot grunn, Ubw
         Q84 = 0.37*Q95*Q99*((1-np.exp(-(Q109/Q100)))  *np.log(Q100/(Q101+Q102))+np.exp(-(Q109/Q100))  *np.log(Q100/Q101+1))                          ## NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For gulv mot grunnen, vertikal kantisolasjon (D' = D)
@@ -1316,12 +1061,12 @@ class EnergiBeregning:
         Q86 = 0.37*Q95*Q99*((1-np.exp(-(Q96/Q100)))   *np.log(Q100/Q103+1)     +np.exp(-(Q96/Q100))   *np.log(Q100/Q101+1))                           # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For vegg og gulv mot grunnen
 
         Q89 = Q99/(0.457*Q92+Q101+0.5*Q96)                                      # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'<dt + 0,5*z)
-        Q88 = REF if Q92>Q101+0.5*Q96 else Q89                                  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'>dt + 0,5*z)
+        Q88 = self.REF if Q92 > Q101 + 0.5 * Q96 else Q89  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'>dt + 0,5*z)
         # Nima Darabi: OBS! Q88 ser ut som er kopiert med offset
         Q81 = Q88*Q94+Q97*Q95                                                   # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Stasjonær varmetransportkoeffisient, Hg] - For gulv mot grunnen
         Q82 = Q88*Q94+Q96*Q95*Q93                                               # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Stasjonær varmetransportkoeffisient, Hg] - For vegg og gulv mot grunnen
-        Q78 = aarsmiddeltemp_inne                                               # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Årsmiddeltemperatur inne, i driftstiden
-        Q79 = aarsmiddeltemp_ute                                                # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Årsmiddeltemperatur ute
+        Q78 = self.aarsmiddeltemp_inne  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Årsmiddeltemperatur inne, i driftstiden
+        Q79 = self.aarsmiddeltemp_ute  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Årsmiddeltemperatur ute
 
         Q66 = C197 * ((Q81 if Q112==2 else Q82)*(Q78-Q79) + (max([Q84,Q85]) if Q112==2 else Q86) * Q114 * np.cos(2*np.pi*(1-1-Q112)/12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - januar
         Q67 = C198 * ((Q81 if Q112==2 else Q82)*(Q78-Q79) + (max([Q84,Q85]) if Q112==2 else Q86) * Q114 * np.cos(2*np.pi*(2-1-Q112)/12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - februar
@@ -1339,10 +1084,10 @@ class EnergiBeregning:
 
         J67 = 0                     #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Det regnes ikke tillegg for kuldebro mot uoppvarmet rom
         # Nima Darabi: OBS! direkt verditildeling paa J67
-        J69 = kuldebro_normalisert  #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Normalisert kuldebro
-        J70 = varmetapsfaktor_uoppv #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Varmetapsfaktor, b
-        J74 = U_mot_uoppvarmet_sone #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - U-verdi mot uoppvarmet
-        J75 = areal_mot_uoppvarmet  #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Areal, mot uoppvarmet
+        J69 = self.kuldebro_normalisert  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Normalisert kuldebro
+        J70 = self.varmetapsfaktor_uoppv  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Varmetapsfaktor, b
+        J74 = self.U_mot_uoppvarmet_sone  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - U-verdi mot uoppvarmet
+        J75 = self.areal_mot_uoppvarmet  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Areal, mot uoppvarmet
         J72 = J74*J75               #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -
         J68 = sum([J75])            #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Oppvarmet areal, uoppvarmet sone
         J66 = J72                   #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Summert UiAi for bygningsdeler
@@ -1352,20 +1097,20 @@ class EnergiBeregning:
         J52 = Q64  # (Varmetapstall) - Varmetap mot grunnen, et helt år
         J53 = X64  # (Varmetapstall) - Ventilasjonsvarmetap, HV
         J54 = AE64 # (Varmetapstall) - Infiltrasjonsvarmetap, Hinf
-        Q46 = utetemp_jan # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - januar
-        Q47 = utetemp_feb # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - februar
-        Q48 = utetemp_mar # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - mars
-        Q49 = utetemp_apr # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - april
-        Q50 = utetemp_mai # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - mai
-        Q51 = utetemp_jun # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - juni
-        Q52 = utetemp_jul # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - juli
-        Q53 = utetemp_aug # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - august
-        Q54 = utetemp_sep # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - september
-        Q55 = utetemp_okt # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - oktober
-        Q56 = utetemp_nov # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - november
-        Q57 = utetemp_des # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - desember
-        Q59 = temp_settpunkt_oppvarming      # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
-        Q60 = temp_settpunkt_oppvarming_natt # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
+        Q46 = self.utetemp_jan  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - januar
+        Q47 = self.utetemp_feb  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - februar
+        Q48 = self.utetemp_mar  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - mars
+        Q49 = self.utetemp_apr  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - april
+        Q50 = self.utetemp_mai  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - mai
+        Q51 = self.utetemp_jun  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - juni
+        Q52 = self.utetemp_jul  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - juli
+        Q53 = self.utetemp_aug  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - august
+        Q54 = self.utetemp_sep  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - september
+        Q55 = self.utetemp_okt  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - oktober
+        Q56 = self.utetemp_nov  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - november
+        Q57 = self.utetemp_des  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - desember
+        Q59 = self.temp_settpunkt_oppvarming  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
+        Q60 = self.temp_settpunkt_oppvarming_natt  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
 
         term49 = (J50+J51+J53+J54)*(Q59-Q46)*X46/1000+(J50+J51+J53+J54)*(Q60-Q46)*AE46/1000+Q66
         term50 = (J50+J51+J53+J54)*(Q59-Q47)*X47/1000+(J50+J51+J53+J54)*(Q60-Q47)*AE47/1000+Q67
@@ -1391,9 +1136,9 @@ class EnergiBeregning:
         C58 = 0.1 if term58<0 else term58 # NS3031* - Varmetap - oktober
         C59 = 0.1 if term59<0 else term59 # NS3031* - Varmetap - november
         C60 = 0.1 if term60<0 else term60 # NS3031* - Varmetap - desember
-        C37 = norm_varmekap                                # NS3031 - Oppvarmingsbehov - Bygningens normaliserte varmekapasitet, C" (Wh/(m3 K))
+        C37 = self.norm_varmekap  # NS3031 - Oppvarmingsbehov - Bygningens normaliserte varmekapasitet, C" (Wh/(m3 K))
         C39 = J50+J51+J53+J54 + (Q81 if Q112==2 else Q82)  # NS3031 - Oppvarmingsbehov - Bygningens varmetransportkoeffisient [W/K]
-        C36 = C37*areal_oppv/C39                           # NS3031 - Oppvarmingsbehov - Varmetreghet, aH
+        C36 = C37 * self.areal_oppv / C39  # NS3031 - Oppvarmingsbehov - Varmetreghet, aH
         C35 = 1 + C36/16                                   # NS3031 - Oppvarmingsbehov - Tidskonstant, τ
 
         Q22 = C120/C49 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - januar
@@ -1438,9 +1183,10 @@ class EnergiBeregning:
 
         ### energipost 1-b
         # 6.1.7 -> Trond Ivar Bøhn: OBS! Denne referansen finnes ikke lenger i NS 3031:2014. Det er nå slik at temperaturvirkningsgraden korrigeres for frostsikringen, ref. NS 3031:2014 tillegg H.9. Men om dette skal gjøres om på, må biblioteksverdier for varmegjenvinning vurderes på nytt
-        C297 = temp_avtrekk                                                # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Temperatur før gjenvinner på avtrekkssiden, θ3
-        C298 = frostsikringstemperatur                                     # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Frostsikringstemperaturen, θ4
-        C296 = C297-(C297-C298)/(tempvirkningsgrad_varmegjenvinner+0.001)  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Minste utetemperatur som ikke innebærer frostsikring av varmegjenvinneren, θ1,min
+        C297 = self.temp_avtrekk  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Temperatur før gjenvinner på avtrekkssiden, θ3
+        C298 = self.frostsikringstemperatur  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Frostsikringstemperaturen, θ4
+        C296 = C297 - (C297 - C298) / (
+                    self.tempvirkningsgrad_varmegjenvinner + 0.001)  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Minste utetemperatur som ikke innebærer frostsikring av varmegjenvinneren, θ1,min
         C283 = 0.33*X66*C197*max([0, C296-Q46])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - januar
         C284 = 0.33*X66*C198*max([0, C296-Q47])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - februar
         C285 = 0.33*X66*C199*max([0, C296-Q48])                            # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - mars
@@ -1458,7 +1204,7 @@ class EnergiBeregning:
         Ventilasjonsvarme = C281     # # - Energipost (1b) (Energibehov [kWh/år]) Trond Ivar Bøhn: OBS! Dette ser ikke ut til å være ventilasjonsoppvarming, men kun frostsikring. Ventilasjonsvarmetapet inngår derimot i posten romoppvarming! Spm til NVE: Brukes disse enkeltpostene for netto energibehov til noe i Enova-modulen? I så fall burde vel dette ordnes opp i?!
 
         ### energipost 3-b
-        Q228 = temp_settpunkt_kjoeling               # NS3031 - Setpunkttemperatur for kjøling
+        Q228 = self.temp_settpunkt_kjoeling  # NS3031 - Setpunkttemperatur for kjøling
 
         Q215 = (J50+J51+J53+J54)*(Q228-Q46)*C197+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - januar
         Q216 = (J50+J51+J53+J54)*(Q228-Q46)*C198+Q66 # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - februar
@@ -1513,7 +1259,7 @@ class EnergiBeregning:
         X225 = 1/AE225 if AE225<0 else (C35/(C35+1) if AE225==1 else (1-AE225**C35)/(1-AE225**(C35+1))) # NS3031 - Utnyttingsfaktor - november
         X226 = 1/AE226 if AE226<0 else (C35/(C35+1) if AE226==1 else (1-AE226**C35)/(1-AE226**(C35+1))) # NS3031 - Utnyttingsfaktor - desember
 
-        C231 = areal_avkjoelt_andel
+        C231 = self.areal_avkjoelt_andel
 
         C215 = (0 if J215-X215*Q215<0 else J215-X215*Q215)*C231
         C216 = (0 if J216-X216*Q216<0 else J216-X216*Q216)*C231
@@ -1529,22 +1275,22 @@ class EnergiBeregning:
         C226 = (0 if J226-X225*Q225<0 else J225-X225*Q225)*C231
         C213 = C215+C216+C217+C218+C219+C220+C221+C222+C223+C224+C225+C226
 
-        J265 = temp_differanse_veskekrets_oppvarming # NS3031* - Energibehov, pumper (Oppvarming) - Temperatur differanse tur-retur væskekrets
-        J266 = varmekapasitet_vann                   # NS3031* - Energibehov, pumper (Oppvarming) - Spesifikk varmekapasitet for vann
-        J267 = densitet_vann                         # NS3031* - Energibehov, pumper (Oppvarming) - Densitet for vann
+        J265 = self.temp_differanse_veskekrets_oppvarming  # NS3031* - Energibehov, pumper (Oppvarming) - Temperatur differanse tur-retur væskekrets
+        J266 = self.varmekapasitet_vann  # NS3031* - Energibehov, pumper (Oppvarming) - Spesifikk varmekapasitet for vann
+        J267 = self.densitet_vann  # NS3031* - Energibehov, pumper (Oppvarming) - Densitet for vann
         J264 = C20/8760*1000                         # NS3031* - Energibehov, pumper (Oppvarming) - Varmebehov
-        J262 = tid_drift_pumpe_oppv                  # NS3031* - Energibehov, pumper (Oppvarming) - Driftstid i året
-        J261 = pumpeeffekt_spesifikk_oppv            # NS3031* - Energibehov, pumper (Oppvarming) - Spesifikk pumpeeffekt
+        J262 = self.tid_drift_pumpe_oppv  # NS3031* - Energibehov, pumper (Oppvarming) - Driftstid i året
+        J261 = self.pumpeeffekt_spesifikk_oppv  # NS3031* - Energibehov, pumper (Oppvarming) - Spesifikk pumpeeffekt
         J260 = J264/(J265*J266*J267)*1000            # NS3031* - Energibehov, pumper (Oppvarming) - Sirkulert vannmengde gjennom pumpen
         J258 = J260*J261*J262                        # NS3031* - Energibehov, pumper (Oppvarming) - Totalt, Ep
 
-        Q265 = temp_differanse_veskekrets_kjoling # NS3031* - Energibehov, pumper (Kjøling) - Temperatur differanse tur-retur væskekrets, kjøling
-        Q266 = varmekapasitet_kuldebaerer                  # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk varmekapasitet for kuldebærer
-        Q267 = densitet_kuldebaerer                        # NS3031* - Energibehov, pumper (Kjøling) - Densitet for kuldebærer
+        Q265 = self.temp_differanse_veskekrets_kjoling  # NS3031* - Energibehov, pumper (Kjøling) - Temperatur differanse tur-retur væskekrets, kjøling
+        Q266 = self.varmekapasitet_kuldebaerer  # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk varmekapasitet for kuldebærer
+        Q267 = self.densitet_kuldebaerer  # NS3031* - Energibehov, pumper (Kjøling) - Densitet for kuldebærer
         Q264 = C213/8760*1000                       # NS3031* - Energibehov, pumper (Kjøling) - Kjølebehov
 
-        Q262 = tid_drift_pumpe_kjoling                 # NS3031* - Energibehov, pumper (Kjøling) - Driftstid i året
-        Q261 = pumpeeffekt_spesifikk_kjoling           # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk pumpeeffekt
+        Q262 = self.tid_drift_pumpe_kjoling  # NS3031* - Energibehov, pumper (Kjøling) - Driftstid i året
+        Q261 = self.pumpeeffekt_spesifikk_kjoling  # NS3031* - Energibehov, pumper (Kjøling) - Spesifikk pumpeeffekt
         Q260 = Q264/(Q265*Q266*Q267)*1000            # NS3031* - Energibehov, pumper (Kjøling) - Sirkulert vannmengde gjennom pumpen
         Q258 = Q260*Q261*Q262                        # NS3031* - Energibehov, pumper (Kjøling) - Totalt, Ep
 
@@ -1576,27 +1322,27 @@ class EnergiBeregning:
                                    Kjoeling
 
         # energivare 1
-        J306 = el_solcelle_andel_el_spesifikt_forbruk  # NS3031 - Andel av energibehov - Andel til el-spesifikt forbruk som dekkes av solcelleanlegg
+        J306 = self.el_solcelle_andel_el_spesifikt_forbruk  # NS3031 - Andel av energibehov - Andel til el-spesifikt forbruk som dekkes av solcelleanlegg
         J307 = np.nan                                  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme (Trond Ivar: Egentlig burde man vel også delt opp romoppvarming og ventilasjonsvarme, for å benytte (om ønskelig) forskjellig andel av netto energibehov.)
-        J308 = el_er_andel_energi_oppv_ventilasjon     # NS3031 - Andel av energibehov - fra elektrisk varmesystem
-        J309 = el_hp_andel_energi_oppv_ventilasjon     # NS3031 - Andel av energibehov - fra varmepumpe
-        J310 = el_Tsol_andel_energi_oppv_ventilasjon   # NS3031 - Andel av energibehov - fra solfangeranlegg
+        J308 = self.el_er_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - fra elektrisk varmesystem
+        J309 = self.el_hp_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - fra varmepumpe
+        J310 = self.el_Tsol_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - fra solfangeranlegg
         J311 = np.nan                                  # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann
-        J312 = el_er_andel_energi_tappevann_varme      # NS3031 - Andel av energibehov - fra elektrisk varmesystem
-        J313 = el_hp_andel_energi_tappevann_varme      # NS3031 - Andel av energibehov - fra varmepumpe
-        J314 = el_Tsol_andel_energi_tappevann_varme    # NS3031 - Andel av energibehov - fra solfangeranlegg
+        J312 = self.el_er_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - fra elektrisk varmesystem
+        J313 = self.el_hp_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - fra varmepumpe
+        J314 = self.el_Tsol_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - fra solfangeranlegg
 
         Q305 = np.nan                                                 # NS3031 - Systemvirkningsgrader - Årsgjennomsnittlig
-        Q306 = systemvirkningsgrad_solcelle                           # NS3031 - Systemvirkningsgrader - Solcellesystemer (elektrisitetsproduksjon)
+        Q306 = self.systemvirkningsgrad_solcelle  # NS3031 - Systemvirkningsgrader - Solcellesystemer (elektrisitetsproduksjon)
         Q307 = np.nan                                                 # NS3031 - Systemvirkningsgrader - Systemvirkningsgrader for romoppvarming og ventilasjonsvarme
-        Q308 = systemvirkningsgrad_elektrisk_oppv_ventilasjon         # NS3031 - Systemvirkningsgrader - for elektrisk varmesystem
-        Q309 = systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader - for varmepumpeanlegg
-        Q310 = systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon # NS3031 - Systemvirkningsgrader - for termisk solfangeranlegg
+        Q308 = self.systemvirkningsgrad_elektrisk_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader - for elektrisk varmesystem
+        Q309 = self.systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader - for varmepumpeanlegg
+        Q310 = self.systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader - for termisk solfangeranlegg
         Q311 = np.nan                                                 # NS3031 - Systemvirkningsgrader - Systemvirkningsgrader for oppvarming av tappevann
-        Q312 = systemvirkningsgrad_elektrisk_tappevann_varme          # NS3031 - Systemvirkningsgrader - for elektrisk varmesystem
-        Q313 = systemvirkningsgrad_varmepumpeanlegg_tappevann_varme   # NS3031 - Systemvirkningsgrader - for varmepumpeanlegg
-        Q314 = systemvirkningsgrad_solfanger_termisk_tappevann_varme  # NS3031 - Systemvirkningsgrader - for termisk solfangeranlegg
-        Q316 = effektfaktor_kjoeleanlegg                              # NS3031 - Systemvirkningsgrader - Årsgjennomsnittlig effektfaktor for kjøleanlegg (komfortkjøling)
+        Q312 = self.systemvirkningsgrad_elektrisk_tappevann_varme  # NS3031 - Systemvirkningsgrader - for elektrisk varmesystem
+        Q313 = self.systemvirkningsgrad_varmepumpeanlegg_tappevann_varme  # NS3031 - Systemvirkningsgrader - for varmepumpeanlegg
+        Q314 = self.systemvirkningsgrad_solfanger_termisk_tappevann_varme  # NS3031 - Systemvirkningsgrader - for termisk solfangeranlegg
+        Q316 = self.effektfaktor_kjoeleanlegg  # NS3031 - Systemvirkningsgrader - Årsgjennomsnittlig effektfaktor for kjøleanlegg (komfortkjøling)
 
         C308 = C242+C258+C272+C277                   # NS3031 - Systemvirkningsgrader - Netto el-spesifikt forbruk
         C309 = ((C20+C281)*J308/Q308+C237*J312/Q312) # NS3031 - Systemvirkningsgrader - Levert elektrisitet til elektriske varmesystemer
@@ -1609,42 +1355,42 @@ class EnergiBeregning:
         Elektrisitet = C306                          # # - Energivare (1) (Levert energi [kWh/år]) - Elektrisitet
 
         # energivare 2
-        Q321 =systemvirkningsgrad_olje_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q322 = systemvirkningsgrad_olje_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for tappevann
-        J321 = olje_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme oljebasert system
-        J322 = olje_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - AAndel av netto energibehov for oppvarming av tappevann oljebasert system
+        Q321 = self.systemvirkningsgrad_olje_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q322 = self.systemvirkningsgrad_olje_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for tappevann
+        J321 = self.olje_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme oljebasert system
+        J322 = self.olje_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - AAndel av netto energibehov for oppvarming av tappevann oljebasert system
         C321 = ((C20+C281)*J321/Q321+C237*J322/Q322)     # NS3031 - Beregning av behov for levert olje - Levert energi i form av olje
         Olje = C321                                      # # - Energivare (2) (Levert energi [kWh/år]) - Olje
 
         # energivare 3
-        Q327 = systemvirkningsgrad_gass_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Gassbasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q328 = systemvirkningsgrad_gass_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Gassbasert varmesystem for tappevann
-        J327 = gass_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme gassbasert system
-        J328 = gass_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann gassbasert system
+        Q327 = self.systemvirkningsgrad_gass_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Gassbasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q328 = self.systemvirkningsgrad_gass_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Gassbasert varmesystem for tappevann
+        J327 = self.gass_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme gassbasert system
+        J328 = self.gass_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann gassbasert system
         C327 = ((C20+C281)*J327/Q327+C237*J328/Q328)     # NS3031 - Beregning av behov for levert gass - Levert energi i form av gass
         Gass = C327                                      # # - Energivare (3) (Levert energi [kWh/år]) - Gass
 
         # energivare 4
-        Q333 = systemvirkningsgrad_fjernvarme_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q334 = systemvirkningsgrad_fjernvarme_tappevann       # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for tappevann
-        J333 = fjernvarme_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme fjernvarmebasert system
-        J334 = fjernvarme_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann fjernvarmebasert system
+        Q333 = self.systemvirkningsgrad_fjernvarme_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q334 = self.systemvirkningsgrad_fjernvarme_tappevann  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for tappevann
+        J333 = self.fjernvarme_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme fjernvarmebasert system
+        J334 = self.fjernvarme_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann fjernvarmebasert system
         C333 = ((C20+C281)*J333/Q333+C237*J334/Q334)           # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
         Fjernvarme = C333                                      # # - Energivare (4) (Levert energi [kWh/år]) - Fjernvarme
 
         # energivare 5
-        Q339 = systemvirkningsgrad_bio_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q340 = systemvirkningsgrad_bio_tappevann         # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for tappevann
-        J339 = bio_andel_energi_oppv_ventilasjon         # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme biobrenselbasert system
-        J340 = bio_andel_energi_tappevann_varme          # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann biobrenselbasert system
+        Q339 = self.systemvirkningsgrad_bio_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for romoppvarming og ventilasjonsvarme
+        Q340 = self.systemvirkningsgrad_bio_tappevann  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for tappevann
+        J339 = self.bio_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme biobrenselbasert system
+        J340 = self.bio_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann biobrenselbasert system
         C339 = ((C20+C281)*J339/Q339+C237*J340/Q340)     # NS3031 - Beregning av behov for levert biobrensel - Levert energi i form av biobrensel
         Biobrensel = C339                                # # - Energivare (5) (Levert energi [kWh/år]) - Biobrensel
 
         # energivare 6
-        Q345 = systemvirkningsgrad_annet_oppv_ventilasjon # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - varmesystem basert på andre energivarer for romoppvarming og ventilasjonsvarme
-        Q346 = systemvirkningsgrad_annet_tappevann        # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - varmesystem basert på andre energivarer for tappevann
-        J345 = annet_andel_energi_oppv_ventilasjon        # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme basert på andre energivarer system
-        J346 = annet_andel_energi_tappevann_varme         # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann basert på andre energivarer system
+        Q345 = self.systemvirkningsgrad_annet_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - varmesystem basert på andre energivarer for romoppvarming og ventilasjonsvarme
+        Q346 = self.systemvirkningsgrad_annet_tappevann  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - varmesystem basert på andre energivarer for tappevann
+        J345 = self.annet_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme basert på andre energivarer system
+        J346 = self.annet_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann basert på andre energivarer system
         C345 = ((C20+C281)*J345/Q345+C237*J346/Q346)      # NS3031 - Beregning av behov for levert andre energivarer - Levert energi i form av andre energivarer
         Annen_energivare = C345                           # # - Energivare (6) (Levert energi [kWh/år]) - Andre energivarer
 
