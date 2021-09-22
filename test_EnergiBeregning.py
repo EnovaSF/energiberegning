@@ -409,7 +409,6 @@ calc_result = calc_engine.calculate()
 
 class TestCalculation(unittest.TestCase):
 
-
     # energipost
     def test_romoppvarming(self):
         self.assertEqual(11810, round(calc_result.Romoppvarming))  # add assertion here
