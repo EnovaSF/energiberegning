@@ -402,15 +402,6 @@ class EnergiBeregning:
 
         # Example we may not do it like this but something like described above
 
-        areal_oppv = self.areal_oppv
-        norm_varmekap = self.norm_varmekap
-        kuldebro_normalisert = self.kuldebro_normalisert
-        temp_settpunkt_oppvarming = self.temp_settpunkt_oppvarming
-        temp_settpunkt_oppvarming_natt = self.temp_settpunkt_oppvarming_natt
-        areal_tak = self.areal_tak
-        areal_vegg_oest = self.areal_vegg_oest
-        areal_vegg_vest = self.areal_vegg_vest
-        areal_vegg_soer = self.areal_vegg_soer
         areal_vegg_nord = self.areal_vegg_nord
         areal_gulv_mot_det_fri = self.areal_gulv_mot_det_fri
         areal_vindu_oest = self.areal_vindu_oest
@@ -1150,29 +1141,29 @@ class EnergiBeregning:
         X207 = tid_drift_person_nov   # - Timer i driftstid for personer - november (timer)
         X208 = tid_drift_person_des   # - Timer i driftstid for personer - desember (timer)
 
-        C192 = areal_oppv # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - Oppvarmed del av BRA
+        C192 = self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - Oppvarmed del av BRA
 
         X72 = Q254 # NS3031* - Ventilasjonsvarmetap, HV - Antall timer i måneden i driftstiden, ton
         X73 = X254 # NS3031* - Ventilasjonsvarmetap, HV - Antall timer i måneden utenfor driftstiden, tred
         X76 = luftmengde_spesifikk_i_driftstid # NS3031* - Ventilasjonsvarmetap, HV - Spesifikk luftmengde for ventilasjon ihht. byggkategori i driftstid
         X77 = luftmengde_spesifikk_utenfor_driftstid # NS3031* - Ventilasjonsvarmetap, HV - Spesifikk luftmengde for ventilasjon ihht. byggkategori utenfor driftstid
         X78 = BygningskategoriErForretningsbygg# NS3031* - Ventilasjonsvarmetap, HV - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig
-        term1 = (1.6-0.007*(areal_oppv-50)) if areal_oppv<110 else 1.2
+        term1 = (1.6 - 0.007 * (self.areal_oppv - 50)) if self.areal_oppv < 110 else 1.2
         X74 = term1 if X78==0 else X76 # NS3031* - Ventilasjonsvarmetap, HV - Arealkorreksjon for bolig, på spesifikk luftmengde for ventilasjon i driftstid
         X75 = term1 if X78==0 else X77 # NS3031* - Ventilasjonsvarmetap, HV - Arealkorreksjon for bolig, på spesifikk luftmengde for ventilasjon utenfor driftstid
-        X67 = X74*areal_oppv # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjon i driftstiden
-        X68 = X75*areal_oppv # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjon utenfor driftstiden
+        X67 = X74 * self.areal_oppv  # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjon i driftstiden
+        X68 = X75 * self.areal_oppv  # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjon utenfor driftstiden
         X70 = varmekapasitet_luft # NS3031* - Ventilasjonsvarmetap, HV - Luftens varmekapasitet per volum
         X69 = tempvirkningsgrad_varmegjenvinner# NS3031* - Ventilasjonsvarmetap, HV - Temperaturvirkningsgrad for varmegjenvinner
         X66 = (X72*X67+X73*X68)/(X72+X73) # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjonsmengde
         X64 = X70*X66*(1-X69) # NS3031* - Ventilasjonsvarmetap, HV - Totalt, HV
-        X65 = X64/areal_oppv# NS3031* - Ventilasjonsvarmetap, HV - G
+        X65 = X64 / self.areal_oppv  # NS3031* - Ventilasjonsvarmetap, HV - G
 
         AE180 = 0.37 * np.mean([vifteeffekt_spesifikk_i_driftstid,vifteeffekt_spesifikk_utenfor_driftstid]) # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Temperaturøkning over avtrekksvifte
         AE179 = 0.37 * np.mean([vifteeffekt_spesifikk_i_driftstid,vifteeffekt_spesifikk_utenfor_driftstid]) # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Temperaturøkning over tilluftsvifte
         AE181 = X66                                                                                         # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Gjennomsnittlig ventilasjon
         AE183 = tempvirkningsgrad_varmegjenvinner                                                           # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmegjenvinnerens temperaturvirkningsgrad
-        AE185 = areal_oppv                                                                                  # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Oppvarmed del av BRA (m2)
+        AE185 = self.areal_oppv  # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Oppvarmed del av BRA (m2)
         AE177 = 0 if AE183<=0 else varmekapasitet_luft*(AE181*((1-AE183)*AE179+AE183*AE180))/AE185          # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmetilskudd fra vifter
 
         C179 = (J197/1000*J179 + Q197/1000*Q179 + X197/1000*X179 + AE177/1000*np.mean([Q254,AE254]))*C192 # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - januar
@@ -1239,10 +1230,10 @@ class EnergiBeregning:
         C94 = U_vindu_nord            # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, nord
         C95 = U_vindu_tak             # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vindu, tak
         C96 = U_dor                   # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, dør
-        C98 = areal_tak               # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, tak
-        C99 = areal_vegg_oest         # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg øst, uten vindu og dør
-        C100 = areal_vegg_vest        # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg vest, uten vindu og dør
-        C101 = areal_vegg_soer        # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg sør, uten vindu og dør
+        C98 = self.areal_tak  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, tak
+        C99 = self.areal_vegg_oest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg øst, uten vindu og dør
+        C100 = self.areal_vegg_vest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg vest, uten vindu og dør
+        C101 = self.areal_vegg_soer  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg sør, uten vindu og dør
         C102 = areal_vegg_nord        # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg nord, uten vindu og dør
         C103 = areal_gulv_mot_det_fri # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, gulv mot det fri
         C105 = areal_vindu_oest       # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, øst
@@ -1267,8 +1258,8 @@ class EnergiBeregning:
 
         C66 = C71+C72+C73+C74+C75+C76 + C77+C78+C79+C80+C81+C82 # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Summert UiAi for bygningsdeler
 
-        C68 = areal_oppv           # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD -  Oppvarmet del av BRA
-        C69 = kuldebro_normalisert # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD -  Normalisert kuldebro
+        C68 = self.areal_oppv  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD -  Oppvarmet del av BRA
+        C69 = self.kuldebro_normalisert  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD -  Normalisert kuldebro
         C67 = C68*C69              # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Normalisert kuldebro ganget med oppvarmet areal
         C64 = C66+C67              # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Totalt, HD
 
@@ -1283,8 +1274,8 @@ class EnergiBeregning:
         AE69 = lekkasjetall                                             # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Terrengskjermingskoeffisient, e
         AE70 = terrengskjermingskoeff_e                                 # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Lekkasjetall, n50
         AE71 = terrengskjermingskoeff_f                                 # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Luftens varmekapasitet per volum
-        AE72 = areal_oppv*AE75                                          # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/h)
-        AE73 = areal_oppv*AE76                                          # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Avtrekksmengde i det mekaniske ventilasjonsanlegget (m3/h)
+        AE72 = self.areal_oppv * AE75  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Tilluftsmengde i det mekaniske ventilasjonsanlegget (m3/h)
+        AE73 = self.areal_oppv * AE76  # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Avtrekksmengde i det mekaniske ventilasjonsanlegget (m3/h)
         AE74 = etasjehoyde_innvendig                                    # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Etasjehøyde, innvendig
         AE67 = C68*AE74                                                 # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Oppvarmet luftvolum (Nettovolum av en bygnig beregnet innenfor dens innvendige, omsluttende flater)§
         AE66 = (AE69*AE70)/(1+(AE71/AE70)*((AE72-AE73)/(AE67*AE69))**2) # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Luftskifte for infiltrasjon
@@ -1339,7 +1330,7 @@ class EnergiBeregning:
 
         J67 = 0                     #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Det regnes ikke tillegg for kuldebro mot uoppvarmet rom
         # Nima Darabi: OBS! direkt verditildeling paa J67
-        J69 = kuldebro_normalisert  #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Normalisert kuldebro
+        J69 = self.kuldebro_normalisert  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Normalisert kuldebro
         J70 = varmetapsfaktor_uoppv #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Varmetapsfaktor, b
         J74 = U_mot_uoppvarmet_sone #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - U-verdi mot uoppvarmet
         J75 = areal_mot_uoppvarmet  #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Areal, mot uoppvarmet
@@ -1364,8 +1355,8 @@ class EnergiBeregning:
         Q55 = utetemp_okt # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - oktober
         Q56 = utetemp_nov # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - november
         Q57 = utetemp_des # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - desember
-        Q59 = temp_settpunkt_oppvarming      # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
-        Q60 = temp_settpunkt_oppvarming_natt # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
+        Q59 = self.temp_settpunkt_oppvarming  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
+        Q60 = self.temp_settpunkt_oppvarming_natt  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
 
         term49 = (J50+J51+J53+J54)*(Q59-Q46)*X46/1000+(J50+J51+J53+J54)*(Q60-Q46)*AE46/1000+Q66
         term50 = (J50+J51+J53+J54)*(Q59-Q47)*X47/1000+(J50+J51+J53+J54)*(Q60-Q47)*AE47/1000+Q67
@@ -1391,9 +1382,9 @@ class EnergiBeregning:
         C58 = 0.1 if term58<0 else term58 # NS3031* - Varmetap - oktober
         C59 = 0.1 if term59<0 else term59 # NS3031* - Varmetap - november
         C60 = 0.1 if term60<0 else term60 # NS3031* - Varmetap - desember
-        C37 = norm_varmekap                                # NS3031 - Oppvarmingsbehov - Bygningens normaliserte varmekapasitet, C" (Wh/(m3 K))
+        C37 = self.norm_varmekap  # NS3031 - Oppvarmingsbehov - Bygningens normaliserte varmekapasitet, C" (Wh/(m3 K))
         C39 = J50+J51+J53+J54 + (Q81 if Q112==2 else Q82)  # NS3031 - Oppvarmingsbehov - Bygningens varmetransportkoeffisient [W/K]
-        C36 = C37*areal_oppv/C39                           # NS3031 - Oppvarmingsbehov - Varmetreghet, aH
+        C36 = C37 * self.areal_oppv / C39  # NS3031 - Oppvarmingsbehov - Varmetreghet, aH
         C35 = 1 + C36/16                                   # NS3031 - Oppvarmingsbehov - Tidskonstant, τ
 
         Q22 = C120/C49 # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - januar
