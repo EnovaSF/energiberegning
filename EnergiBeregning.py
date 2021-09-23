@@ -445,42 +445,27 @@ class EnergiBeregning:
         tid_drift_vent_okt = timer_okt - self.tid_drift_vent_okt
         tid_drift_vent_nov = timer_nov - self.tid_drift_vent_nov
         tid_drift_vent_des = timer_des - self.tid_drift_vent_des
-        mean_tid_drift_vent = np.mean(
+
+        # - Timer i driftstid for ventilasjon (Timer for måneden) - AVERAGE
+        mean_tid_drift_ventilasjon = np.mean(
             [tid_drift_vent_jan, tid_drift_vent_feb, tid_drift_vent_mar, tid_drift_vent_apr, tid_drift_vent_mai,
              tid_drift_vent_jun, (tid_drift_vent_jul), (tid_drift_vent_aug), (tid_drift_vent_sep), (tid_drift_vent_okt),
              (tid_drift_vent_nov), (tid_drift_vent_des)])
-        # - Timer i driftstid for ventilasjon (Timer for måneden) - AVERAGE
-        # - Driftstid for ventilasjon - Oppvarmed del av BRA
-        # - Driftstid for ventilasjon - Spesifikk vifteeffekt i driftstiden
-        # - Driftstid for ventilasjon - Spesifikk vifteeffekt utenfor driftstiden
-        # - Driftstid for ventilasjon - Spesifikk luftmengde i driftstiden
-        # - Driftstid for ventilasjon - Spesifikk luftmengde utenfor driftstiden
-        # - Driftstid for ventilasjon - Luftmengde i driftstiden
-        # - Driftstid for ventilasjon - Luftmengde utenfor driftstiden
-        C244 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_jan * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_jan * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - januar
-        C245 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_feb * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_feb * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - februar
-        C246 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_mar * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_mar * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - mars
-        C247 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_apr * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_apr * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - april
-        C248 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_mai * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_mai * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - mai
-        C249 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_jun * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_jun * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - juni
-        C250 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_jul * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_jul * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - juli
-        C251 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_aug * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_aug * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - august
-        C252 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_sep * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_sep * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - september
-        C253 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_okt * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_okt * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - oktober
-        C254 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_nov * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_nov * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - november
-        C255 = (
-                       self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.tid_drift_vent_des * self.vifteeffekt_spesifikk_i_driftstid + self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * tid_drift_vent_des * self.vifteeffekt_spesifikk_utenfor_driftstid) / 3600  # NS3031 - Energibehov for vifter og pumper - desember
+
+        spesifikk_i_driftstid = self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.vifteeffekt_spesifikk_i_driftstid
+        spesifikk_utenfor_driftstid = self.luftmengde_spesifikk_utenfor_driftstid * self.areal_oppv * self.vifteeffekt_spesifikk_utenfor_driftstid
+        C244 = (spesifikk_i_driftstid * self.tid_drift_vent_jan + spesifikk_utenfor_driftstid * tid_drift_vent_jan) / 3600  # NS3031 - Energibehov for vifter og pumper - januar
+        C245 = (spesifikk_i_driftstid * self.tid_drift_vent_feb + spesifikk_utenfor_driftstid * tid_drift_vent_feb) / 3600  # NS3031 - Energibehov for vifter og pumper - februar
+        C246 = (spesifikk_i_driftstid * self.tid_drift_vent_mar + spesifikk_utenfor_driftstid * tid_drift_vent_mar) / 3600  # NS3031 - Energibehov for vifter og pumper - mars
+        C247 = (spesifikk_i_driftstid * self.tid_drift_vent_apr + spesifikk_utenfor_driftstid * tid_drift_vent_apr) / 3600  # NS3031 - Energibehov for vifter og pumper - april
+        C248 = (spesifikk_i_driftstid * self.tid_drift_vent_mai + spesifikk_utenfor_driftstid * tid_drift_vent_mai) / 3600  # NS3031 - Energibehov for vifter og pumper - mai
+        C249 = (spesifikk_i_driftstid * self.tid_drift_vent_jun + spesifikk_utenfor_driftstid * tid_drift_vent_jun) / 3600  # NS3031 - Energibehov for vifter og pumper - juni
+        C250 = (spesifikk_i_driftstid * self.tid_drift_vent_jul + spesifikk_utenfor_driftstid * tid_drift_vent_jul) / 3600  # NS3031 - Energibehov for vifter og pumper - juli
+        C251 = (spesifikk_i_driftstid * self.tid_drift_vent_aug + spesifikk_utenfor_driftstid * tid_drift_vent_aug) / 3600  # NS3031 - Energibehov for vifter og pumper - august
+        C252 = (spesifikk_i_driftstid * self.tid_drift_vent_sep + spesifikk_utenfor_driftstid * tid_drift_vent_sep) / 3600  # NS3031 - Energibehov for vifter og pumper - september
+        C253 = (spesifikk_i_driftstid * self.tid_drift_vent_okt + spesifikk_utenfor_driftstid * tid_drift_vent_okt) / 3600  # NS3031 - Energibehov for vifter og pumper - oktober
+        C254 = (spesifikk_i_driftstid * self.tid_drift_vent_nov + spesifikk_utenfor_driftstid * tid_drift_vent_nov) / 3600  # NS3031 - Energibehov for vifter og pumper - november
+        C255 = (spesifikk_i_driftstid * self.tid_drift_vent_des + spesifikk_utenfor_driftstid * tid_drift_vent_des) / 3600  # NS3031 - Energibehov for vifter og pumper - desember
         C242 = C244 + C245 + C246 + C247 + C248 + C249 + C250 + C251 + C252 + C253 + C254 + C255  # NS3031 - Energibehov for vifter og pumper (Vifter) - Totalt, Efan
         Vifter = C242  # # - Energipost (3a) (Energibehov [kWh/år]) - Vifter
 
@@ -872,7 +857,7 @@ class EnergiBeregning:
              (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt), (self.tid_drift_vent_nov),
              (
                  self.tid_drift_vent_des)])  # NS3031* - Ventilasjonsvarmetap, HV - Antall timer i måneden i driftstiden, ton
-        X73 = mean_tid_drift_vent  # NS3031* - Ventilasjonsvarmetap, HV - Antall timer i måneden utenfor driftstiden, tred
+        X73 = mean_tid_drift_ventilasjon  # NS3031* - Ventilasjonsvarmetap, HV - Antall timer i måneden utenfor driftstiden, tred
         X76 = self.luftmengde_spesifikk_i_driftstid  # NS3031* - Ventilasjonsvarmetap, HV - Spesifikk luftmengde for ventilasjon ihht. byggkategori i driftstid
         X77 = self.luftmengde_spesifikk_utenfor_driftstid  # NS3031* - Ventilasjonsvarmetap, HV - Spesifikk luftmengde for ventilasjon ihht. byggkategori utenfor driftstid
         X78 = self.BygningskategoriErForretningsbygg  # NS3031* - Ventilasjonsvarmetap, HV - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig
