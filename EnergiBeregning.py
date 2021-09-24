@@ -394,55 +394,6 @@ class EnergiBeregning:
     REF: int
 
     def calculate(self):
-        # This is where all the calculation stuff happens ie. your code
-        # if the code is a lib, we can import it and call a calc function from it passing self
-        # import 'your-library'
-        # result = your-library.calculate(self.param1, self.param2 ...)
-        # return Output(result['abc'], ...)
-
-        # Example we may not do it like this but something like described above
-        if 0:
-            solfaktor_total_glass_skjerming_tak = self.solfaktor_total_glass_skjerming_tak
-            energibehov_tappevann = self.energibehov_tappevann
-            energibehov_belysning = self.energibehov_belysning
-            energibehov_utstyr = self.energibehov_utstyr
-            CO2_faktor_el = self.CO2_faktor_el
-            CO2_faktor_olje = self.CO2_faktor_olje
-            CO2_faktor_gass = self.CO2_faktor_gass
-            CO2_faktor_fjernvarme = self.CO2_faktor_fjernvarme
-            CO2_faktor_bio = self.CO2_faktor_bio
-            CO2_faktor_annet = self.CO2_faktor_annet
-            Primaerenergi_faktor_el = self.Primaerenergi_faktor_el
-            Primaerenergi_faktor_olje = self.Primaerenergi_faktor_olje
-            Primaerenergi_faktor_gass = self.Primaerenergi_faktor_gass
-            Primaerenergi_faktor_fjernvarme = self.Primaerenergi_faktor_fjernvarme
-            Primaerenergi_faktor_bio = self.Primaerenergi_faktor_bio
-            Primaerenergi_faktor_annet = self.Primaerenergi_faktor_annet
-            Energipris_el = self.Energipris_el
-            Energipris_olje = self.Energipris_olje
-            Energipris_gass = self.Energipris_gass
-            Energipris_fjernvarme = self.Energipris_fjernvarme
-            Energipris_bio = self.Energipris_bio
-            Energipris_annet = self.Energipris_annet
-            Energipol_vektingsfaktor_el = self.Energipol_vektingsfaktor_el
-            Energipol_vektingsfaktor_olje = self.Energipol_vektingsfaktor_olje
-            Energipol_vektingsfaktor_gass = self.Energipol_vektingsfaktor_gass
-            Energipol_vektingsfaktor_fjernvarme = self.Energipol_vektingsfaktor_fjernvarme
-            Energipol_vektingsfaktor_bio = self.Energipol_vektingsfaktor_bio
-            Energipol_vektingsfaktor_annet = self.Energipol_vektingsfaktor_annet
-            tid_drift_vent_jan = self.tid_drift_vent_jan
-            tid_drift_vent_feb = self.tid_drift_vent_feb
-            tid_drift_vent_mar = self.tid_drift_vent_mar
-            tid_drift_vent_apr = self.tid_drift_vent_apr
-            tid_drift_vent_mai = self.tid_drift_vent_mai
-            tid_drift_vent_jun = self.tid_drift_vent_jun
-            tid_drift_vent_jul = self.tid_drift_vent_jul
-            tid_drift_vent_aug = self.tid_drift_vent_aug
-            tid_drift_vent_sep = self.tid_drift_vent_sep
-            tid_drift_vent_okt = self.tid_drift_vent_okt
-            tid_drift_vent_nov = self.tid_drift_vent_nov
-            tid_drift_vent_des = self.tid_drift_vent_des
-
         ### energipost 2
         J237 = self.energibehov_tappevann  # NS3031*- Energibehov for varmt tappevann, spesifikt - Varmtvann
         C238 = self.areal_oppv  # NS3031 - Energibehov for varmt tappevann - Oppvarmed del av BRA
@@ -589,105 +540,57 @@ class EnergiBeregning:
         AE147 = self.straalingsfluks_tak_nov  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - november
         AE148 = self.straalingsfluks_tak_des  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - desember
 
-        Q120 = (
-                       1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_oest
-        Q121 = (
-                       1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_oest
-        Q122 = (
-                       1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_oest
-        Q123 = (
-                       1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_oest
-        Q124 = (
-                       1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_oest
-        Q125 = (
-                       1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_oest
-        Q126 = (
-                       1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_oest
-        Q127 = (
-                       1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_oest
-        Q128 = (
-                       1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_oest
-        Q129 = (
-                       1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_oest
-        Q130 = (
-                       1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_oest
-        Q131 = (
-                       1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_oest
+        Q120 = (1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_oest
+        Q121 = (1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_oest
+        Q122 = (1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_oest
+        Q123 = (1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_oest
+        Q124 = (1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_oest
+        Q125 = (1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_oest
+        Q126 = (1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_oest
+        Q127 = (1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_oest
+        Q128 = (1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_oest
+        Q129 = (1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_oest
+        Q130 = (1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_oest
+        Q131 = (1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_oest
 
-        Q133 = (
-                       1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_vest
-        Q134 = (
-                       1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_vest
-        Q135 = (
-                       1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_vest
-        Q136 = (
-                       1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_vest
-        Q137 = (
-                       1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_vest
-        Q138 = (
-                       1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_vest
-        Q139 = (
-                       1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_vest
-        Q140 = (
-                       1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_vest
-        Q141 = (
-                       1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_vest
-        Q142 = (
-                       1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_vest
-        Q143 = (
-                       1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_vest
-        Q144 = (
-                       1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_vest
+        Q133 = (1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_vest
+        Q134 = (1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_vest
+        Q135 = (1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_vest
+        Q136 = (1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_vest
+        Q137 = (1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_vest
+        Q138 = (1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_vest
+        Q139 = (1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_vest
+        Q140 = (1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_vest
+        Q141 = (1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_vest
+        Q142 = (1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_vest
+        Q143 = (1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_vest
+        Q144 = (1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_vest
 
-        Q146 = (
-                       1 - self.sol_tidsvariabel_soer_jan) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_jan * self.solfaktor_total_glass_skjerming_soer
-        Q147 = (
-                       1 - self.sol_tidsvariabel_soer_feb) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_feb * self.solfaktor_total_glass_skjerming_soer
-        Q148 = (
-                       1 - self.sol_tidsvariabel_soer_mars) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mars * self.solfaktor_total_glass_skjerming_soer
-        Q149 = (
-                       1 - self.sol_tidsvariabel_soer_april) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_april * self.solfaktor_total_glass_skjerming_soer
-        Q150 = (
-                       1 - self.sol_tidsvariabel_soer_mai) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mai * self.solfaktor_total_glass_skjerming_soer
-        Q151 = (
-                       1 - self.sol_tidsvariabel_soer_juni) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juni * self.solfaktor_total_glass_skjerming_soer
-        Q152 = (
-                       1 - self.sol_tidsvariabel_soer_juli) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juli * self.solfaktor_total_glass_skjerming_soer
-        Q153 = (
-                       1 - self.sol_tidsvariabel_soer_aug) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_aug * self.solfaktor_total_glass_skjerming_soer
-        Q154 = (
-                       1 - self.sol_tidsvariabel_soer_sept) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_sept * self.solfaktor_total_glass_skjerming_soer
-        Q155 = (
-                       1 - self.sol_tidsvariabel_soer_okt) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_okt * self.solfaktor_total_glass_skjerming_soer
-        Q156 = (
-                       1 - self.sol_tidsvariabel_soer_nov) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_nov * self.solfaktor_total_glass_skjerming_soer
-        Q157 = (
-                       1 - self.sol_tidsvariabel_soer_des) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_des * self.solfaktor_total_glass_skjerming_soer
+        Q146 = (1 - self.sol_tidsvariabel_soer_jan) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_jan * self.solfaktor_total_glass_skjerming_soer
+        Q147 = (1 - self.sol_tidsvariabel_soer_feb) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_feb * self.solfaktor_total_glass_skjerming_soer
+        Q148 = (1 - self.sol_tidsvariabel_soer_mars) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mars * self.solfaktor_total_glass_skjerming_soer
+        Q149 = (1 - self.sol_tidsvariabel_soer_april) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_april * self.solfaktor_total_glass_skjerming_soer
+        Q150 = (1 - self.sol_tidsvariabel_soer_mai) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mai * self.solfaktor_total_glass_skjerming_soer
+        Q151 = (1 - self.sol_tidsvariabel_soer_juni) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juni * self.solfaktor_total_glass_skjerming_soer
+        Q152 = (1 - self.sol_tidsvariabel_soer_juli) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juli * self.solfaktor_total_glass_skjerming_soer
+        Q153 = (1 - self.sol_tidsvariabel_soer_aug) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_aug * self.solfaktor_total_glass_skjerming_soer
+        Q154 = (1 - self.sol_tidsvariabel_soer_sept) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_sept * self.solfaktor_total_glass_skjerming_soer
+        Q155 = (1 - self.sol_tidsvariabel_soer_okt) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_okt * self.solfaktor_total_glass_skjerming_soer
+        Q156 = (1 - self.sol_tidsvariabel_soer_nov) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_nov * self.solfaktor_total_glass_skjerming_soer
+        Q157 = (1 - self.sol_tidsvariabel_soer_des) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_des * self.solfaktor_total_glass_skjerming_soer
 
-        Q159 = (
-                       1 - self.sol_tidsvariabel_nord_jan) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_jan * self.solfaktor_total_glass_skjerming_nord
-        Q160 = (
-                       1 - self.sol_tidsvariabel_nord_feb) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_feb * self.solfaktor_total_glass_skjerming_nord
-        Q161 = (
-                       1 - self.sol_tidsvariabel_nord_mars) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mars * self.solfaktor_total_glass_skjerming_nord
-        Q162 = (
-                       1 - self.sol_tidsvariabel_nord_april) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_april * self.solfaktor_total_glass_skjerming_nord
-        Q163 = (
-                       1 - self.sol_tidsvariabel_nord_mai) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mai * self.solfaktor_total_glass_skjerming_nord
-        Q164 = (
-                       1 - self.sol_tidsvariabel_nord_juni) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juni * self.solfaktor_total_glass_skjerming_nord
-        Q165 = (
-                       1 - self.sol_tidsvariabel_nord_juli) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juli * self.solfaktor_total_glass_skjerming_nord
-        Q166 = (
-                       1 - self.sol_tidsvariabel_nord_aug) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_aug * self.solfaktor_total_glass_skjerming_nord
-        Q167 = (
-                       1 - self.sol_tidsvariabel_nord_sept) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_sept * self.solfaktor_total_glass_skjerming_nord
-        Q168 = (
-                       1 - self.sol_tidsvariabel_nord_okt) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_okt * self.solfaktor_total_glass_skjerming_nord
-        Q169 = (
-                       1 - self.sol_tidsvariabel_nord_nov) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_nov * self.solfaktor_total_glass_skjerming_nord
-        Q170 = (
-                       1 - self.sol_tidsvariabel_nord_des) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_des * self.solfaktor_total_glass_skjerming_nord
+        Q159 = (1 - self.sol_tidsvariabel_nord_jan) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_jan * self.solfaktor_total_glass_skjerming_nord
+        Q160 = (1 - self.sol_tidsvariabel_nord_feb) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_feb * self.solfaktor_total_glass_skjerming_nord
+        Q161 = (1 - self.sol_tidsvariabel_nord_mars) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mars * self.solfaktor_total_glass_skjerming_nord
+        Q162 = (1 - self.sol_tidsvariabel_nord_april) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_april * self.solfaktor_total_glass_skjerming_nord
+        Q163 = (1 - self.sol_tidsvariabel_nord_mai) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mai * self.solfaktor_total_glass_skjerming_nord
+        Q164 = (1 - self.sol_tidsvariabel_nord_juni) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juni * self.solfaktor_total_glass_skjerming_nord
+        Q165 = (1 - self.sol_tidsvariabel_nord_juli) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juli * self.solfaktor_total_glass_skjerming_nord
+        Q166 = (1 - self.sol_tidsvariabel_nord_aug) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_aug * self.solfaktor_total_glass_skjerming_nord
+        Q167 = (1 - self.sol_tidsvariabel_nord_sept) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_sept * self.solfaktor_total_glass_skjerming_nord
+        Q168 = (1 - self.sol_tidsvariabel_nord_okt) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_okt * self.solfaktor_total_glass_skjerming_nord
+        Q169 = (1 - self.sol_tidsvariabel_nord_nov) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_nov * self.solfaktor_total_glass_skjerming_nord
+        Q170 = (1 - self.sol_tidsvariabel_nord_des) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_des * self.solfaktor_total_glass_skjerming_nord
 
         C157 = self.areal_vindu_oest  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, øst
         C158 = self.areal_vindu_vest  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, vest
