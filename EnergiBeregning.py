@@ -391,7 +391,6 @@ class EnergiBeregning:
     varmekapasitet_kuldebaerer: float
     densitet_kuldebaerer: float
     BygningskategoriErForretningsbygg: int
-    REF: int
 
     def calculate(self):
         ### energipost 2
