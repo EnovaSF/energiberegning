@@ -963,8 +963,9 @@ class EnergiBeregning:
         Q85 = 0.37*Q95*Q99*((1-np.exp(-(2*Q110/Q100)))*np.log(Q100/(Q101+Q102))+np.exp(-(2*Q110/Q100))*np.log(Q100/Q101+1))                           # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For gulv mot grunnen, horisontal kantisolasjon (D' = 2 x D)
         Q86 = 0.37*Q95*Q99*((1-np.exp(-(Q96/Q100)))   *np.log(Q100/Q103+1)     +np.exp(-(Q96/Q100))   *np.log(Q100/Q101+1))                           # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For vegg og gulv mot grunnen
 
-        Q89 = Q99/(0.457*Q92+Q101+0.5*Q96)                                      # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'<dt + 0,5*z)
-        Q88 = self.REF if Q92 > Q101 + 0.5 * Q96 else Q89  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'>dt + 0,5*z)
+        Q89 = 2*Q99/(np.pi*Q92+Q101*0.5*Q96)*np.log((np.pi*Q92)/(Q101+0.5*Q96)+1)   # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'<dt + 0,5*z)
+        Q90 = Q99/(0.457*Q92+Q101+0.5*Q96)                                          # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'>dt + 0,5*z)
+        Q88 = Q89 if Q92 > Q101 + 0.5 * Q96 else Q90
         # Nima Darabi: OBS! Q88 ser ut som er kopiert med offset
         Q81 = Q88*Q94+Q97*Q95                                                   # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Stasjonær varmetransportkoeffisient, Hg] - For gulv mot grunnen
         Q82 = Q88*Q94+Q96*Q95*Q93                                               # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Stasjonær varmetransportkoeffisient, Hg] - For vegg og gulv mot grunnen
