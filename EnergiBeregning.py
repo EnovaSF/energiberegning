@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 import numpy as np
 
-
 @dataclass
 class Output:
     """ This class holds the calculation result, one field per value """
@@ -14,7 +13,6 @@ class Output:
     Teknisk_utstyr: float
     Kjoeling: float
     Totalt_netto_energibehov: float
-
     Elektrisitet: float
     Olje: float
     Gass: float
@@ -22,7 +20,10 @@ class Output:
     Biobrensel: float
     Annen_energivare: float
     Totalt_levert_energi: float
-
+    Primaerenergi: float
+    CO2_utslipp: float
+    Energi_kostnader: float
+    Energi_politisk: float
 
     def __str__(self):
         return "Romoppvarming: {0.Romoppvarming},Ventilasjonsvarme: {0.Ventilasjonsvarme}, \
@@ -36,7 +37,10 @@ class Output:
 		Fjernvarme: {0.Fjernvarme}, \
 		Biobrensel: {0.Biobrensel},\
 		Annen_energivare: {0.Annen_energivare}, \
-		Totalt_levert_energi: {0.Totalt_levert_energi}".format(
+		Totalt_levert_energi: {0.Totalt_levert_energi},\
+        Primaerenergi: {0.Primaerenergi},\
+        CO2_utslipp: {0.CO2_utslipp},\
+        Energi_kostnader: {0.Energi_kostnader}".format(
             self)
 
 
@@ -391,45 +395,15 @@ class EnergiBeregning:
     varmekapasitet_kuldebaerer: float
     densitet_kuldebaerer: float
     BygningskategoriErForretningsbygg: int
-    REF: int
 
     def calculate(self):
-        # This is where all the calculation stuff happens ie. your code
-        # if the code is a lib, we can import it and call a calc function from it passing self
-        # import 'your-library'
-        # result = your-library.calculate(self.param1, self.param2 ...)
-        # return Output(result['abc'], ...)
 
-        # Example we may not do it like this but something like described above
+
         if 0:
             solfaktor_total_glass_skjerming_tak = self.solfaktor_total_glass_skjerming_tak
             energibehov_tappevann = self.energibehov_tappevann
             energibehov_belysning = self.energibehov_belysning
             energibehov_utstyr = self.energibehov_utstyr
-            CO2_faktor_el = self.CO2_faktor_el
-            CO2_faktor_olje = self.CO2_faktor_olje
-            CO2_faktor_gass = self.CO2_faktor_gass
-            CO2_faktor_fjernvarme = self.CO2_faktor_fjernvarme
-            CO2_faktor_bio = self.CO2_faktor_bio
-            CO2_faktor_annet = self.CO2_faktor_annet
-            Primaerenergi_faktor_el = self.Primaerenergi_faktor_el
-            Primaerenergi_faktor_olje = self.Primaerenergi_faktor_olje
-            Primaerenergi_faktor_gass = self.Primaerenergi_faktor_gass
-            Primaerenergi_faktor_fjernvarme = self.Primaerenergi_faktor_fjernvarme
-            Primaerenergi_faktor_bio = self.Primaerenergi_faktor_bio
-            Primaerenergi_faktor_annet = self.Primaerenergi_faktor_annet
-            Energipris_el = self.Energipris_el
-            Energipris_olje = self.Energipris_olje
-            Energipris_gass = self.Energipris_gass
-            Energipris_fjernvarme = self.Energipris_fjernvarme
-            Energipris_bio = self.Energipris_bio
-            Energipris_annet = self.Energipris_annet
-            Energipol_vektingsfaktor_el = self.Energipol_vektingsfaktor_el
-            Energipol_vektingsfaktor_olje = self.Energipol_vektingsfaktor_olje
-            Energipol_vektingsfaktor_gass = self.Energipol_vektingsfaktor_gass
-            Energipol_vektingsfaktor_fjernvarme = self.Energipol_vektingsfaktor_fjernvarme
-            Energipol_vektingsfaktor_bio = self.Energipol_vektingsfaktor_bio
-            Energipol_vektingsfaktor_annet = self.Energipol_vektingsfaktor_annet
             tid_drift_vent_jan = self.tid_drift_vent_jan
             tid_drift_vent_feb = self.tid_drift_vent_feb
             tid_drift_vent_mar = self.tid_drift_vent_mar
@@ -589,105 +563,57 @@ class EnergiBeregning:
         AE147 = self.straalingsfluks_tak_nov  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - november
         AE148 = self.straalingsfluks_tak_des  # - Gjennomsnittlig strålingsfluks mot utsiden av vinduene, tak (Tillegg M - NS3031:2007) - desember
 
-        Q120 = (
-                       1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_oest
-        Q121 = (
-                       1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_oest
-        Q122 = (
-                       1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_oest
-        Q123 = (
-                       1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_oest
-        Q124 = (
-                       1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_oest
-        Q125 = (
-                       1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_oest
-        Q126 = (
-                       1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_oest
-        Q127 = (
-                       1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_oest
-        Q128 = (
-                       1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_oest
-        Q129 = (
-                       1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_oest
-        Q130 = (
-                       1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_oest
-        Q131 = (
-                       1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_oest
+        Q120 = (1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_oest
+        Q121 = (1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_oest
+        Q122 = (1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_oest
+        Q123 = (1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_oest
+        Q124 = (1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_oest
+        Q125 = (1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_oest
+        Q126 = (1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_oest
+        Q127 = (1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_oest
+        Q128 = (1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_oest
+        Q129 = (1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_oest
+        Q130 = (1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_oest
+        Q131 = (1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_oest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_oest
 
-        Q133 = (
-                       1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_vest
-        Q134 = (
-                       1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_vest
-        Q135 = (
-                       1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_vest
-        Q136 = (
-                       1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_vest
-        Q137 = (
-                       1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_vest
-        Q138 = (
-                       1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_vest
-        Q139 = (
-                       1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_vest
-        Q140 = (
-                       1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_vest
-        Q141 = (
-                       1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_vest
-        Q142 = (
-                       1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_vest
-        Q143 = (
-                       1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_vest
-        Q144 = (
-                       1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_vest
+        Q133 = (1 - self.sol_tidsvariabel_ost_vest_jan) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_jan * self.solfaktor_total_glass_skjerming_vest
+        Q134 = (1 - self.sol_tidsvariabel_ost_vest_feb) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_feb * self.solfaktor_total_glass_skjerming_vest
+        Q135 = (1 - self.sol_tidsvariabel_ost_vest_mars) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mars * self.solfaktor_total_glass_skjerming_vest
+        Q136 = (1 - self.sol_tidsvariabel_ost_vest_april) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_april * self.solfaktor_total_glass_skjerming_vest
+        Q137 = (1 - self.sol_tidsvariabel_ost_vest_mai) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_mai * self.solfaktor_total_glass_skjerming_vest
+        Q138 = (1 - self.sol_tidsvariabel_ost_vest_juni) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juni * self.solfaktor_total_glass_skjerming_vest
+        Q139 = (1 - self.sol_tidsvariabel_ost_vest_juli) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_juli * self.solfaktor_total_glass_skjerming_vest
+        Q140 = (1 - self.sol_tidsvariabel_ost_vest_aug) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_aug * self.solfaktor_total_glass_skjerming_vest
+        Q141 = (1 - self.sol_tidsvariabel_ost_vest_sept) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_sept * self.solfaktor_total_glass_skjerming_vest
+        Q142 = (1 - self.sol_tidsvariabel_ost_vest_okt) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_okt * self.solfaktor_total_glass_skjerming_vest
+        Q143 = (1 - self.sol_tidsvariabel_ost_vest_nov) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_nov * self.solfaktor_total_glass_skjerming_vest
+        Q144 = (1 - self.sol_tidsvariabel_ost_vest_des) * self.solfaktor_vindu_vest + self.sol_tidsvariabel_ost_vest_des * self.solfaktor_total_glass_skjerming_vest
 
-        Q146 = (
-                       1 - self.sol_tidsvariabel_soer_jan) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_jan * self.solfaktor_total_glass_skjerming_soer
-        Q147 = (
-                       1 - self.sol_tidsvariabel_soer_feb) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_feb * self.solfaktor_total_glass_skjerming_soer
-        Q148 = (
-                       1 - self.sol_tidsvariabel_soer_mars) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mars * self.solfaktor_total_glass_skjerming_soer
-        Q149 = (
-                       1 - self.sol_tidsvariabel_soer_april) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_april * self.solfaktor_total_glass_skjerming_soer
-        Q150 = (
-                       1 - self.sol_tidsvariabel_soer_mai) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mai * self.solfaktor_total_glass_skjerming_soer
-        Q151 = (
-                       1 - self.sol_tidsvariabel_soer_juni) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juni * self.solfaktor_total_glass_skjerming_soer
-        Q152 = (
-                       1 - self.sol_tidsvariabel_soer_juli) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juli * self.solfaktor_total_glass_skjerming_soer
-        Q153 = (
-                       1 - self.sol_tidsvariabel_soer_aug) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_aug * self.solfaktor_total_glass_skjerming_soer
-        Q154 = (
-                       1 - self.sol_tidsvariabel_soer_sept) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_sept * self.solfaktor_total_glass_skjerming_soer
-        Q155 = (
-                       1 - self.sol_tidsvariabel_soer_okt) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_okt * self.solfaktor_total_glass_skjerming_soer
-        Q156 = (
-                       1 - self.sol_tidsvariabel_soer_nov) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_nov * self.solfaktor_total_glass_skjerming_soer
-        Q157 = (
-                       1 - self.sol_tidsvariabel_soer_des) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_des * self.solfaktor_total_glass_skjerming_soer
+        Q146 = (1 - self.sol_tidsvariabel_soer_jan) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_jan * self.solfaktor_total_glass_skjerming_soer
+        Q147 = (1 - self.sol_tidsvariabel_soer_feb) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_feb * self.solfaktor_total_glass_skjerming_soer
+        Q148 = (1 - self.sol_tidsvariabel_soer_mars) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mars * self.solfaktor_total_glass_skjerming_soer
+        Q149 = (1 - self.sol_tidsvariabel_soer_april) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_april * self.solfaktor_total_glass_skjerming_soer
+        Q150 = (1 - self.sol_tidsvariabel_soer_mai) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_mai * self.solfaktor_total_glass_skjerming_soer
+        Q151 = (1 - self.sol_tidsvariabel_soer_juni) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juni * self.solfaktor_total_glass_skjerming_soer
+        Q152 = (1 - self.sol_tidsvariabel_soer_juli) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_juli * self.solfaktor_total_glass_skjerming_soer
+        Q153 = (1 - self.sol_tidsvariabel_soer_aug) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_aug * self.solfaktor_total_glass_skjerming_soer
+        Q154 = (1 - self.sol_tidsvariabel_soer_sept) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_sept * self.solfaktor_total_glass_skjerming_soer
+        Q155 = (1 - self.sol_tidsvariabel_soer_okt) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_okt * self.solfaktor_total_glass_skjerming_soer
+        Q156 = (1 - self.sol_tidsvariabel_soer_nov) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_nov * self.solfaktor_total_glass_skjerming_soer
+        Q157 = (1 - self.sol_tidsvariabel_soer_des) * self.solfaktor_vindu_soer + self.sol_tidsvariabel_soer_des * self.solfaktor_total_glass_skjerming_soer
 
-        Q159 = (
-                       1 - self.sol_tidsvariabel_nord_jan) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_jan * self.solfaktor_total_glass_skjerming_nord
-        Q160 = (
-                       1 - self.sol_tidsvariabel_nord_feb) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_feb * self.solfaktor_total_glass_skjerming_nord
-        Q161 = (
-                       1 - self.sol_tidsvariabel_nord_mars) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mars * self.solfaktor_total_glass_skjerming_nord
-        Q162 = (
-                       1 - self.sol_tidsvariabel_nord_april) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_april * self.solfaktor_total_glass_skjerming_nord
-        Q163 = (
-                       1 - self.sol_tidsvariabel_nord_mai) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mai * self.solfaktor_total_glass_skjerming_nord
-        Q164 = (
-                       1 - self.sol_tidsvariabel_nord_juni) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juni * self.solfaktor_total_glass_skjerming_nord
-        Q165 = (
-                       1 - self.sol_tidsvariabel_nord_juli) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juli * self.solfaktor_total_glass_skjerming_nord
-        Q166 = (
-                       1 - self.sol_tidsvariabel_nord_aug) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_aug * self.solfaktor_total_glass_skjerming_nord
-        Q167 = (
-                       1 - self.sol_tidsvariabel_nord_sept) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_sept * self.solfaktor_total_glass_skjerming_nord
-        Q168 = (
-                       1 - self.sol_tidsvariabel_nord_okt) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_okt * self.solfaktor_total_glass_skjerming_nord
-        Q169 = (
-                       1 - self.sol_tidsvariabel_nord_nov) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_nov * self.solfaktor_total_glass_skjerming_nord
-        Q170 = (
-                       1 - self.sol_tidsvariabel_nord_des) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_des * self.solfaktor_total_glass_skjerming_nord
+        Q159 = (1 - self.sol_tidsvariabel_nord_jan) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_jan * self.solfaktor_total_glass_skjerming_nord
+        Q160 = (1 - self.sol_tidsvariabel_nord_feb) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_feb * self.solfaktor_total_glass_skjerming_nord
+        Q161 = (1 - self.sol_tidsvariabel_nord_mars) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mars * self.solfaktor_total_glass_skjerming_nord
+        Q162 = (1 - self.sol_tidsvariabel_nord_april) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_april * self.solfaktor_total_glass_skjerming_nord
+        Q163 = (1 - self.sol_tidsvariabel_nord_mai) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mai * self.solfaktor_total_glass_skjerming_nord
+        Q164 = (1 - self.sol_tidsvariabel_nord_juni) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juni * self.solfaktor_total_glass_skjerming_nord
+        Q165 = (1 - self.sol_tidsvariabel_nord_juli) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juli * self.solfaktor_total_glass_skjerming_nord
+        Q166 = (1 - self.sol_tidsvariabel_nord_aug) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_aug * self.solfaktor_total_glass_skjerming_nord
+        Q167 = (1 - self.sol_tidsvariabel_nord_sept) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_sept * self.solfaktor_total_glass_skjerming_nord
+        Q168 = (1 - self.sol_tidsvariabel_nord_okt) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_okt * self.solfaktor_total_glass_skjerming_nord
+        Q169 = (1 - self.sol_tidsvariabel_nord_nov) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_nov * self.solfaktor_total_glass_skjerming_nord
+        Q170 = (1 - self.sol_tidsvariabel_nord_des) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_des * self.solfaktor_total_glass_skjerming_nord
 
         C157 = self.areal_vindu_oest  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, øst
         C158 = self.areal_vindu_vest  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, vest
@@ -1060,9 +986,9 @@ class EnergiBeregning:
         Q85 = 0.37*Q95*Q99*((1-np.exp(-(2*Q110/Q100)))*np.log(Q100/(Q101+Q102))+np.exp(-(2*Q110/Q100))*np.log(Q100/Q101+1))                           # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For gulv mot grunnen, horisontal kantisolasjon (D' = 2 x D)
         Q86 = 0.37*Q95*Q99*((1-np.exp(-(Q96/Q100)))   *np.log(Q100/Q103+1)     +np.exp(-(Q96/Q100))   *np.log(Q100/Q101+1))                           # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For vegg og gulv mot grunnen
 
-        Q89 = Q99/(0.457*Q92+Q101+0.5*Q96)                                      # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'<dt + 0,5*z)
-        Q88 = self.REF if Q92 > Q101 + 0.5 * Q96 else Q89  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'>dt + 0,5*z)
-        # Nima Darabi: OBS! Q88 ser ut som er kopiert med offset
+        Q89 = 2*Q99/(np.pi*Q92+Q101*0.5*Q96)*np.log((np.pi*Q92)/(Q101+0.5*Q96)+1)   # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'<dt + 0,5*z)
+        Q90 = Q99/(0.457*Q92+Q101+0.5*Q96)                                          # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'>dt + 0,5*z)
+        Q88 = Q89 if Q92 > Q101 + 0.5 * Q96 else Q90
         Q81 = Q88*Q94+Q97*Q95                                                   # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Stasjonær varmetransportkoeffisient, Hg] - For gulv mot grunnen
         Q82 = Q88*Q94+Q96*Q95*Q93                                               # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Stasjonær varmetransportkoeffisient, Hg] - For vegg og gulv mot grunnen
         Q78 = self.aarsmiddeltemp_inne  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Årsmiddeltemperatur inne, i driftstiden
@@ -1083,7 +1009,7 @@ class EnergiBeregning:
         Q64 = Q66 + Q67 + Q68 + Q69 + Q70 + Q71 + Q72 + Q73 + Q74 + Q75 + Q76 + Q77
 
         J67 = 0                     #  NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Det regnes ikke tillegg for kuldebro mot uoppvarmet rom
-        # Nima Darabi: OBS! direkt verditildeling paa J67
+        # I celle C67 beregnes kuldebrotapet ut ifra forenklet metode hvor normalisert kuldebroverdi ganges med oppvarmet BRA, ref. ligning (10) i NS3031:2007. Dette vil da i prinsippet ivareta samtlige kuldebroer for hele bygget, også de som evt. finnes for bygningsdeler mot uoppvarmet rom. (Betyr at direkt verditildeling paa J67 = 0 er riktig)
         J69 = self.kuldebro_normalisert  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Normalisert kuldebro
         J70 = self.varmetapsfaktor_uoppv  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Varmetapsfaktor, b
         J74 = self.U_mot_uoppvarmet_sone  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - U-verdi mot uoppvarmet
@@ -1356,43 +1282,137 @@ class EnergiBeregning:
 
         # energivare 2
         Q321 = self.systemvirkningsgrad_olje_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q322 = self.systemvirkningsgrad_olje_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for tappevann
-        J321 = self.olje_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme oljebasert system
-        J322 = self.olje_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - AAndel av netto energibehov for oppvarming av tappevann oljebasert system
-        C321 = ((C20+C281)*J321/Q321+C237*J322/Q322)     # NS3031 - Beregning av behov for levert olje - Levert energi i form av olje
-        Olje = C321                                      # # - Energivare (2) (Levert energi [kWh/år]) - Olje
+        Q322 = self.systemvirkningsgrad_olje_tappevann_varme   # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Oljebasert varmesystem for tappevann
+        J321 = self.olje_andel_energi_oppv_ventilasjon         # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme oljebasert system
+        J322 = self.olje_andel_energi_tappevann_varme          # NS3031 - Andel av energibehov - AAndel av netto energibehov for oppvarming av tappevann oljebasert system
+        C321 = ((C20+C281)*J321/Q321+C237*J322/Q322)           # NS3031 - Beregning av behov for levert olje - Levert energi i form av olje
+        Olje = C321                                            # # - Energivare (2) (Levert energi [kWh/år]) - Olje
 
         # energivare 3
         Q327 = self.systemvirkningsgrad_gass_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Gassbasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q328 = self.systemvirkningsgrad_gass_tappevann_varme  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Gassbasert varmesystem for tappevann
-        J327 = self.gass_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme gassbasert system
-        J328 = self.gass_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann gassbasert system
-        C327 = ((C20+C281)*J327/Q327+C237*J328/Q328)     # NS3031 - Beregning av behov for levert gass - Levert energi i form av gass
-        Gass = C327                                      # # - Energivare (3) (Levert energi [kWh/år]) - Gass
+        Q328 = self.systemvirkningsgrad_gass_tappevann_varme   # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Gassbasert varmesystem for tappevann
+        J327 = self.gass_andel_energi_oppv_ventilasjon         # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme gassbasert system
+        J328 = self.gass_andel_energi_tappevann_varme          # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann gassbasert system
+        C327 = ((C20+C281)*J327/Q327+C237*J328/Q328)           # NS3031 - Beregning av behov for levert gass - Levert energi i form av gass
+        Gass = C327                                            # # - Energivare (3) (Levert energi [kWh/år]) - Gass
 
         # energivare 4
         Q333 = self.systemvirkningsgrad_fjernvarme_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q334 = self.systemvirkningsgrad_fjernvarme_tappevann  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for tappevann
-        J333 = self.fjernvarme_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme fjernvarmebasert system
-        J334 = self.fjernvarme_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann fjernvarmebasert system
-        C333 = ((C20+C281)*J333/Q333+C237*J334/Q334)           # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
-        Fjernvarme = C333                                      # # - Energivare (4) (Levert energi [kWh/år]) - Fjernvarme
+        Q334 = self.systemvirkningsgrad_fjernvarme_tappevann         # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Fjernvarmebasert varmesystem for tappevann
+        J333 = self.fjernvarme_andel_energi_oppv_ventilasjon         # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme fjernvarmebasert system
+        J334 = self.fjernvarme_andel_energi_tappevann_varme          # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann fjernvarmebasert system
+        C333 = ((C20+C281)*J333/Q333+C237*J334/Q334)                 # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
+        Fjernvarme = C333                                            # # - Energivare (4) (Levert energi [kWh/år]) - Fjernvarme
 
         # energivare 5
         Q339 = self.systemvirkningsgrad_bio_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for romoppvarming og ventilasjonsvarme
-        Q340 = self.systemvirkningsgrad_bio_tappevann  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for tappevann
-        J339 = self.bio_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme biobrenselbasert system
-        J340 = self.bio_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann biobrenselbasert system
-        C339 = ((C20+C281)*J339/Q339+C237*J340/Q340)     # NS3031 - Beregning av behov for levert biobrensel - Levert energi i form av biobrensel
-        Biobrensel = C339                                # # - Energivare (5) (Levert energi [kWh/år]) - Biobrensel
+        Q340 = self.systemvirkningsgrad_bio_tappevann         # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - Biobrenselbasert varmesystem for tappevann
+        J339 = self.bio_andel_energi_oppv_ventilasjon         # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme biobrenselbasert system
+        J340 = self.bio_andel_energi_tappevann_varme          # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann biobrenselbasert system
+        C339 = ((C20+C281)*J339/Q339+C237*J340/Q340)          # NS3031 - Beregning av behov for levert biobrensel - Levert energi i form av biobrensel
+        Biobrensel = C339                                     # # - Energivare (5) (Levert energi [kWh/år]) - Biobrensel
 
         # energivare 6
         Q345 = self.systemvirkningsgrad_annet_oppv_ventilasjon  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - varmesystem basert på andre energivarer for romoppvarming og ventilasjonsvarme
-        Q346 = self.systemvirkningsgrad_annet_tappevann  # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - varmesystem basert på andre energivarer for tappevann
-        J345 = self.annet_andel_energi_oppv_ventilasjon  # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme basert på andre energivarer system
-        J346 = self.annet_andel_energi_tappevann_varme  # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann basert på andre energivarer system
-        C345 = ((C20+C281)*J345/Q345+C237*J346/Q346)      # NS3031 - Beregning av behov for levert andre energivarer - Levert energi i form av andre energivarer
-        Annen_energivare = C345                           # # - Energivare (6) (Levert energi [kWh/år]) - Andre energivarer
+        Q346 = self.systemvirkningsgrad_annet_tappevann         # NS3031 - Systemvirkningsgrader (Årsgjennomsnittlig) - varmesystem basert på andre energivarer for tappevann
+        J345 = self.annet_andel_energi_oppv_ventilasjon         # NS3031 - Andel av energibehov - Andel av netto energibehov for romoppvarming og ventilasjonsvarme basert på andre energivarer system
+        J346 = self.annet_andel_energi_tappevann_varme          # NS3031 - Andel av energibehov - Andel av netto energibehov for oppvarming av tappevann basert på andre energivarer system
+        C345 = ((C20+C281)*J345/Q345+C237*J346/Q346)            # NS3031 - Beregning av behov for levert andre energivarer - Levert energi i form av andre energivarer
+        Annen_energivare = C345                                 # # - Energivare (6) (Levert energi [kWh/år]) - Andre energivarer
+
+        # Primaerenergi
+        Q355 = self.Primaerenergi_faktor_el  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Elektrisitet
+        Q356 = self.Primaerenergi_faktor_olje  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Olje
+        Q357 = self.Primaerenergi_faktor_gass  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Gass
+        Q358 = self.Primaerenergi_faktor_fjernvarme  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Fjernvarme
+        Q359 = self.Primaerenergi_faktor_bio  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Biobrensel
+        Q360 = self.Primaerenergi_faktor_annet  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Andre energivarer
+        J355 = C306                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert elektrisitet (kWh)
+        J356 = C321                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert energi i form av olje (kWh)
+        J357 = C327                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert energi i form av gass (kWh)
+        J358 = C333                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert energi i form av fjernvarme (kWh)
+        J359 = C339                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert energi i form av biobrensel (kWh)
+        J360 = C345                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert energi i form av andre energivarer (kWh)
+        C355 = J355*Q355                        # NS3031 (8.1) - Primærenergibehov - Elektrisitet (kWh)
+        C356 = J356*Q356                        # NS3031 (8.1) - Primærenergibehov - Olje (kWh)
+        C357 = J357*Q357                        # NS3031 (8.1) - Primærenergibehov - Gass (kWh)
+        C358 = J358*Q358                        # NS3031 (8.1) - Primærenergibehov - Fjernvarme (kWh)
+        C359 = J359*Q359                        # NS3031 (8.1) - Primærenergibehov - Biobrensel (kWh)
+        C360 = J360*Q360                        # NS3031 (8.1) - Primærenergibehov - Andre energivarer (kWh)
+
+        # Co2-utslipp
+        Q366 = self.CO2_faktor_el  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert elektrisitet
+        Q367 = self.CO2_faktor_olje  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av olje
+        Q368 = self.CO2_faktor_gass  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av gass
+        Q369 = self.CO2_faktor_fjernvarme  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av fjernvarme
+        Q370 = self.CO2_faktor_bio  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av biobrensel
+        Q371 = self.CO2_faktor_annet  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av andre energivarer
+        J366 = C306                  # NS3031 (8.2) - CO2-utslipp; Levert energi for energivaren - Levert elektrisitet (kWh)
+        J367 = C321                  # NS3031 (8.2) - CO2-utslipp; Levert energi for energivaren - Levert energi i form av olje (kWh)
+        J368 = C327                  # NS3031 (8.2) - CO2-utslipp; Levert energi for energivaren - Levert energi i form av gass (kWh)
+        J369 = C333                  # NS3031 (8.2) - CO2-utslipp; Levert energi for energivaren - Levert energi i form av fjernvarme (kWh)
+        J370 = C339                  # NS3031 (8.2) - CO2-utslipp; Levert energi for energivaren - Levert energi i form av biobrensel (kWh)
+        J371 = C345                  # NS3031 (8.2) - CO2-utslipp; Levert energi for energivaren - Levert energi i form av andre energivarer (kWh)
+        C366 = J366*Q366             # NS3031 (8.2) - CO2-utslipp - Utslipp fra elektrisitet
+        C367 = J367*Q367             # NS3031 (8.2) - CO2-utslipp - Utslipp fra olje
+        C368 = J368*Q368             # NS3031 (8.2) - CO2-utslipp - Utslipp fra gass
+        C369 = J369*Q369             # NS3031 (8.2) - CO2-utslipp - Utslipp fra fjernvarme
+        C370 = J370*Q370             # NS3031 (8.2) - CO2-utslipp - Utslipp fra biobrensel
+        C371 = J371*Q371             # NS3031 (8.2) - CO2-utslipp - Utslipp fra andre energivarer
+
+        # Energi-kostnader
+        Q377 = self.Energipris_el  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert elektrisitet
+        Q378 = self.Energipris_olje  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av olje
+        Q379 = self.Energipris_gass  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av gass
+        Q380 = self.Energipris_fjernvarme  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av fjernvarme
+        Q381 = self.Energipris_bio  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av biobrensel
+        Q382 = self.Energipris_annet  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av andre energivarer
+        J377 = C306                  # NS3031 (8.3) - Energikostnad; Levert energi for energivaren - Levert elektrisitet (kWh)
+        J378 = C321                  # NS3031 (8.3) - Energikostnad; Levert energi for energivaren - Levert energi i form av olje (kWh)
+        J379 = C327                  # NS3031 (8.3) - Energikostnad; Levert energi for energivaren - Levert energi i form av gass (kWh)
+        J380 = C333                  # NS3031 (8.3) - Energikostnad; Levert energi for energivaren - Levert energi i form av fjernvarme (kWh)
+        J381 = C339                  # NS3031 (8.3) - Energikostnad; Levert energi for energivaren - Levert energi i form av biobrensel (kWh)
+        J382 = C345                  # NS3031 (8.3) - Energikostnad; Levert energi for energivaren - Levert energi i form av andre energivarer (kWh)
+        C377 = J377*Q377             # NS3031 (8.3) - Energikostnader - Utslipp fra elektrisitet
+        C378 = J378*Q378             # NS3031 (8.3) - Energikostnader - Utslipp fra olje
+        C379 = J379*Q379             # NS3031 (8.3) - Energikostnader - Utslipp fra gass
+        C380 = J380*Q380             # NS3031 (8.3) - Energikostnader - Utslipp fra fjernvarme
+        C381 = J381*Q381             # NS3031 (8.3) - Energikostnader - Utslipp fra biobrensel
+        C382 = J382*Q382             # NS3031 (8.3) - Energikostnader - Utslipp fra andre energivarer
+
+        # Energi-politisk
+        Q388 = self.Energipol_vektingsfaktor_el  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert elektrisitet
+        Q389 = self.Energipol_vektingsfaktor_olje  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av olje
+        Q390 = self.Energipol_vektingsfaktor_gass  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av gass
+        Q391 = self.Energipol_vektingsfaktor_fjernvarme  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av fjernvarme
+        Q392 = self.Energipol_vektingsfaktor_bio  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av biobrensel
+        Q393 = self.Energipol_vektingsfaktor_annet  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av andre energivarer
+        J388 = C306                  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert elektrisitet (kWh)
+        J389 = C321                  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av olje (kWh)
+        J390 = C327                  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av gass (kWh)
+        J391 = C333                  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av fjernvarme (kWh)
+        J392 = C339                  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av biobrensel (kWh)
+        J393 = C345                  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av andre energivarer (kWh)
+        C388 = J388*Q388             # NS3031 (8.4) - Energipolitisk vektet levert energi - Utslipp fra elektrisitet
+        C389 = J389*Q389             # NS3031 (8.4) - Energipolitisk vektet levert energi - Utslipp fra olje
+        C390 = J390*Q390             # NS3031 (8.4) - Energipolitisk vektet levert energi - Utslipp fra gass
+        C391 = J391*Q391             # NS3031 (8.4) - Energipolitisk vektet levert energi - Utslipp fra fjernvarme
+        C392 = J392*Q392             # NS3031 (8.4) - Energipolitisk vektet levert energi- Utslipp fra biobrensel
+        C393 = J393*Q393             # NS3031 (8.4) - Energipolitisk vektet levert energi - Utslipp fra andre energivarer
+
+
+        X8, X9, X10, X11, X12, X13  = C355, C356, C357, C358, C359, C360 # Energivare - Primærenergi behov [kWh/år]
+        Y8, Y9, Y10, Y11, Y12, Y13  = C366, C367, C368, C369, C370, C371 # Energivare - CO2-utslipp [kg/år]
+        Z8, Z9, Z10, Z11, Z12, Z13  = C377, C378, C379, C380, C381, C382 # Energivare - Energi-kostnader [kr/år]
+        AA8,AA9,AA10,AA11,AA12,AA13 = C388, C389, C390, C391, C392, C393 # Energivare - Energi-politisk vektet levert energi [kWh/år]
+        X14  = X8 + X9 + X10 + X11 + X12 + X13   # Energivare - Primærenergi behov [kWh/år]
+        Y14  = Y8 + Y9 + Y10 + Y11 + Y12 + Y13   # Energivare - CO2-utslipp [kg/år]
+        Z14  = Z8 + Z9 + Z10 + Z11 + Z12 + Z13   # Energivare - Energi-kostnader [kr/år]
+        AA14 = AA8+ AA9+ AA10+ AA11+ AA12+ AA13  # Energivare - Energi-politisk vektet levert energi [kWh/år]
+        Primaerenergi = X14       # Energivare - Primærenergi behov [kWh/år]
+        CO2_utslipp = Y14        # Energivare - CO2-utslipp [kg/år]
+        Energi_kostnader = Z14   # Energivare - Energi-kostnader [kr/år]
+        Energi_politisk = AA14   # Energivare - Energi-politisk vektet levert energi [kWh/år]
 
         Totalt_netto_energibehov = Romoppvarming+Ventilasjonsvarme +\
 	                           Varmtvann+\
@@ -1417,11 +1437,14 @@ class EnergiBeregning:
                       Teknisk_utstyr,
                       Kjoeling,
                       Totalt_netto_energibehov,
-
-		      Elektrisitet,
-	              Olje,
-	              Gass,
-	              Fjernvarme,
-	              Biobrensel,
-	              Annen_energivare,
-		      Totalt_levert_energi)
+                      Elektrisitet,
+                      Olje,
+                      Gass,
+                      Fjernvarme,
+                      Biobrensel,
+                      Annen_energivare,
+                      Totalt_levert_energi,
+                      Primaerenergi,
+                      CO2_utslipp,
+                      Energi_kostnader,
+                      Energi_politisk)
