@@ -394,29 +394,10 @@ class EnergiBeregning:
     densitet_vann: float
     varmekapasitet_kuldebaerer: float
     densitet_kuldebaerer: float
-    BygningskategoriErForretningsbygg: int
+    BygningskategoriErForretningsbygg: int # Nima Darabi: OBS! ikke tildelt i arket
+    solfaktor_total_glass_skjerming_tak: float # Nima Darabi: OBS! ikke i bruk i arket
 
     def calculate(self):
-
-
-        if 0:
-            solfaktor_total_glass_skjerming_tak = self.solfaktor_total_glass_skjerming_tak
-            energibehov_tappevann = self.energibehov_tappevann
-            energibehov_belysning = self.energibehov_belysning
-            energibehov_utstyr = self.energibehov_utstyr
-            tid_drift_vent_jan = self.tid_drift_vent_jan
-            tid_drift_vent_feb = self.tid_drift_vent_feb
-            tid_drift_vent_mar = self.tid_drift_vent_mar
-            tid_drift_vent_apr = self.tid_drift_vent_apr
-            tid_drift_vent_mai = self.tid_drift_vent_mai
-            tid_drift_vent_jun = self.tid_drift_vent_jun
-            tid_drift_vent_jul = self.tid_drift_vent_jul
-            tid_drift_vent_aug = self.tid_drift_vent_aug
-            tid_drift_vent_sep = self.tid_drift_vent_sep
-            tid_drift_vent_okt = self.tid_drift_vent_okt
-            tid_drift_vent_nov = self.tid_drift_vent_nov
-            tid_drift_vent_des = self.tid_drift_vent_des
-
         ### energipost 2
         J237 = self.energibehov_tappevann  # NS3031*- Energibehov for varmt tappevann, spesifikt - Varmtvann
         C238 = self.areal_oppv  # NS3031 - Energibehov for varmt tappevann - Oppvarmed del av BRA
