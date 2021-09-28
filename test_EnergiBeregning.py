@@ -399,9 +399,8 @@ calc_engine = calc.EnergiBeregning(
     varmekapasitet_kuldebaerer=4210,
     densitet_kuldebaerer=999.8,
 
-    BygningskategoriErForretningsbygg=0,
-    # Nima Darabi: OBS! finnes ikke i input? (1 = Forretningsbygg, 0 = Bolig)
-    REF=123456789  # Nima Darabi: OBS! Hva er verdi for #REF! i Q88
+    BygningskategoriErForretningsbygg=0    # Nima Darabi: OBS! finnes ikke i input? (1 = Forretningsbygg, 0 = Bolig)
+
 )
 
 calc_result = calc_engine.calculate()
@@ -455,6 +454,19 @@ class TestCalculation(unittest.TestCase):
 
     def test_totalt_levert_energi(self):
         self.assertEqual(33789, round(calc_result.Totalt_levert_energi))  # add assertion here
+
+    # energivare
+    def test_priaerenergi(self):
+        self.assertEqual(23666, round(calc_result.Priaerenergi))  # add assertion here
+
+    def test_cO2_utslipp(self):
+        self.assertEqual(9989, round(calc_result.CO2_utslipp))  # add assertion here
+
+    def test_energi_kostnader(self):
+        self.assertEqual(26986, round(calc_result.Energi_kostnader))  # add assertion here
+
+    def test_energi_politisk(self):
+        self.assertEqual(43526, round(calc_result.Energi_politisk))  # add assertion here
 
 
 if __name__ == '__main__':
