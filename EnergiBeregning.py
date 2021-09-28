@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+import statistics
 import numpy as np
 
 
@@ -393,6 +394,20 @@ class EnergiBeregning:
 
     @property
     def calculate(self):
+        maaneder = ['jan','feb','mar','apr','mai','jun','jul','aug','sep', 'okt', 'nov', 'des']
+        tid = {'jan': self.tid_jan,
+               'feb': self.tid_feb,
+               'mar': self.tid_mar,
+               'apr': self.tid_apr,
+               'mai': self.tid_mai,
+               'jun': self.tid_jun,
+               'jul': self.tid_jul,
+               'aug': self.tid_aug,
+               'sep': self.tid_sep,
+               'okt': self.tid_okt,
+               'nov': self.tid_nov,
+               'des': self.tid_des
+        }
         ### energipost 2
         # NS3031*- Energibehov for varmt tappevann, spesifikt - Varmtvann
         # NS3031 - Energibehov for varmt tappevann - Oppvarmed del av BRA
@@ -411,40 +426,27 @@ class EnergiBeregning:
         # NS3031 - Energibehov for utstyr - Årlig energibehov
         Teknisk_utstyr = self.energibehov_utstyr * self.areal_oppv  # # - Energipost (5) (Energibehov [kWh/år]) - Teknisk_utstyr
 
+
+        timer = {}
         ### energipost 3-a timer per måned
-        timer_jan = (self.tid_jan) * 1000
-        timer_feb = (self.tid_feb) * 1000
-        timer_mar = (self.tid_mar) * 1000
-        timer_apr = (self.tid_apr) * 1000
-        timer_mai = (self.tid_mai) * 1000
-        timer_jun = (self.tid_jun) * 1000
-        timer_jul = (self.tid_jul) * 1000
-        timer_aug = (self.tid_aug) * 1000
-        timer_sep = (self.tid_sep) * 1000
-        timer_okt = (self.tid_okt) * 1000
-        timer_nov = (self.tid_nov) * 1000
-        timer_des = (self.tid_des) * 1000
-        mean_timer_per_aar = np.mean(
-            [timer_jan, timer_feb, timer_mar, timer_apr, timer_mai, timer_jun, timer_jul, timer_aug,
-             timer_sep,
-             timer_okt,
-             timer_nov,
-             timer_des]
-        )
+        for maaned in maaneder:
+            timer[maaned] = tid[maaned] * 1000
+
+        mean_timer_per_aar = np.mean(list(timer.values()))
 
         # - Timer i driftstid for ventilasjon (Timer for måneden)
-        tid_drift_vent_jan = timer_jan - self.tid_drift_vent_jan
-        tid_drift_vent_feb = timer_feb - self.tid_drift_vent_feb
-        tid_drift_vent_mar = timer_mar - self.tid_drift_vent_mar
-        tid_drift_vent_apr = timer_apr - self.tid_drift_vent_apr
-        tid_drift_vent_mai = timer_mai - self.tid_drift_vent_mai
-        tid_drift_vent_jun = timer_jun - self.tid_drift_vent_jun
-        tid_drift_vent_jul = timer_jul - self.tid_drift_vent_jul
-        tid_drift_vent_aug = timer_aug - self.tid_drift_vent_aug
-        tid_drift_vent_sep = timer_sep - self.tid_drift_vent_sep
-        tid_drift_vent_okt = timer_okt - self.tid_drift_vent_okt
-        tid_drift_vent_nov = timer_nov - self.tid_drift_vent_nov
-        tid_drift_vent_des = timer_des - self.tid_drift_vent_des
+        tid_drift_vent_jan = timer['jan'] - self.tid_drift_vent_jan
+        tid_drift_vent_feb = timer['feb'] - self.tid_drift_vent_feb
+        tid_drift_vent_mar = timer['mar'] - self.tid_drift_vent_mar
+        tid_drift_vent_apr = timer['apr'] - self.tid_drift_vent_apr
+        tid_drift_vent_mai = timer['mai'] - self.tid_drift_vent_mai
+        tid_drift_vent_jun = timer['jun'] - self.tid_drift_vent_jun
+        tid_drift_vent_jul = timer['jul'] - self.tid_drift_vent_jul
+        tid_drift_vent_aug = timer['aug'] - self.tid_drift_vent_aug
+        tid_drift_vent_sep = timer['sep'] - self.tid_drift_vent_sep
+        tid_drift_vent_okt = timer['okt'] - self.tid_drift_vent_okt
+        tid_drift_vent_nov = timer['nov'] - self.tid_drift_vent_nov
+        tid_drift_vent_des = timer['des'] - self.tid_drift_vent_des
 
         # - Timer i driftstid for ventilasjon (Timer for måneden) - AVERAGE
         mean_tid_drift_ventilasjon = np.mean(
@@ -466,6 +468,7 @@ class EnergiBeregning:
         C253 = (spesifikk_i_driftstid * self.tid_drift_vent_okt + spesifikk_utenfor_driftstid * tid_drift_vent_okt) / 3600  # NS3031 - Energibehov for vifter og pumper - oktober
         C254 = (spesifikk_i_driftstid * self.tid_drift_vent_nov + spesifikk_utenfor_driftstid * tid_drift_vent_nov) / 3600  # NS3031 - Energibehov for vifter og pumper - november
         C255 = (spesifikk_i_driftstid * self.tid_drift_vent_des + spesifikk_utenfor_driftstid * tid_drift_vent_des) / 3600  # NS3031 - Energibehov for vifter og pumper - desember
+
         C242 = C244 + C245 + C246 + C247 + C248 + C249 + C250 + C251 + C252 + C253 + C254 + C255  # NS3031 - Energibehov for vifter og pumper (Vifter) - Totalt, Efan
         Vifter = C242  # # - Energipost (3a) (Energibehov [kWh/år]) - Vifter
 
@@ -1020,18 +1023,18 @@ class EnergiBeregning:
         X56 = self.tid_drift_oppv_belysn_utstyr_nov  # - Timer i driftstid for oppvarming - Timer for måneden - november
         X57 = self.tid_drift_oppv_belysn_utstyr_des  # - Timer i driftstid for oppvarming - Timer for måneden - desember
 
-        AE46 = timer_jan - X46  # Timer utenfor driftstid for oppvarming - januar
-        AE47 = timer_feb - X47  # Timer utenfor driftstid for oppvarming - februar
-        AE48 = timer_mar - X48  # Timer utenfor driftstid for oppvarming - mars
-        AE49 = timer_apr - X49  # Timer utenfor driftstid for oppvarming - april
-        AE50 = timer_mai - X50  # Timer utenfor driftstid for oppvarming - mai
-        AE51 = timer_jun - X51  # Timer utenfor driftstid for oppvarming - juni
-        AE52 = timer_jul - X52  # Timer utenfor driftstid for oppvarming - juli
-        AE53 = timer_aug - X53  # Timer utenfor driftstid for oppvarming - august
-        AE54 = timer_sep - X54  # Timer utenfor driftstid for oppvarming - september
-        AE55 = timer_okt - X55  # Timer utenfor driftstid for oppvarming - oktober
-        AE56 = timer_nov - X56  # Timer utenfor driftstid for oppvarming - november
-        AE57 = timer_des - X57  # Timer utenfor driftstid for oppvarming - desember
+        AE46 = timer['jan'] - X46  # Timer utenfor driftstid for oppvarming - januar
+        AE47 = timer['feb'] - X47  # Timer utenfor driftstid for oppvarming - februar
+        AE48 = timer['mar'] - X48  # Timer utenfor driftstid for oppvarming - mars
+        AE49 = timer['apr'] - X49  # Timer utenfor driftstid for oppvarming - april
+        AE50 = timer['mai'] - X50  # Timer utenfor driftstid for oppvarming - mai
+        AE51 = timer['jun'] - X51  # Timer utenfor driftstid for oppvarming - juni
+        AE52 = timer['jul'] - X52  # Timer utenfor driftstid for oppvarming - juli
+        AE53 = timer['aug'] - X53  # Timer utenfor driftstid for oppvarming - august
+        AE54 = timer['sep'] - X54  # Timer utenfor driftstid for oppvarming - september
+        AE55 = timer['okt'] - X55  # Timer utenfor driftstid for oppvarming - oktober
+        AE56 = timer['nov'] - X56  # Timer utenfor driftstid for oppvarming - november
+        AE57 = timer['des'] - X57  # Timer utenfor driftstid for oppvarming - desember
 
         C84 = self.U_tak  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, tak
         C85 = self.U_vegg_oest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - U-verdi, vegg øst, uten vindu og dør
