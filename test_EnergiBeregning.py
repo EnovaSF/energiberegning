@@ -457,7 +457,7 @@ class TestCalculation(unittest.TestCase):
 
     # energivare
     def test_priaerenergi(self):
-        self.assertEqual(23666, round(calc_result.Priaerenergi))  # add assertion here
+        self.assertEqual(47613, round(calc_result.Primaerenergi))  # add assertion here
 
     def test_cO2_utslipp(self):
         self.assertEqual(9989, round(calc_result.CO2_utslipp))  # add assertion here

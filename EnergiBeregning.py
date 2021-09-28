@@ -40,8 +40,7 @@ class Output:
 		Totalt_levert_energi: {0.Totalt_levert_energi},\
         Primaerenergi: {0.Primaerenergi},\
         CO2_utslipp: {0.CO2_utslipp},\
-        Energi_kostnader: {0.Energi_kostnader},\
-        Energi_politisk: {0.Energi_politisk}".format(
+        Energi_kostnader: {0.Energi_kostnader}".format(
             self)
 
 
@@ -400,35 +399,11 @@ class EnergiBeregning:
     def calculate(self):
 
 
-        if 1:
+        if 0:
             solfaktor_total_glass_skjerming_tak = self.solfaktor_total_glass_skjerming_tak
             energibehov_tappevann = self.energibehov_tappevann
             energibehov_belysning = self.energibehov_belysning
             energibehov_utstyr = self.energibehov_utstyr
-            CO2_faktor_el = self.CO2_faktor_el
-            CO2_faktor_olje = self.CO2_faktor_olje
-            CO2_faktor_gass = self.CO2_faktor_gass
-            CO2_faktor_fjernvarme = self.CO2_faktor_fjernvarme
-            CO2_faktor_bio = self.CO2_faktor_bio
-            CO2_faktor_annet = self.CO2_faktor_annet
-            Primaerenergi_faktor_el = self.Primaerenergi_faktor_el
-            Primaerenergi_faktor_olje = self.Primaerenergi_faktor_olje
-            Primaerenergi_faktor_gass = self.Primaerenergi_faktor_gass
-            Primaerenergi_faktor_fjernvarme = self.Primaerenergi_faktor_fjernvarme
-            Primaerenergi_faktor_bio = self.Primaerenergi_faktor_bio
-            Primaerenergi_faktor_annet = self.Primaerenergi_faktor_annet
-            Energipris_el = self.Energipris_el
-            Energipris_olje = self.Energipris_olje
-            Energipris_gass = self.Energipris_gass
-            Energipris_fjernvarme = self.Energipris_fjernvarme
-            Energipris_bio = self.Energipris_bio
-            Energipris_annet = self.Energipris_annet
-            Energipol_vektingsfaktor_el = self.Energipol_vektingsfaktor_el
-            Energipol_vektingsfaktor_olje = self.Energipol_vektingsfaktor_olje
-            Energipol_vektingsfaktor_gass = self.Energipol_vektingsfaktor_gass
-            Energipol_vektingsfaktor_fjernvarme = self.Energipol_vektingsfaktor_fjernvarme
-            Energipol_vektingsfaktor_bio = self.Energipol_vektingsfaktor_bio
-            Energipol_vektingsfaktor_annet = self.Energipol_vektingsfaktor_annet
             tid_drift_vent_jan = self.tid_drift_vent_jan
             tid_drift_vent_feb = self.tid_drift_vent_feb
             tid_drift_vent_mar = self.tid_drift_vent_mar
@@ -1345,12 +1320,13 @@ class EnergiBeregning:
         C345 = ((C20+C281)*J345/Q345+C237*J346/Q346)            # NS3031 - Beregning av behov for levert andre energivarer - Levert energi i form av andre energivarer
         Annen_energivare = C345                                 # # - Energivare (6) (Levert energi [kWh/år]) - Andre energivarer
 
-        Q355 = Primaerenergi_faktor_el          # NS3031 (8.1) - Primærenergi; faktor for energivaren - Elektrisitet
-        Q356 = Primaerenergi_faktor_olje        # NS3031 (8.1) - Primærenergi; faktor for energivaren - Olje
-        Q357 = Primaerenergi_faktor_gass        # NS3031 (8.1) - Primærenergi; faktor for energivaren - Gass
-        Q358 = Primaerenergi_faktor_fjernvarme  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Fjernvarme
-        Q359 = Primaerenergi_faktor_bio         # NS3031 (8.1) - Primærenergi; faktor for energivaren - Biobrensel
-        Q360 = Primaerenergi_faktor_annet       # NS3031 (8.1) - Primærenergi; faktor for energivaren - Andre energivarer
+        # Primaerenergi
+        Q355 = self.Primaerenergi_faktor_el  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Elektrisitet
+        Q356 = self.Primaerenergi_faktor_olje  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Olje
+        Q357 = self.Primaerenergi_faktor_gass  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Gass
+        Q358 = self.Primaerenergi_faktor_fjernvarme  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Fjernvarme
+        Q359 = self.Primaerenergi_faktor_bio  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Biobrensel
+        Q360 = self.Primaerenergi_faktor_annet  # NS3031 (8.1) - Primærenergi; faktor for energivaren - Andre energivarer
         J355 = C306                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert elektrisitet (kWh)
         J356 = C321                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert energi i form av olje (kWh)
         J357 = C327                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert energi i form av gass (kWh)
@@ -1359,17 +1335,18 @@ class EnergiBeregning:
         J360 = C345                             # NS3031 (8.1) - Primærenergibehov; Levert energi for energivaren -  Levert energi i form av andre energivarer (kWh)
         C355 = J355*Q355                        # NS3031 (8.1) - Primærenergibehov - Elektrisitet (kWh)
         C356 = J356*Q356                        # NS3031 (8.1) - Primærenergibehov - Olje (kWh)
-        C357 = J355*Q355                        # NS3031 (8.1) - Primærenergibehov - Gass (kWh)
+        C357 = J357*Q357                        # NS3031 (8.1) - Primærenergibehov - Gass (kWh)
         C358 = J358*Q358                        # NS3031 (8.1) - Primærenergibehov - Fjernvarme (kWh)
         C359 = J359*Q359                        # NS3031 (8.1) - Primærenergibehov - Biobrensel (kWh)
         C360 = J360*Q360                        # NS3031 (8.1) - Primærenergibehov - Andre energivarer (kWh)
 
-        Q366 = CO2_faktor_el         # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert elektrisitet
-        Q367 = CO2_faktor_olje       # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av olje
-        Q368 = CO2_faktor_gass       # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av gass
-        Q369 = CO2_faktor_fjernvarme # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av fjernvarme
-        Q370 = CO2_faktor_bio        # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av biobrensel
-        Q371 = CO2_faktor_annet      # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av andre energivarer
+        # Co2-utslipp
+        Q366 = self.CO2_faktor_el  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert elektrisitet
+        Q367 = self.CO2_faktor_olje  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av olje
+        Q368 = self.CO2_faktor_gass  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av gass
+        Q369 = self.CO2_faktor_fjernvarme  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av fjernvarme
+        Q370 = self.CO2_faktor_bio  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av biobrensel
+        Q371 = self.CO2_faktor_annet  # NS3031 (8.2) - CO2-utslipp; levert energi for energivaren - Levert energi i form av andre energivarer
         J366 = C306                  # NS3031 (8.2) - CO2-utslipp; Levert energi for energivaren - Levert elektrisitet (kWh)
         J367 = C321                  # NS3031 (8.2) - CO2-utslipp; Levert energi for energivaren - Levert energi i form av olje (kWh)
         J368 = C327                  # NS3031 (8.2) - CO2-utslipp; Levert energi for energivaren - Levert energi i form av gass (kWh)
@@ -1383,12 +1360,13 @@ class EnergiBeregning:
         C370 = J370*Q370             # NS3031 (8.2) - CO2-utslipp - Utslipp fra biobrensel
         C371 = J371*Q371             # NS3031 (8.2) - CO2-utslipp - Utslipp fra andre energivarer
 
-        Q377 = Energipris_el         # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert elektrisitet
-        Q378 = Energipris_olje       # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av olje
-        Q379 = Energipris_gass       # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av gass
-        Q380 = Energipris_fjernvarme # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av fjernvarme
-        Q381 = Energipris_bio        # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av biobrensel
-        Q382 = Energipris_annet      # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av andre energivarer
+        # Energi-kostnader
+        Q377 = self.Energipris_el  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert elektrisitet
+        Q378 = self.Energipris_olje  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av olje
+        Q379 = self.Energipris_gass  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av gass
+        Q380 = self.Energipris_fjernvarme  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av fjernvarme
+        Q381 = self.Energipris_bio  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av biobrensel
+        Q382 = self.Energipris_annet  # NS3031 (8.3) - Energikostnad; levert energi for energivaren - Levert energi i form av andre energivarer
         J377 = C306                  # NS3031 (8.3) - Energikostnad; Levert energi for energivaren - Levert elektrisitet (kWh)
         J378 = C321                  # NS3031 (8.3) - Energikostnad; Levert energi for energivaren - Levert energi i form av olje (kWh)
         J379 = C327                  # NS3031 (8.3) - Energikostnad; Levert energi for energivaren - Levert energi i form av gass (kWh)
@@ -1402,12 +1380,13 @@ class EnergiBeregning:
         C381 = J381*Q381             # NS3031 (8.3) - Energikostnader - Utslipp fra biobrensel
         C382 = J382*Q382             # NS3031 (8.3) - Energikostnader - Utslipp fra andre energivarer
 
-        Q388 = Energipol_vektingsfaktor_el         # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert elektrisitet
-        Q389 = Energipol_vektingsfaktor_olje       # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av olje
-        Q390 = Energipol_vektingsfaktor_gass       # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av gass
-        Q391 = Energipol_vektingsfaktor_fjernvarme # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av fjernvarme
-        Q392 = Energipol_vektingsfaktor_bio        # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av biobrensel
-        Q393 = Energipol_vektingsfaktor_annet      # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av andre energivarer
+        # Energi-politisk
+        Q388 = self.Energipol_vektingsfaktor_el  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert elektrisitet
+        Q389 = self.Energipol_vektingsfaktor_olje  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av olje
+        Q390 = self.Energipol_vektingsfaktor_gass  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av gass
+        Q391 = self.Energipol_vektingsfaktor_fjernvarme  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av fjernvarme
+        Q392 = self.Energipol_vektingsfaktor_bio  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av biobrensel
+        Q393 = self.Energipol_vektingsfaktor_annet  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av andre energivarer
         J388 = C306                  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert elektrisitet (kWh)
         J389 = C321                  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av olje (kWh)
         J390 = C327                  # NS3031 (8.4) - Energikostnad; Levert energi for energivaren - Levert energi i form av gass (kWh)
@@ -1420,6 +1399,7 @@ class EnergiBeregning:
         C391 = J391*Q391             # NS3031 (8.4) - Energipolitisk vektet levert energi - Utslipp fra fjernvarme
         C392 = J392*Q392             # NS3031 (8.4) - Energipolitisk vektet levert energi- Utslipp fra biobrensel
         C393 = J393*Q393             # NS3031 (8.4) - Energipolitisk vektet levert energi - Utslipp fra andre energivarer
+
 
         X8, X9, X10, X11, X12, X13  = C355, C356, C357, C358, C359, C360 # Energivare - Primærenergi behov [kWh/år]
         Y8, Y9, Y10, Y11, Y12, Y13  = C366, C367, C368, C369, C370, C371 # Energivare - CO2-utslipp [kg/år]
