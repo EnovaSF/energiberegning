@@ -581,183 +581,249 @@ class EnergiBeregning:
             'des': self.sol_tidsvariabel_soer_des
         }
 
-        Q159 = (1 - self.sol_tidsvariabel_nord_jan) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_jan * self.solfaktor_total_glass_skjerming_nord
-        Q160 = (1 - self.sol_tidsvariabel_nord_feb) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_feb * self.solfaktor_total_glass_skjerming_nord
-        Q161 = (1 - self.sol_tidsvariabel_nord_mars) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mars * self.solfaktor_total_glass_skjerming_nord
-        Q162 = (1 - self.sol_tidsvariabel_nord_april) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_april * self.solfaktor_total_glass_skjerming_nord
-        Q163 = (1 - self.sol_tidsvariabel_nord_mai) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_mai * self.solfaktor_total_glass_skjerming_nord
-        Q164 = (1 - self.sol_tidsvariabel_nord_juni) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juni * self.solfaktor_total_glass_skjerming_nord
-        Q165 = (1 - self.sol_tidsvariabel_nord_juli) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_juli * self.solfaktor_total_glass_skjerming_nord
-        Q166 = (1 - self.sol_tidsvariabel_nord_aug) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_aug * self.solfaktor_total_glass_skjerming_nord
-        Q167 = (1 - self.sol_tidsvariabel_nord_sept) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_sept * self.solfaktor_total_glass_skjerming_nord
-        Q168 = (1 - self.sol_tidsvariabel_nord_okt) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_okt * self.solfaktor_total_glass_skjerming_nord
-        Q169 = (1 - self.sol_tidsvariabel_nord_nov) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_nov * self.solfaktor_total_glass_skjerming_nord
-        Q170 = (1 - self.sol_tidsvariabel_nord_des) * self.solfaktor_vindu_nord + self.sol_tidsvariabel_nord_des * self.solfaktor_total_glass_skjerming_nord
+        sol_tidsvariabel_nord = {
+            'jan': self.sol_tidsvariabel_nord_jan,
+            'feb': self.sol_tidsvariabel_nord_feb,
+            'mar': self.sol_tidsvariabel_nord_mars,
+            'apr': self.sol_tidsvariabel_nord_april,
+            'mai': self.sol_tidsvariabel_nord_mai,
+            'jun': self.sol_tidsvariabel_nord_juni,
+            'jul': self.sol_tidsvariabel_nord_juli,
+            'aug': self.sol_tidsvariabel_nord_aug,
+            'sep': self.sol_tidsvariabel_nord_sept,
+            'okt': self.sol_tidsvariabel_nord_okt,
+            'nov': self.sol_tidsvariabel_nord_nov,
+            'des': self.sol_tidsvariabel_nord_des
+        }
 
-        C157 = self.areal_vindu_oest  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, øst
-        C158 = self.areal_vindu_vest  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, vest
-        C159 = self.areal_vindu_soer  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, sør
-        C160 = self.areal_vindu_nord  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, nord
-        C161 = self.areal_vindu_tak  # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, tak
+        # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, øst
+        areal_vindu_oest = self.areal_vindu_oest
+        # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, vest
+        areal_vindu_vest = self.areal_vindu_vest
+        # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, sør
+        areal_vindu_soer = self.areal_vindu_soer
+        # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, nord
+        areal_vindu_nord = self.areal_vindu_nord
+        # NS3031 - Varmettilskudd fra sol - Totalt vindusareal inkludert karm og ramme, tak
+        areal_vindu_tak = self.areal_vindu_tak
+        # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, øst
+        arealfraksjon_karm_oest = self.arealfraksjon_karm_oest
+        # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, vest
+        arealfraksjon_karm_vest = self.arealfraksjon_karm_vest
+        # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, sør
+        arealfraksjon_karm_soer = self.arealfraksjon_karm_soer
+        # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, nord
+        arealfraksjon_karm_nord = self.arealfraksjon_karm_nord
+        # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, tak
+        arealfraksjon_karm_tak = self.arealfraksjon_karm_tak
 
-        C163 = self.arealfraksjon_karm_oest  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, øst
-        C164 = self.arealfraksjon_karm_vest  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, vest
-        C165 = self.arealfraksjon_karm_soer  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, sør
-        C166 = self.arealfraksjon_karm_nord  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, nord
-        C167 = self.arealfraksjon_karm_tak  # NS3031 - Varmettilskudd fra sol - Karm/ramme arealfraksjon, tak
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - januar (Solfaktor x 0,9, dvs. forenklet)
+        solfaktor_vindu_tak_ = self.solfaktor_vindu_tak * 0, 9
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - februar (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - mars (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - april (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - mai (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - juni (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - juli (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - august (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - sept (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - okt (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - nov (Solfaktor x 0,9, dvs. forenklet)
+        # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - des (Solfaktor x 0,9, dvs. forenklet)
+        AE166 = np.mean(
+            [(solfaktor_vindu_tak_), (solfaktor_vindu_tak_), (solfaktor_vindu_tak_), (solfaktor_vindu_tak_),
+             (solfaktor_vindu_tak_),
+             (solfaktor_vindu_tak_), (solfaktor_vindu_tak_), (solfaktor_vindu_tak_),
+             (solfaktor_vindu_tak_), (solfaktor_vindu_tak_),
+             (solfaktor_vindu_tak_),
+             (solfaktor_vindu_tak_)])  # Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt (tak)
 
-        AE154 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - januar (Solfaktor x 0,9, dvs. forenklet)
-        AE155 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - februar (Solfaktor x 0,9, dvs. forenklet)
-        AE156 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - mars (Solfaktor x 0,9, dvs. forenklet)
-        AE157 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - april (Solfaktor x 0,9, dvs. forenklet)
-        AE158 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - mai (Solfaktor x 0,9, dvs. forenklet)
-        AE159 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - juni (Solfaktor x 0,9, dvs. forenklet)
-        AE160 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - juli (Solfaktor x 0,9, dvs. forenklet)
-        AE161 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - august (Solfaktor x 0,9, dvs. forenklet)
-        AE162 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - sept (Solfaktor x 0,9, dvs. forenklet)
-        AE163 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - okt (Solfaktor x 0,9, dvs. forenklet)
-        AE164 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - nov (Solfaktor x 0,9, dvs. forenklet)
-        AE165 = self.solfaktor_vindu_tak * 0, 9  # - Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt - des (Solfaktor x 0,9, dvs. forenklet)
-        AE166 = np.mean([AE154, AE155, AE156, AE157, AE158, AE159, AE160, AE161, AE162, AE163, AE164,
-                         AE165])  # Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt (tak)
+        J172 = areal_vindu_tak * AE166 * (
+                1 - arealfraksjon_karm_tak)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, tak
 
-        J172 = C161 * AE166 * (1 - C167)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, tak
-
-        J120 = C157 * ((1 - sol_tidsvariabel_ost_vest['jan']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+        J120 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['jan']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'jan'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - januar
-        J121 = C157 * ((1 - sol_tidsvariabel_ost_vest['feb']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - januar
+        J121 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['feb']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'feb'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - februar
-        J122 = C157 * ((1 - sol_tidsvariabel_ost_vest['mar']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - februar
+        J122 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['mar']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'mar'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - mars
-        J123 = C157 * ((1 - sol_tidsvariabel_ost_vest['apr']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - mars
+        J123 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['apr']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'apr'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - april
-        J124 = C157 * ((1 - sol_tidsvariabel_ost_vest['mai']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - april
+        J124 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['mai']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'mai'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - mai
-        J125 = C157 * ((1 - sol_tidsvariabel_ost_vest['jun']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - mai
+        J125 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['jun']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'jun'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - juni
-        J126 = C157 * ((1 - sol_tidsvariabel_ost_vest['jul']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - juni
+        J126 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['jul']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'jul'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - juli
-        J127 = C157 * ((1 - sol_tidsvariabel_ost_vest['aug']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - juli
+        J127 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['aug']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'aug'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - august
-        J128 = C157 * ((1 - sol_tidsvariabel_ost_vest['sep']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - august
+        J128 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['sep']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'sep'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - september
-        J129 = C157 * ((1 - sol_tidsvariabel_ost_vest['okt']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - september
+        J129 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['okt']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'okt'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - oktober
-        J130 = C157 * ((1 - sol_tidsvariabel_ost_vest['nov']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - oktober
+        J130 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['nov']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'nov'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - november
-        J131 = C157 * ((1 - sol_tidsvariabel_ost_vest['des']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - november
+        J131 = areal_vindu_oest * (
+                (1 - sol_tidsvariabel_ost_vest['des']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
             'des'] * self.solfaktor_total_glass_skjerming_oest) * (
-                       1 - C163)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - desember
+                       1 - arealfraksjon_karm_oest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst - desember
 
-        J133 = C158 * ((1 - sol_tidsvariabel_ost_vest['jan']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+        J133 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['jan']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'jan'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - januar
-        J134 = C158 * ((1 - sol_tidsvariabel_ost_vest['feb']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - januar
+        J134 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['feb']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'feb'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - februar
-        J135 = C158 * ((1 - sol_tidsvariabel_ost_vest['mar']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - februar
+        J135 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['mar']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'mar'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - mars
-        J136 = C158 * ((1 - sol_tidsvariabel_ost_vest['apr']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - mars
+        J136 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['apr']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'apr'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - april
-        J137 = C158 * ((1 - sol_tidsvariabel_ost_vest['mai']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - april
+        J137 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['mai']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'mai'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - mai
-        J138 = C158 * ((1 - sol_tidsvariabel_ost_vest['jun']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - mai
+        J138 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['jun']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'jun'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - juni
-        J139 = C158 * ((1 - sol_tidsvariabel_ost_vest['jul']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - juni
+        J139 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['jul']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'jul'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - juli
-        J140 = C158 * ((1 - sol_tidsvariabel_ost_vest['aug']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - juli
+        J140 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['aug']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'aug'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - august
-        J141 = C158 * ((1 - sol_tidsvariabel_ost_vest['sep']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - august
+        J141 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['sep']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'sep'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - september
-        J142 = C158 * ((1 - sol_tidsvariabel_ost_vest['okt']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - september
+        J142 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['okt']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'okt'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - oktober
-        J143 = C158 * ((1 - sol_tidsvariabel_ost_vest['nov']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - oktober
+        J143 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['nov']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'nov'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - november
-        J144 = C158 * ((1 - sol_tidsvariabel_ost_vest['des']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - november
+        J144 = areal_vindu_vest * (
+                (1 - sol_tidsvariabel_ost_vest['des']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
             'des'] * self.solfaktor_total_glass_skjerming_vest) * (
-                       1 - C164)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - desember
+                       1 - arealfraksjon_karm_vest)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest - desember
 
-        J146 = C159 * ((1 - sol_tidsvariabel_sor['jan']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+        J146 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['jan']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'jan'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - januar
-        J147 = C159 * ((1 - sol_tidsvariabel_sor['feb']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - januar
+        J147 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['feb']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'feb'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - februar
-        J148 = C159 * ((1 - sol_tidsvariabel_sor['mar']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - februar
+        J148 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['mar']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'mar'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - mars
-        J149 = C159 * ((1 - sol_tidsvariabel_sor['apr']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - mars
+        J149 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['apr']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'apr'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - april
-        J150 = C159 * ((1 - sol_tidsvariabel_sor['mai']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - april
+        J150 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['mai']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'mai'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - mai
-        J151 = C159 * ((1 - sol_tidsvariabel_sor['jun']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - mai
+        J151 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['jun']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'jun'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - juni
-        J152 = C159 * ((1 - sol_tidsvariabel_sor['jul']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - juni
+        J152 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['jul']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'jul'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - juli
-        J153 = C159 * ((1 - sol_tidsvariabel_sor['aug']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - juli
+        J153 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['aug']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'aug'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - august
-        J154 = C159 * ((1 - sol_tidsvariabel_sor['sep']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - august
+        J154 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['sep']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'sep'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - september
-        J155 = C159 * ((1 - sol_tidsvariabel_sor['okt']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - september
+        J155 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['okt']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'okt'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - oktober
-        J156 = C159 * ((1 - sol_tidsvariabel_sor['nov']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - oktober
+        J156 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['nov']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'nov'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - november
-        J157 = C159 * ((1 - sol_tidsvariabel_sor['des']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - november
+        J157 = areal_vindu_soer * ((1 - sol_tidsvariabel_sor['des']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
             'des'] * self.solfaktor_total_glass_skjerming_soer) * (
-                       1 - C165)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - desember
+                       1 - arealfraksjon_karm_soer)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør - desember
 
-        J159 = C160 * Q159 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - januar
-        J160 = C160 * Q160 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - februar
-        J161 = C160 * Q161 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - mars
-        J162 = C160 * Q162 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - april
-        J163 = C160 * Q163 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - mai
-        J164 = C160 * Q164 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - juni
-        J165 = C160 * Q165 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - juli
-        J166 = C160 * Q166 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - august
-        J167 = C160 * Q167 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - september
-        J168 = C160 * Q168 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - oktober
-        J169 = C160 * Q169 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - november
-        J170 = C160 * Q170 * (
-                    1 - C166)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - desember
+        J159 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['jan']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'jan'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - januar
+        J160 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['feb']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'feb'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - februar
+        J161 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['mar']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'mar'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - mars
+        J162 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['apr']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'apr'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - april
+        J163 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['mai']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'mai'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - mai
+        J164 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['jun']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'jun'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - juni
+        J165 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['jul']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'jul'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - juli
+        J166 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['aug']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'aug'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - august
+        J167 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['sep']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'sep'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - september
+        J168 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['okt']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'okt'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - oktober
+        J169 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['nov']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'nov'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - november
+        J170 = areal_vindu_nord * (
+                (1 - sol_tidsvariabel_nord['des']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
+            'des'] * self.solfaktor_total_glass_skjerming_nord) * (
+                       1 - arealfraksjon_karm_nord)  # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord - desember
 
         X159 = self.solskjermingsfaktor_horisont_oest  # - Solskjermingsfaktor - Fhor,øst
         X160 = self.solskjermingsfaktor_horisont_vest  # - Solskjermingsfaktor - Fhor,vest
@@ -1142,11 +1208,11 @@ class EnergiBeregning:
         C101 = self.areal_vegg_soer  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg sør, uten vindu og dør
         C102 = self.areal_vegg_nord  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vegg nord, uten vindu og dør
         C103 = self.areal_gulv_mot_det_fri  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, gulv mot det fri
-        C105 = self.areal_vindu_oest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, øst
-        C106 = self.areal_vindu_vest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, vest
-        C107 = self.areal_vindu_soer  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, sør
-        C108 = self.areal_vindu_nord  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, nord
-        C109 = self.areal_vindu_tak  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, tak
+        C105 = areal_vindu_oest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, øst
+        C106 = areal_vindu_vest  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, vest
+        C107 = areal_vindu_soer  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, sør
+        C108 = areal_vindu_nord  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, nord
+        C109 = areal_vindu_tak  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, vindu, tak
         C110 = self.areal_dor  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - Areal, dører
 
         C71 = C84 * C98  # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - tak
