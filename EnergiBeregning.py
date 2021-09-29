@@ -954,67 +954,48 @@ class EnergiBeregning:
         # NS3031 - Oppvarmingsbehov - Varmetreghet, aH
         C35 = 1 + self.norm_varmekap * self.areal_oppv / oppvarmingsbehov / 16  # NS3031 - Oppvarmingsbehov - Tidskonstant, τ
 
-        Q22 = varmetilskudd[
-                  'jan'] / varmetap[
-                  'jan']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - januar
-        Q23 = varmetilskudd[
-                  'feb'] / varmetap[
-                  'feb']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - februar
-        Q24 = varmetilskudd[
-                  'mar'] / varmetap[
-                  'mar']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - mars
-        Q25 = varmetilskudd[
-                  'apr'] / varmetap[
-                  'apr']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - april
-        Q26 = varmetilskudd[
-                  'mai'] / varmetap[
-                  'mai']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - mai
-        Q27 = varmetilskudd[
-                  'jun'] / varmetap[
-                  'jun']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - juni
-        Q28 = varmetilskudd[
-                  'jul'] / varmetap[
-                  'jul']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - juli
-        Q29 = varmetilskudd[
-                  'aug'] / varmetap[
-                  'aug']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - august
-        Q30 = varmetilskudd[
-                  'sep'] / varmetap[
-                  'sep']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - september
-        Q31 = varmetilskudd[
-                  'okt'] / varmetap[
-                  'okt']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - oktober
-        Q32 = varmetilskudd[
-                  'nov'] / varmetap[
-                  'nov']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - november
-        Q33 = varmetilskudd[
-                  'des'] / varmetap[
-                  'des']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - desember
+        utnyttingsfaktor_tmp = {}
+        for maaned in maaneder:
+            utnyttingsfaktor_tmp[maaned] = varmetilskudd[maaned] / varmetap[maaned]
 
-        J22 = 1 / Q22 if Q22 < 0 else C35 / (C35 + 1) if Q22 == 1 else (1 - Q22 ** C35) / (
-                    1 - Q22 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - januar
-        J23 = 1 / Q23 if Q23 < 0 else C35 / (C35 + 1) if Q23 == 1 else (1 - Q23 ** C35) / (
-                    1 - Q23 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - februar
-        J24 = 1 / Q24 if Q24 < 0 else C35 / (C35 + 1) if Q24 == 1 else (1 - Q24 ** C35) / (
-                    1 - Q24 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - mars
-        J25 = 1 / Q25 if Q25 < 0 else C35 / (C35 + 1) if Q25 == 1 else (1 - Q25 ** C35) / (
-                    1 - Q25 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - april
-        J26 = 1 / Q26 if Q26 < 0 else C35 / (C35 + 1) if Q26 == 1 else (1 - Q26 ** C35) / (
-                    1 - Q26 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - mai
-        J27 = 1 / Q27 if Q27 < 0 else C35 / (C35 + 1) if Q27 == 1 else (1 - Q27 ** C35) / (
-                    1 - Q27 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - juni
-        J28 = 1 / Q28 if Q28 < 0 else C35 / (C35 + 1) if Q28 == 1 else (1 - Q28 ** C35) / (
-                    1 - Q28 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - juli
-        J29 = 1 / Q29 if Q29 < 0 else C35 / (C35 + 1) if Q29 == 1 else (1 - Q29 ** C35) / (
-                    1 - Q29 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - august
-        J30 = 1 / Q30 if Q30 < 0 else C35 / (C35 + 1) if Q30 == 1 else (1 - Q30 ** C35) / (
-                    1 - Q30 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - september
-        J31 = 1 / Q31 if Q31 < 0 else C35 / (C35 + 1) if Q31 == 1 else (1 - Q31 ** C35) / (
-                    1 - Q31 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - october
-        J32 = 1 / Q32 if Q32 < 0 else C35 / (C35 + 1) if Q32 == 1 else (1 - Q32 ** C35) / (
-                    1 - Q32 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - november
-        J33 = 1 / Q33 if Q33 < 0 else C35 / (C35 + 1) if Q33 == 1 else (1 - Q33 ** C35) / (
-                    1 - Q33 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - desember
+
+
+        J22 = 1 / utnyttingsfaktor_tmp['jan'] if utnyttingsfaktor_tmp['jan'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['jan'] == 1 else (1 - utnyttingsfaktor_tmp['jan'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['jan'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - januar
+        J23 = 1 / utnyttingsfaktor_tmp['feb'] if utnyttingsfaktor_tmp['feb'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['feb'] == 1 else (1 - utnyttingsfaktor_tmp['feb'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['feb'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - februar
+        J24 = 1 / utnyttingsfaktor_tmp['mar'] if utnyttingsfaktor_tmp['mar'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['mar'] == 1 else (1 - utnyttingsfaktor_tmp['mar'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['mar'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - mars
+        J25 = 1 / utnyttingsfaktor_tmp['apr'] if utnyttingsfaktor_tmp['apr'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['apr'] == 1 else (1 - utnyttingsfaktor_tmp['apr'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['apr'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - april
+        J26 = 1 / utnyttingsfaktor_tmp['mai'] if utnyttingsfaktor_tmp['mai'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['mai'] == 1 else (1 - utnyttingsfaktor_tmp['mai'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['mai'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - mai
+        J27 = 1 / utnyttingsfaktor_tmp['jun'] if utnyttingsfaktor_tmp['jun'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['jun'] == 1 else (1 - utnyttingsfaktor_tmp['jun'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['jun'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - juni
+        J28 = 1 / utnyttingsfaktor_tmp['jul'] if utnyttingsfaktor_tmp['jul'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['jul'] == 1 else (1 - utnyttingsfaktor_tmp['jul'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['jul'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - juli
+        J29 = 1 / utnyttingsfaktor_tmp['aug'] if utnyttingsfaktor_tmp['aug'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['aug'] == 1 else (1 - utnyttingsfaktor_tmp['aug'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['aug'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - august
+        J30 = 1 / utnyttingsfaktor_tmp['sep'] if utnyttingsfaktor_tmp['sep'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['sep'] == 1 else (1 - utnyttingsfaktor_tmp['sep'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['sep'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - september
+        J31 = 1 / utnyttingsfaktor_tmp['okt'] if utnyttingsfaktor_tmp['okt'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['okt'] == 1 else (1 - utnyttingsfaktor_tmp['okt'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['okt'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - october
+        J32 = 1 / utnyttingsfaktor_tmp['nov'] if utnyttingsfaktor_tmp['nov'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['nov'] == 1 else (1 - utnyttingsfaktor_tmp['nov'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['nov'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - november
+        J33 = 1 / utnyttingsfaktor_tmp['des'] if utnyttingsfaktor_tmp['des'] < 0 else C35 / (C35 + 1) if \
+        utnyttingsfaktor_tmp['des'] == 1 else (1 - utnyttingsfaktor_tmp['des'] ** C35) / (
+                1 - utnyttingsfaktor_tmp['des'] ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - desember
         C22 = varmetap['jan'] - J22 * varmetilskudd['jan']  # NS3031 - Oppvarmingsbehov - januar
         C23 = varmetap['feb'] - J23 * varmetilskudd['feb']  # NS3031 - Oppvarmingsbehov - februar
         C24 = varmetap['mar'] - J24 * varmetilskudd['mar']  # NS3031 - Oppvarmingsbehov - mars
