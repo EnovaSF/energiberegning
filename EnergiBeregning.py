@@ -642,314 +642,161 @@ class EnergiBeregning:
         # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmegjenvinnerens temperaturvirkningsgrad
         # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Oppvarmed del av BRA (m2)
         # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmetilskudd fra vifter
-        C179 = (
-                       self.tid_drift_oppv_belysn_utstyr_jan / 1000 * self.varmetilskudd_lys_jan + self.tid_drift_oppv_belysn_utstyr_jan / 1000 * self.varmetilskudd_utstyr_jan + self.tid_drift_person_jan / 1000 * self.varmetilskudd_person_jan + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - januar
-        C180 = (
-                       self.tid_drift_oppv_belysn_utstyr_feb / 1000 * self.varmetilskudd_lys_feb + self.tid_drift_oppv_belysn_utstyr_feb / 1000 * self.varmetilskudd_utstyr_feb + self.tid_drift_person_feb / 1000 * self.varmetilskudd_person_feb + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - februar
-        C181 = (
-                       self.tid_drift_oppv_belysn_utstyr_mar / 1000 * self.varmetilskudd_lys_mar + self.tid_drift_oppv_belysn_utstyr_mar / 1000 * self.varmetilskudd_utstyr_mar + self.tid_drift_person_mar / 1000 * self.varmetilskudd_person_mar + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - mars
-        C182 = (
-                       self.tid_drift_oppv_belysn_utstyr_apr / 1000 * self.varmetilskudd_lys_apr + self.tid_drift_oppv_belysn_utstyr_apr / 1000 * self.varmetilskudd_utstyr_apr + self.tid_drift_person_apr / 1000 * self.varmetilskudd_person_apr + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - april
-        C183 = (
-                       self.tid_drift_oppv_belysn_utstyr_mai / 1000 * self.varmetilskudd_lys_mai + self.tid_drift_oppv_belysn_utstyr_mai / 1000 * self.varmetilskudd_utstyr_mai + self.tid_drift_person_mai / 1000 * self.varmetilskudd_person_mai + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - mail
-        C184 = (
-                       self.tid_drift_oppv_belysn_utstyr_jun / 1000 * self.varmetilskudd_lys_jun + self.tid_drift_oppv_belysn_utstyr_jun / 1000 * self.varmetilskudd_utstyr_jun + self.tid_drift_person_jun / 1000 * self.varmetilskudd_person_jun + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - juni
-        C185 = (
-                       self.tid_drift_oppv_belysn_utstyr_jul / 1000 * self.varmetilskudd_lys_jul + self.tid_drift_oppv_belysn_utstyr_jul / 1000 * self.varmetilskudd_utstyr_jul + self.tid_drift_person_jul / 1000 * self.varmetilskudd_person_jul + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - juli
-        C186 = (
-                       self.tid_drift_oppv_belysn_utstyr_aug / 1000 * self.varmetilskudd_lys_aug + self.tid_drift_oppv_belysn_utstyr_aug / 1000 * self.varmetilskudd_utstyr_aug + self.tid_drift_person_aug / 1000 * self.varmetilskudd_person_aug + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - august
-        C187 = (
-                       self.tid_drift_oppv_belysn_utstyr_sep / 1000 * self.varmetilskudd_lys_sep + self.tid_drift_oppv_belysn_utstyr_sep / 1000 * self.varmetilskudd_utstyr_sep + self.tid_drift_person_sep / 1000 * self.varmetilskudd_person_sep + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - september
-        C188 = (
-                       self.tid_drift_oppv_belysn_utstyr_okt / 1000 * self.varmetilskudd_lys_okt + self.tid_drift_oppv_belysn_utstyr_okt / 1000 * self.varmetilskudd_utstyr_okt + self.tid_drift_person_okt / 1000 * self.varmetilskudd_person_okt + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - oktober
-        C189 = (
-                       self.tid_drift_oppv_belysn_utstyr_nov / 1000 * self.varmetilskudd_lys_nov + self.tid_drift_oppv_belysn_utstyr_nov / 1000 * self.varmetilskudd_utstyr_nov + self.tid_drift_person_nov / 1000 * self.varmetilskudd_person_nov + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - november
-        C190 = (
-                       self.tid_drift_oppv_belysn_utstyr_des / 1000 * self.varmetilskudd_lys_des + self.tid_drift_oppv_belysn_utstyr_des / 1000 * self.varmetilskudd_utstyr_des + self.tid_drift_person_des / 1000 * self.varmetilskudd_person_des + (
-                   0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
-                           (ventilasjonsvarmetap_timer * (
-                               term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
-                                                                                                       1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
-                       [(self.vifteeffekt_spesifikk_i_driftstid),
-                        (
-                            self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
-                   [(np.mean(
-                       [(self.tid_drift_vent_jan), (self.tid_drift_vent_feb), (self.tid_drift_vent_mar),
-                        (self.tid_drift_vent_apr),
-                        (self.tid_drift_vent_mai), (self.tid_drift_vent_jun), (self.tid_drift_vent_jul),
-                        (self.tid_drift_vent_aug), (self.tid_drift_vent_sep), (self.tid_drift_vent_okt),
-                        (self.tid_drift_vent_nov),
-                        (self.tid_drift_vent_des)])),
-                       mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i - desember
+        tid_drift_gjsnitt = (np.mean(list(tid_drift_vent.values())))
 
-        C120 = tid['jan'] * (
-                        straalingsfluks_soer[
-                            'jan'] * areal_vindu_oest * (
-                                (1 - sol_tidsvariabel_ost_vest['jan']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
-                            'jan'] * self.solfaktor_total_glass_skjerming_oest) * (
-                                1 - arealfraksjon_karm_oest) * self.solskjermingsfaktor_horisont_oest * self.solskjermingsfaktor_overheng_oest * self.solskjermingsfaktor_finner_oest +
-                        straalingsfluks_ostvest['jan'] * areal_vindu_vest * (
-                                (1 - sol_tidsvariabel_ost_vest['jan']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
-                            'jan'] * self.solfaktor_total_glass_skjerming_vest) * (
-                                1 - arealfraksjon_karm_vest) * self.solskjermingsfaktor_horisont_vest * self.solskjermingsfaktor_overheng_vest * self.solskjermingsfaktor_finner_vest +
-                        straalingsfluks_ostvest[
-                            'jan'] * areal_vindu_soer * (
-                                (1 - sol_tidsvariabel_sor['jan']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
-                            'jan'] * self.solfaktor_total_glass_skjerming_soer) * (
-                                1 - arealfraksjon_karm_soer) * self.solskjermingsfaktor_horisont_soer * self.solskjermingsfaktor_overheng_soer * self.solskjermingsfaktor_finner_soer +
-                        straalingsfluks_nord[
-                            'jan'] * self.solskjermingsfaktor_horisont_nord * self.solskjermingsfaktor_overheng_nord * self.solskjermingsfaktor_finner_nord * areal_vindu_nord * (
-                                (1 - sol_tidsvariabel_nord['jan']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
-                            'jan'] * self.solfaktor_total_glass_skjerming_nord) * (
-                                1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'jan'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C179  # NS3031 - Varmettilskudd - januar
-        C121 = tid['feb'] * (
-                        straalingsfluks_soer[
-                            'feb'] * areal_vindu_oest * (
-                                (1 - sol_tidsvariabel_ost_vest['feb']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
-                            'feb'] * self.solfaktor_total_glass_skjerming_oest) * (
-                                1 - arealfraksjon_karm_oest) * self.solskjermingsfaktor_horisont_oest * self.solskjermingsfaktor_overheng_oest * self.solskjermingsfaktor_finner_oest +
-                        straalingsfluks_ostvest['feb'] * areal_vindu_vest * (
-                                (1 - sol_tidsvariabel_ost_vest['feb']) * self.solfaktor_vindu_vest + sol_tidsvariabel_ost_vest[
-                            'feb'] * self.solfaktor_total_glass_skjerming_vest) * (
-                                1 - arealfraksjon_karm_vest) * self.solskjermingsfaktor_horisont_vest * self.solskjermingsfaktor_overheng_vest * self.solskjermingsfaktor_finner_vest +
-                        straalingsfluks_ostvest[
-                            'feb'] * areal_vindu_soer * (
-                                (1 - sol_tidsvariabel_sor['feb']) * self.solfaktor_vindu_soer + sol_tidsvariabel_sor[
-                            'feb'] * self.solfaktor_total_glass_skjerming_soer) * (
-                                1 - arealfraksjon_karm_soer) * self.solskjermingsfaktor_horisont_soer * self.solskjermingsfaktor_overheng_soer * self.solskjermingsfaktor_finner_soer +
-                        straalingsfluks_nord[
-                            'feb'] * self.solskjermingsfaktor_horisont_nord * self.solskjermingsfaktor_overheng_nord * self.solskjermingsfaktor_finner_nord * areal_vindu_nord * (
-                                (1 - sol_tidsvariabel_nord['feb']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
-                            'feb'] * self.solfaktor_total_glass_skjerming_nord) * (
-                                1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'feb'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C180  # NS3031 - Varmettilskudd - februar
-        C122 = tid['mar'] * (
+        tid_drift_oppv_belysn_utstyr = {
+            'jan': self.tid_drift_oppv_belysn_utstyr_jan,
+            'feb': self.tid_drift_oppv_belysn_utstyr_feb,
+            'mar': self.tid_drift_oppv_belysn_utstyr_mar,
+            'apr': self.tid_drift_oppv_belysn_utstyr_apr,
+            'mai': self.tid_drift_oppv_belysn_utstyr_mai,
+            'jun': self.tid_drift_oppv_belysn_utstyr_jun,
+            'jul': self.tid_drift_oppv_belysn_utstyr_jul,
+            'aug': self.tid_drift_oppv_belysn_utstyr_aug,
+            'sep': self.tid_drift_oppv_belysn_utstyr_sep,
+            'okt': self.tid_drift_oppv_belysn_utstyr_okt,
+            'nov': self.tid_drift_oppv_belysn_utstyr_nov,
+            'des': self.tid_drift_oppv_belysn_utstyr_des
+        }
+
+        tid_drift_person = {
+            'jan': self.tid_drift_person_jan,
+            'feb': self.tid_drift_person_feb,
+            'mar': self.tid_drift_person_mar,
+            'apr': self.tid_drift_person_apr,
+            'mai': self.tid_drift_person_mai,
+            'jun': self.tid_drift_person_jun,
+            'jul': self.tid_drift_person_jul,
+            'aug': self.tid_drift_person_aug,
+            'sep': self.tid_drift_person_sep,
+            'okt': self.tid_drift_person_okt,
+            'nov': self.tid_drift_person_nov,
+            'des': self.tid_drift_person_des
+        }
+
+        varmetilskudd_person = {
+            'jan': self.varmetilskudd_person_jan,
+            'feb': self.varmetilskudd_person_feb,
+            'mar': self.varmetilskudd_person_mar,
+            'apr': self.varmetilskudd_person_apr,
+            'mai': self.varmetilskudd_person_mai,
+            'jun': self.varmetilskudd_person_jun,
+            'jul': self.varmetilskudd_person_jul,
+            'aug': self.varmetilskudd_person_aug,
+            'sep': self.varmetilskudd_person_sep,
+            'okt': self.varmetilskudd_person_okt,
+            'nov': self.varmetilskudd_person_nov,
+            'des': self.varmetilskudd_person_des
+        }
+
+        varmetilskudd_lys = {
+            'jan': self.varmetilskudd_lys_jan,
+            'feb': self.varmetilskudd_lys_feb,
+            'mar': self.varmetilskudd_lys_mar,
+            'apr': self.varmetilskudd_lys_apr,
+            'mai': self.varmetilskudd_lys_mai,
+            'jun': self.varmetilskudd_lys_jun,
+            'jul': self.varmetilskudd_lys_jul,
+            'aug': self.varmetilskudd_lys_aug,
+            'sep': self.varmetilskudd_lys_sep,
+            'okt': self.varmetilskudd_lys_okt,
+            'nov': self.varmetilskudd_lys_nov,
+            'des': self.varmetilskudd_lys_des
+        }
+
+        varmetilskudd_utstyr = {
+            'jan': self.varmetilskudd_utstyr_jan,
+            'feb': self.varmetilskudd_utstyr_feb,
+            'mar': self.varmetilskudd_utstyr_mar,
+            'apr': self.varmetilskudd_utstyr_apr,
+            'mai': self.varmetilskudd_utstyr_mai,
+            'jun': self.varmetilskudd_utstyr_jun,
+            'jul': self.varmetilskudd_utstyr_jul,
+            'aug': self.varmetilskudd_utstyr_aug,
+            'sep': self.varmetilskudd_utstyr_sep,
+            'okt': self.varmetilskudd_utstyr_okt,
+            'nov': self.varmetilskudd_utstyr_nov,
+            'des': self.varmetilskudd_utstyr_des
+        }
+
+        varmetilskudd = {}
+        for maaned in maaneder:
+            varmetilskudd[maaned] = tid[maaned] * (straalingsfluks_soer[maaned] * areal_vindu_oest * (
+                    (1 - sol_tidsvariabel_ost_vest[maaned]) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                maaned] * self.solfaktor_total_glass_skjerming_oest) * (
+                                                          1 - arealfraksjon_karm_oest) * self.solskjermingsfaktor_horisont_oest * self.solskjermingsfaktor_overheng_oest * self.solskjermingsfaktor_finner_oest +
+                                                  straalingsfluks_ostvest[maaned] * areal_vindu_vest * (
+                                                          (1 - sol_tidsvariabel_ost_vest[maaned]) * self.solfaktor_vindu_vest +
+                                                          sol_tidsvariabel_ost_vest[
+                                                              maaned] * self.solfaktor_total_glass_skjerming_vest) * (
+                                                          1 - arealfraksjon_karm_vest) * self.solskjermingsfaktor_horisont_vest * self.solskjermingsfaktor_overheng_vest * self.solskjermingsfaktor_finner_vest +
+                                                  straalingsfluks_ostvest[maaned] * areal_vindu_soer * (
+                                                          (1 - sol_tidsvariabel_sor[maaned]) * self.solfaktor_vindu_soer +
+                                                          sol_tidsvariabel_sor[maaned] * self.solfaktor_total_glass_skjerming_soer) * (
+                                                          1 - arealfraksjon_karm_soer) * self.solskjermingsfaktor_horisont_soer * self.solskjermingsfaktor_overheng_soer * self.solskjermingsfaktor_finner_soer +
+                                                  straalingsfluks_nord[
+                                                      maaned] * self.solskjermingsfaktor_horisont_nord * self.solskjermingsfaktor_overheng_nord * self.solskjermingsfaktor_finner_nord * areal_vindu_nord * (
+                                                          (1 - sol_tidsvariabel_nord[maaned]) * self.solfaktor_vindu_nord +
+                                                          sol_tidsvariabel_nord[maaned] * self.solfaktor_total_glass_skjerming_nord) * (
+                                                          1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
+                                                      maaned] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                            tid_drift_oppv_belysn_utstyr[maaned] / 1000 * varmetilskudd_lys[maaned] + tid_drift_oppv_belysn_utstyr[maaned] / 1000 * varmetilskudd_utstyr[maaned] + tid_drift_person[maaned] / 1000 * varmetilskudd_person[maaned] + (
+                                        0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * ((
+                                                                                                                                  ventilasjonsvarmetap_timer * (
+                                                                                                                              term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                                                                                                      term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                                                                                                  ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * (
+                                                                                                                                  (
+                                                                                                                                          1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                                                                                              [(
+                                                                                                                                  self.vifteeffekt_spesifikk_i_driftstid),
+                                                                                                                                  (
+                                                                                                                                      self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                                                                                              [(
+                                                                                                                                  self.vifteeffekt_spesifikk_i_driftstid),
+                                                                                                                                  (
+                                                                                                                                      self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                        [tid_drift_gjsnitt, mean_timer_per_aar])) * self.areal_oppv
+
+        # NS3031 - Varmettilskudd - januar
+        varmetilskudd_feb = tid['feb'] * (straalingsfluks_soer['feb'] * areal_vindu_oest * (
+                    (1 - sol_tidsvariabel_ost_vest['feb']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
+                'feb'] * self.solfaktor_total_glass_skjerming_oest) * (
+                                         1 - arealfraksjon_karm_oest) * self.solskjermingsfaktor_horisont_oest * self.solskjermingsfaktor_overheng_oest * self.solskjermingsfaktor_finner_oest +
+                             straalingsfluks_ostvest['feb'] * areal_vindu_vest * (
+                                         (1 - sol_tidsvariabel_ost_vest['feb']) * self.solfaktor_vindu_vest +
+                                         sol_tidsvariabel_ost_vest[
+                                             'feb'] * self.solfaktor_total_glass_skjerming_vest) * (
+                                         1 - arealfraksjon_karm_vest) * self.solskjermingsfaktor_horisont_vest * self.solskjermingsfaktor_overheng_vest * self.solskjermingsfaktor_finner_vest +
+                             straalingsfluks_ostvest['feb'] * areal_vindu_soer * (
+                                         (1 - sol_tidsvariabel_sor['feb']) * self.solfaktor_vindu_soer +
+                                         sol_tidsvariabel_sor['feb'] * self.solfaktor_total_glass_skjerming_soer) * (
+                                         1 - arealfraksjon_karm_soer) * self.solskjermingsfaktor_horisont_soer * self.solskjermingsfaktor_overheng_soer * self.solskjermingsfaktor_finner_soer +
+                             straalingsfluks_nord[
+                                 'feb'] * self.solskjermingsfaktor_horisont_nord * self.solskjermingsfaktor_overheng_nord * self.solskjermingsfaktor_finner_nord * areal_vindu_nord * (
+                                         (1 - sol_tidsvariabel_nord['feb']) * self.solfaktor_vindu_nord +
+                                         sol_tidsvariabel_nord['feb'] * self.solfaktor_total_glass_skjerming_nord) * (
+                                         1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
+                                 'feb'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                           self.tid_drift_oppv_belysn_utstyr_feb / 1000 * self.varmetilskudd_lys_feb + self.tid_drift_oppv_belysn_utstyr_feb / 1000 * self.varmetilskudd_utstyr_feb + self.tid_drift_person_feb / 1000 * self.varmetilskudd_person_feb + (
+                       0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * ((
+                                                                                                                     ventilasjonsvarmetap_timer * (
+                                                                                                                 term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                                                                                         term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                                                                                     ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * (
+                                                                                                                     (
+                                                                                                                                 1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                                                                                 [(
+                                                                                                                      self.vifteeffekt_spesifikk_i_driftstid),
+                                                                                                                  (
+                                                                                                                      self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                                                                                 [(
+                                                                                                                      self.vifteeffekt_spesifikk_i_driftstid),
+                                                                                                                  (
+                                                                                                                      self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                       [tid_drift_gjsnitt, mean_timer_per_aar])) * self.areal_oppv
+        # NS3031 - Varmettilskudd - februar
+        varmetilskudd_mar = tid['mar'] * (
                         straalingsfluks_soer[
                             'mar'] * areal_vindu_oest * (
                                 (1 - sol_tidsvariabel_ost_vest['mar']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
@@ -969,8 +816,23 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['mar']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'mar'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'mar'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C181  # NS3031 - Varmettilskudd - mars
-        C123 = tid['apr'] * (
+                            'mar'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_mar / 1000 * self.varmetilskudd_lys_mar + self.tid_drift_oppv_belysn_utstyr_mar / 1000 * self.varmetilskudd_utstyr_mar + self.tid_drift_person_mar / 1000 * self.varmetilskudd_person_mar + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - mars
+        varmetilskudd_apr = tid['apr'] * (
                         straalingsfluks_soer[
                             'apr'] * areal_vindu_oest * (
                                 (1 - sol_tidsvariabel_ost_vest['apr']) * self.solfaktor_vindu_oest + sol_tidsvariabel_ost_vest[
@@ -990,7 +852,22 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['apr']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'apr'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'apr'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C182  # NS3031 - Varmettilskudd - april
+                            'apr'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_apr / 1000 * self.varmetilskudd_lys_apr + self.tid_drift_oppv_belysn_utstyr_apr / 1000 * self.varmetilskudd_utstyr_apr + self.tid_drift_person_apr / 1000 * self.varmetilskudd_person_apr + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - april
         C124 = tid['mai'] * (
                         straalingsfluks_soer[
                             'mai'] * areal_vindu_oest * (
@@ -1011,7 +888,22 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['mai']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'mai'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'mai'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C183  # NS3031 - Varmettilskudd - mai
+                            'mai'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_mai / 1000 * self.varmetilskudd_lys_mai + self.tid_drift_oppv_belysn_utstyr_mai / 1000 * self.varmetilskudd_utstyr_mai + self.tid_drift_person_mai / 1000 * self.varmetilskudd_person_mai + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - mai
         C125 = tid['jun'] * (
                         straalingsfluks_soer[
                             'jun'] * areal_vindu_oest * (
@@ -1032,7 +924,22 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['jun']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'jun'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'jun'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C184  # NS3031 - Varmettilskudd - juni
+                            'jun'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_jun / 1000 * self.varmetilskudd_lys_jun + self.tid_drift_oppv_belysn_utstyr_jun / 1000 * self.varmetilskudd_utstyr_jun + self.tid_drift_person_jun / 1000 * self.varmetilskudd_person_jun + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - juni
         C126 = tid['jul'] * (
                         straalingsfluks_soer[
                             'jul'] * areal_vindu_oest * (
@@ -1053,7 +960,22 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['jul']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'jul'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'jul'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C185  # NS3031 - Varmettilskudd - juli
+                            'jul'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_jul / 1000 * self.varmetilskudd_lys_jul + self.tid_drift_oppv_belysn_utstyr_jul / 1000 * self.varmetilskudd_utstyr_jul + self.tid_drift_person_jul / 1000 * self.varmetilskudd_person_jul + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - juli
         C127 = tid['aug'] * (
                         straalingsfluks_soer[
                             'aug'] * areal_vindu_oest * (
@@ -1074,7 +996,22 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['aug']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'aug'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'aug'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C186  # NS3031 - Varmettilskudd - august
+                            'aug'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_aug / 1000 * self.varmetilskudd_lys_aug + self.tid_drift_oppv_belysn_utstyr_aug / 1000 * self.varmetilskudd_utstyr_aug + self.tid_drift_person_aug / 1000 * self.varmetilskudd_person_aug + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - august
         C128 = tid['sep'] * (
                         straalingsfluks_soer[
                             'sep'] * areal_vindu_oest * (
@@ -1095,7 +1032,22 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['sep']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'sep'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'sep'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C187  # NS3031 - Varmettilskudd - september
+                            'sep'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_sep / 1000 * self.varmetilskudd_lys_sep + self.tid_drift_oppv_belysn_utstyr_sep / 1000 * self.varmetilskudd_utstyr_sep + self.tid_drift_person_sep / 1000 * self.varmetilskudd_person_sep + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - september
         C129 = tid['okt'] * (
                         straalingsfluks_soer[
                             'okt'] * areal_vindu_oest * (
@@ -1116,7 +1068,22 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['okt']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'okt'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'okt'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C188  # NS3031 - Varmettilskudd - oktober
+                            'okt'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_okt / 1000 * self.varmetilskudd_lys_okt + self.tid_drift_oppv_belysn_utstyr_okt / 1000 * self.varmetilskudd_utstyr_okt + self.tid_drift_person_okt / 1000 * self.varmetilskudd_person_okt + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - oktober
         C130 = tid['nov'] * (
                         straalingsfluks_soer[
                             'nov'] * areal_vindu_oest * (
@@ -1137,7 +1104,22 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['nov']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'nov'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'nov'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C189  # NS3031 - Varmettilskudd - november
+                            'nov'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_nov / 1000 * self.varmetilskudd_lys_nov + self.tid_drift_oppv_belysn_utstyr_nov / 1000 * self.varmetilskudd_utstyr_nov + self.tid_drift_person_nov / 1000 * self.varmetilskudd_person_nov + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - november
         C131 = tid['des'] * (
                         straalingsfluks_soer[
                             'des'] * areal_vindu_oest * (
@@ -1158,7 +1140,22 @@ class EnergiBeregning:
                                 (1 - sol_tidsvariabel_nord['des']) * self.solfaktor_vindu_nord + sol_tidsvariabel_nord[
                             'des'] * self.solfaktor_total_glass_skjerming_nord) * (
                                 1 - arealfraksjon_karm_nord) + straalingsfluks_tak[
-                            'des'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + C190  # NS3031 - Varmettilskudd - desember
+                            'des'] * total_solfaktor_gjennomsnitt_vindu_tak * self.solskjermingsfaktor_horisont_tak * self.solskjermingsfaktor_overheng_tak * self.solskjermingsfaktor_finner_tak) + (
+                                                   self.tid_drift_oppv_belysn_utstyr_des / 1000 * self.varmetilskudd_lys_des + self.tid_drift_oppv_belysn_utstyr_des / 1000 * self.varmetilskudd_utstyr_des + self.tid_drift_person_des / 1000 * self.varmetilskudd_person_des + (
+                                               0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * (
+                                                       (ventilasjonsvarmetap_timer * (
+                                                           term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                            term1 if self.BygningskategoriErForretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                               ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * ((
+                                                                                                                                   1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                   [(self.vifteeffekt_spesifikk_i_driftstid),
+                                                    (
+                                                        self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                               [tid_drift_gjsnitt,
+                                                mean_timer_per_aar])) * self.areal_oppv  # NS3031 - Varmettilskudd - desember
 
         X46 = self.tid_drift_oppv_belysn_utstyr_jan  # - Timer i driftstid for oppvarming - Timer for måneden - januar
         X47 = self.tid_drift_oppv_belysn_utstyr_feb  # - Timer i driftstid for oppvarming - Timer for måneden - februar
@@ -1410,10 +1407,11 @@ class EnergiBeregning:
         C36 = C37 * self.areal_oppv / C39  # NS3031 - Oppvarmingsbehov - Varmetreghet, aH
         C35 = 1 + C36 / 16  # NS3031 - Oppvarmingsbehov - Tidskonstant, τ
 
-        Q22 = C120 / C49  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - januar
-        Q23 = C121 / C50  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - februar
-        Q24 = C122 / C51  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - mars
-        Q25 = C123 / C52  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - april
+        Q22 = varmetilskudd[
+                  'jan'] / C49  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - januar
+        Q23 = varmetilskudd_feb / C50  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - februar
+        Q24 = varmetilskudd_mar / C51  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - mars
+        Q25 = varmetilskudd_apr / C52  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - april
         Q26 = C124 / C53  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - mai
         Q27 = C125 / C54  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - juni
         Q28 = C126 / C55  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - juli
@@ -1447,10 +1445,10 @@ class EnergiBeregning:
                     1 - Q32 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - november
         J33 = 1 / Q33 if Q33 < 0 else C35 / (C35 + 1) if Q33 == 1 else (1 - Q33 ** C35) / (
                     1 - Q33 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - desember
-        C22 = C49 - J22 * C120  # NS3031 - Oppvarmingsbehov - januar
-        C23 = C50 - J23 * C121  # NS3031 - Oppvarmingsbehov - februar
-        C24 = C51 - J24 * C122  # NS3031 - Oppvarmingsbehov - mars
-        C25 = C52 - J25 * C123  # NS3031 - Oppvarmingsbehov - april
+        C22 = C49 - J22 * varmetilskudd['jan']  # NS3031 - Oppvarmingsbehov - januar
+        C23 = C50 - J23 * varmetilskudd_feb  # NS3031 - Oppvarmingsbehov - februar
+        C24 = C51 - J24 * varmetilskudd_mar  # NS3031 - Oppvarmingsbehov - mars
+        C25 = C52 - J25 * varmetilskudd_apr  # NS3031 - Oppvarmingsbehov - april
         C26 = C53 - J26 * C124  # NS3031 - Oppvarmingsbehov - mai
         C27 = C54 - J27 * C125  # NS3031 - Oppvarmingsbehov - juni
         C28 = C55 - J28 * C126  # NS3031 - Oppvarmingsbehov - juli
@@ -1573,10 +1571,10 @@ class EnergiBeregning:
                    'des'] + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - desember
         Q213 = Q215 + Q216 + Q217 + Q218 + Q219 + Q220 + Q221 + Q222 + Q223 + Q224 + Q225 + Q226  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - Total
 
-        J215 = C120  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - januar
-        J216 = C121  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - februar
-        J217 = C122  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - mars
-        J218 = C123  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - april
+        J215 = varmetilskudd['jan']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - januar
+        J216 = varmetilskudd_feb  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - februar
+        J217 = varmetilskudd_mar  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - mars
+        J218 = varmetilskudd_apr  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - april
         J219 = C124  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - mai
         J220 = C125  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - juni
         J221 = C126  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - juli
