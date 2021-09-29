@@ -993,163 +993,229 @@ class EnergiBeregning:
         Ventilasjonsvarme = sum(energibehov_frostsikring_av_varmegjenvinner.values())
 
         ### energipost 3-b
-        Q228 = self.temp_settpunkt_kjoeling  # NS3031 - Setpunkttemperatur for kjøling
+        # NS3031 - Setpunkttemperatur for kjøling
+        # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls]
+        setpunkttemp_for_kjoeling = {}
+        for maaned in maaneder:
+            setpunkttemp_for_kjoeling[maaned] = (self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                    self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                    self.temp_settpunkt_kjoeling - utetemp[maaned]) * tid[maaned] + varmetap_mot_grunnen_qg['jan'] # TODO: Er dette riktig? varmetap i jan for alle?
 
-        Q215 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'jan'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - januar
-        Q216 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'feb'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - februar
-        Q217 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'mar'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mars
-        Q218 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'apr'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - april
-        Q219 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'mai'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mai
-        Q220 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'jun'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juni
-        Q221 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'jul'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juli
-        Q222 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'aug'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - august
-        Q223 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'sep'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - september
-        Q224 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'okt'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - oktober
-        Q225 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'nov'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - november
-        Q226 = (
-                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
-                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
-                       Q228 - utetemp['jan']) * tid[
-                   'des'] + varmetap_mot_grunnen_qg[
-                   'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - desember
-        Q213 = Q215 + Q216 + Q217 + Q218 + Q219 + Q220 + Q221 + Q222 + Q223 + Q224 + Q225 + Q226  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - Total
-
-        J215 = varmetilskudd['jan']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - januar
-        J216 = varmetilskudd['feb']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - februar
-        J217 = varmetilskudd['mar']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - mars
-        J218 = varmetilskudd['apr']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - april
-        J219 = varmetilskudd['mai']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - mai
-        J220 = varmetilskudd['jun']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - juni
-        J221 = varmetilskudd['jul']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - juli
-        J222 = varmetilskudd['aug']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - august
-        J223 = varmetilskudd['sep']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - september
-        J224 = varmetilskudd['okt']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - oktober
-        J225 = varmetilskudd['nov']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - november
-        J226 = varmetilskudd['des']  # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - desember
-
-        AE215 = J215 / Q215  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - januar
-        AE216 = J216 / Q216  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - februar
-        AE217 = J217 / Q217  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - mars
-        AE218 = J218 / Q218  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - april
-        AE219 = J219 / Q219  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - mai
-        AE220 = J220 / Q220  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - juni
-        AE221 = J221 / Q221  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - juli
-        AE222 = J222 / Q222  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - august
-        AE223 = J223 / Q223  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - september
-        AE224 = J224 / Q224  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - oktober
-        AE225 = J225 / Q225  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - november
-        AE226 = J226 / Q226  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i - desember
-
-        X215 = 1 / AE215 if AE215 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE215 == 1 else (1 - AE215 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE215 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - januar
-        X216 = 1 / AE216 if AE216 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE216 == 1 else (1 - AE216 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE216 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - februar
-        X217 = 1 / AE217 if AE217 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE217 == 1 else (1 - AE217 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE217 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - mars
-        X218 = 1 / AE218 if AE218 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE218 == 1 else (1 - AE218 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE218 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - april
-        X219 = 1 / AE219 if AE219 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE219 == 1 else (1 - AE219 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE219 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - mai
-        X220 = 1 / AE220 if AE220 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE220 == 1 else (1 - AE220 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE220 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - juni
-        X221 = 1 / AE221 if AE221 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE221 == 1 else (1 - AE221 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE221 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - juli
-        X222 = 1 / AE222 if AE222 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE222 == 1 else (1 - AE222 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE222 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - august
-        X223 = 1 / AE223 if AE223 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE223 == 1 else (1 - AE223 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE223 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - september
-        X224 = 1 / AE224 if AE224 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE224 == 1 else (1 - AE224 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE224 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - oktober
-        X225 = 1 / AE225 if AE225 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE225 == 1 else (1 - AE225 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE225 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - november
-        X226 = 1 / AE226 if AE226 < 0 else (oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if AE226 == 1 else (1 - AE226 ** oppvarmingsbehov_tidskonstant) / (
-                    1 - AE226 ** (oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - desember
+        # NS3031 - Varmettilskudd (6.1.1.2) [kWh] - januar
+        # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yC,i
+        X215 = 1 / (varmetilskudd['jan'] / setpunkttemp_for_kjoeling['jan']) if varmetilskudd['jan'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'jan'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['jan'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'jan'] == 1 else (1 - (
+                    varmetilskudd['jan'] / setpunkttemp_for_kjoeling['jan']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'jan'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'jan']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - januar
+        X216 = 1 / (varmetilskudd['feb'] / setpunkttemp_for_kjoeling['feb']) if varmetilskudd['feb'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'feb'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['feb'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'feb'] == 1 else (1 - (
+                    varmetilskudd['feb'] / setpunkttemp_for_kjoeling['feb']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'feb'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'feb']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - februar
+        X217 = 1 / (varmetilskudd['mar'] / setpunkttemp_for_kjoeling['mar']) if varmetilskudd['mar'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'mar'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['mar'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'mar'] == 1 else (1 - (
+                    varmetilskudd['mar'] / setpunkttemp_for_kjoeling['mar']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'mar'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'mar']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - mars
+        X218 = 1 / (varmetilskudd['apr'] / setpunkttemp_for_kjoeling['apr']) if varmetilskudd['apr'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'apr'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['apr'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'apr'] == 1 else (1 - (
+                    varmetilskudd['apr'] / setpunkttemp_for_kjoeling['apr']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'apr'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'apr']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - april
+        X219 = 1 / (varmetilskudd['mai'] / setpunkttemp_for_kjoeling['mai']) if varmetilskudd['mai'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'mai'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['mai'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'mai'] == 1 else (1 - (
+                    varmetilskudd['mai'] / setpunkttemp_for_kjoeling['mai']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'mai'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'mai']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - mai
+        X220 = 1 / (varmetilskudd['jun'] / setpunkttemp_for_kjoeling['jun']) if varmetilskudd['jun'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'jun'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['jun'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'jun'] == 1 else (1 - (
+                    varmetilskudd['jun'] / setpunkttemp_for_kjoeling['jun']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'jun'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'jun']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - juni
+        X221 = 1 / (varmetilskudd['jul'] / setpunkttemp_for_kjoeling['jul']) if varmetilskudd['jul'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'jul'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['jul'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'jul'] == 1 else (1 - (
+                    varmetilskudd['jul'] / setpunkttemp_for_kjoeling['jul']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'jul'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'jul']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - juli
+        X222 = 1 / (varmetilskudd['aug'] / setpunkttemp_for_kjoeling['aug']) if varmetilskudd['aug'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'aug'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['aug'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'aug'] == 1 else (1 - (
+                    varmetilskudd['aug'] / setpunkttemp_for_kjoeling['aug']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'aug'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'aug']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - august
+        X223 = 1 / (varmetilskudd['sep'] / setpunkttemp_for_kjoeling['sep']) if varmetilskudd['sep'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'sep'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['sep'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'sep'] == 1 else (1 - (
+                    varmetilskudd['sep'] / setpunkttemp_for_kjoeling['sep']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'sep'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'sep']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - september
+        X224 = 1 / (varmetilskudd['okt'] / setpunkttemp_for_kjoeling['okt']) if varmetilskudd['okt'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'okt'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['okt'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'okt'] == 1 else (1 - (
+                    varmetilskudd['okt'] / setpunkttemp_for_kjoeling['okt']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'okt'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'okt']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - oktober
+        X225 = 1 / (varmetilskudd['nov'] / setpunkttemp_for_kjoeling['nov']) if varmetilskudd['nov'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'nov'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['nov'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'nov'] == 1 else (1 - (
+                    varmetilskudd['nov'] / setpunkttemp_for_kjoeling['nov']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'nov'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'nov']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - november
+        X226 = 1 / (varmetilskudd['des'] / setpunkttemp_for_kjoeling['des']) if varmetilskudd['des'] / \
+                                                                                setpunkttemp_for_kjoeling[
+                                                                                    'des'] < 0 else (
+            oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1) if varmetilskudd['des'] /
+                                                                                   setpunkttemp_for_kjoeling[
+                                                                                       'des'] == 1 else (1 - (
+                    varmetilskudd['des'] / setpunkttemp_for_kjoeling['des']) ** oppvarmingsbehov_tidskonstant) / (
+                                                                                                                1 - (
+                                                                                                                varmetilskudd[
+                                                                                                                    'des'] /
+                                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                                    'des']) ** (
+                                                                                                                            oppvarmingsbehov_tidskonstant + 1)))  # NS3031 - Utnyttingsfaktor - desember
 
         C231 = self.areal_avkjoelt_andel
 
-        C215 = (0 if J215 - X215 * Q215 < 0 else J215 - X215 * Q215) * C231
-        C216 = (0 if J216 - X216 * Q216 < 0 else J216 - X216 * Q216) * C231
-        C217 = (0 if J217 - X217 * Q217 < 0 else J217 - X217 * Q217) * C231
-        C218 = (0 if J218 - X218 * Q218 < 0 else J218 - X218 * Q218) * C231
-        C219 = (0 if J219 - X219 * Q219 < 0 else J219 - X219 * Q219) * C231
-        C220 = (0 if J220 - X220 * Q220 < 0 else J220 - X220 * Q220) * C231
-        C221 = (0 if J221 - X220 * Q220 < 0 else J220 - X220 * Q220) * C231
-        C222 = (0 if J222 - X221 * Q221 < 0 else J221 - X221 * Q221) * C231
-        C223 = (0 if J223 - X222 * Q222 < 0 else J222 - X222 * Q222) * C231
-        C224 = (0 if J224 - X223 * Q223 < 0 else J223 - X223 * Q223) * C231
-        C225 = (0 if J225 - X224 * Q224 < 0 else J224 - X224 * Q224) * C231
-        C226 = (0 if J226 - X225 * Q225 < 0 else J225 - X225 * Q225) * C231
+        C215 = (0 if varmetilskudd['jan'] - X215 * setpunkttemp_for_kjoeling['jan'] < 0 else varmetilskudd[
+                                                                                                 'jan'] - X215 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'jan']) * C231
+        C216 = (0 if varmetilskudd['feb'] - X216 * setpunkttemp_for_kjoeling['feb'] < 0 else varmetilskudd[
+                                                                                                 'feb'] - X216 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'feb']) * C231
+        C217 = (0 if varmetilskudd['mar'] - X217 * setpunkttemp_for_kjoeling['mar'] < 0 else varmetilskudd[
+                                                                                                 'mar'] - X217 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'mar']) * C231
+        C218 = (0 if varmetilskudd['apr'] - X218 * setpunkttemp_for_kjoeling['apr'] < 0 else varmetilskudd[
+                                                                                                 'apr'] - X218 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'apr']) * C231
+        C219 = (0 if varmetilskudd['mai'] - X219 * setpunkttemp_for_kjoeling['mai'] < 0 else varmetilskudd[
+                                                                                                 'mai'] - X219 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'mai']) * C231
+        C220 = (0 if varmetilskudd['jun'] - X220 * setpunkttemp_for_kjoeling['jun'] < 0 else varmetilskudd[
+                                                                                                 'jun'] - X220 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'jun']) * C231
+        C221 = (0 if varmetilskudd['jul'] - X220 * setpunkttemp_for_kjoeling['jun'] < 0 else varmetilskudd[
+                                                                                                 'jun'] - X220 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'jun']) * C231
+        C222 = (0 if varmetilskudd['aug'] - X221 * setpunkttemp_for_kjoeling['jul'] < 0 else varmetilskudd[
+                                                                                                 'jul'] - X221 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'jul']) * C231
+        C223 = (0 if varmetilskudd['sep'] - X222 * setpunkttemp_for_kjoeling['aug'] < 0 else varmetilskudd[
+                                                                                                 'aug'] - X222 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'aug']) * C231
+        C224 = (0 if varmetilskudd['okt'] - X223 * setpunkttemp_for_kjoeling['sep'] < 0 else varmetilskudd[
+                                                                                                 'sep'] - X223 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'sep']) * C231
+        C225 = (0 if varmetilskudd['nov'] - X224 * setpunkttemp_for_kjoeling['okt'] < 0 else varmetilskudd[
+                                                                                                 'okt'] - X224 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'okt']) * C231
+        C226 = (0 if varmetilskudd['des'] - X225 * setpunkttemp_for_kjoeling['nov'] < 0 else varmetilskudd[
+                                                                                                 'nov'] - X225 *
+                                                                                             setpunkttemp_for_kjoeling[
+                                                                                                 'nov']) * C231
         C213 = C215 + C216 + C217 + C218 + C219 + C220 + C221 + C222 + C223 + C224 + C225 + C226
 
         J265 = self.temp_differanse_veskekrets_oppvarming  # NS3031* - Energibehov, pumper (Oppvarming) - Temperatur differanse tur-retur væskekrets
         J266 = self.varmekapasitet_vann  # NS3031* - Energibehov, pumper (Oppvarming) - Spesifikk varmekapasitet for vann
         J267 = self.densitet_vann  # NS3031* - Energibehov, pumper (Oppvarming) - Densitet for vann
-        J264 = (oppvarmingsbehov[
-                    'jan'] + oppvarmingsbehov[
-                    'feb'] + oppvarmingsbehov[
-                    'mar'] + oppvarmingsbehov[
-                    'apr'] + oppvarmingsbehov[
-                    'mai'] + oppvarmingsbehov[
-                    'jun'] + oppvarmingsbehov[
-                    'jul'] + oppvarmingsbehov[
-                    'aug'] + oppvarmingsbehov['sep'] + oppvarmingsbehov[
-                    'okt'] + oppvarmingsbehov['nov'] + oppvarmingsbehov[
-                    'des']) / 8760 * 1000  # NS3031* - Energibehov, pumper (Oppvarming) - Varmebehov
+        J264 = Romoppvarming / 8760 * 1000  # NS3031* - Energibehov, pumper (Oppvarming) - Varmebehov
         J262 = self.tid_drift_pumpe_oppv  # NS3031* - Energibehov, pumper (Oppvarming) - Driftstid i året
         J261 = self.pumpeeffekt_spesifikk_oppv  # NS3031* - Energibehov, pumper (Oppvarming) - Spesifikk pumpeeffekt
         J260 = J264 / (
@@ -1173,29 +1239,65 @@ class EnergiBeregning:
 
         ### energipost 6
         C215 = (
-                   0 if J215 - X215 * Q215 < 0 else J215 - X215 * Q215) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - januar
+                   0 if varmetilskudd['jan'] - X215 * setpunkttemp_for_kjoeling['jan'] < 0 else varmetilskudd[
+                                                                                                    'jan'] - X215 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'jan']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - januar
         C216 = (
-                   0 if J216 - X216 * Q216 < 0 else J216 - X216 * Q216) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - februar
+                   0 if varmetilskudd['feb'] - X216 * setpunkttemp_for_kjoeling['feb'] < 0 else varmetilskudd[
+                                                                                                    'feb'] - X216 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'feb']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - februar
         C217 = (
-                   0 if J217 - X217 * Q217 < 0 else J217 - X217 * Q215) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mars
+                   0 if varmetilskudd['mar'] - X217 * setpunkttemp_for_kjoeling['mar'] < 0 else varmetilskudd[
+                                                                                                    'mar'] - X217 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'jan']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mars
         C218 = (
-                   0 if J218 - X218 * Q218 < 0 else J218 - X218 * Q216) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - april
+                   0 if varmetilskudd['apr'] - X218 * setpunkttemp_for_kjoeling['apr'] < 0 else varmetilskudd[
+                                                                                                    'apr'] - X218 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'feb']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - april
         C219 = (
-                   0 if J219 - X219 * Q219 < 0 else J219 - X219 * Q215) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mai
+                   0 if varmetilskudd['mai'] - X219 * setpunkttemp_for_kjoeling['mai'] < 0 else varmetilskudd[
+                                                                                                    'mai'] - X219 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'jan']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mai
         C220 = (
-                   0 if J220 - X220 * Q220 < 0 else J220 - X220 * Q220) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juni
+                   0 if varmetilskudd['jun'] - X220 * setpunkttemp_for_kjoeling['jun'] < 0 else varmetilskudd[
+                                                                                                    'jun'] - X220 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'jun']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juni
         C221 = (
-                   0 if J221 - X221 * Q221 < 0 else J221 - X221 * Q221) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juli
+                   0 if varmetilskudd['jul'] - X221 * setpunkttemp_for_kjoeling['jul'] < 0 else varmetilskudd[
+                                                                                                    'jul'] - X221 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'jul']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juli
         C222 = (
-                   0 if J222 - X222 * Q222 < 0 else J222 - X222 * Q222) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - august
+                   0 if varmetilskudd['aug'] - X222 * setpunkttemp_for_kjoeling['aug'] < 0 else varmetilskudd[
+                                                                                                    'aug'] - X222 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'aug']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - august
         C223 = (
-                   0 if J223 - X223 * Q223 < 0 else J223 - X223 * Q223) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - september
+                   0 if varmetilskudd['sep'] - X223 * setpunkttemp_for_kjoeling['sep'] < 0 else varmetilskudd[
+                                                                                                    'sep'] - X223 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'sep']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - september
         C224 = (
-                   0 if J224 - X224 * Q224 < 0 else J224 - X224 * Q224) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - oktober
+                   0 if varmetilskudd['okt'] - X224 * setpunkttemp_for_kjoeling['okt'] < 0 else varmetilskudd[
+                                                                                                    'okt'] - X224 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'okt']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - oktober
         C225 = (
-                   0 if J225 - X225 * Q225 < 0 else J225 - X225 * Q225) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - november
+                   0 if varmetilskudd['nov'] - X225 * setpunkttemp_for_kjoeling['nov'] < 0 else varmetilskudd[
+                                                                                                    'nov'] - X225 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'nov']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - november
         C226 = (
-                   0 if J226 - X226 * Q226 < 0 else J226 - X226 * Q226) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - desember
+                   0 if varmetilskudd['des'] - X226 * setpunkttemp_for_kjoeling['des'] < 0 else varmetilskudd[
+                                                                                                    'des'] - X226 *
+                                                                                                setpunkttemp_for_kjoeling[
+                                                                                                    'des']) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - desember
         C213 = C215 + C216 + C217 + C218 + C219 + C220 + C221 + C222 + C223 + C224 + C225 + C226
         Kjoeling = C213  # # - Energipost (6) (Energibehov [kWh/år]) - Kjoeling
 
