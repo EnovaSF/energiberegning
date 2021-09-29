@@ -973,85 +973,24 @@ class EnergiBeregning:
 
         ### energipost 1-b
         # 6.1.7 -> Trond Ivar Bøhn: OBS! Denne referansen finnes ikke lenger i NS 3031:2014. Det er nå slik at temperaturvirkningsgraden korrigeres for frostsikringen, ref. NS 3031:2014 tillegg H.9. Men om dette skal gjøres om på, må biblioteksverdier for varmegjenvinning vurderes på nytt
-        C297 = self.temp_avtrekk  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Temperatur før gjenvinner på avtrekkssiden, θ3
-        C298 = self.frostsikringstemperatur  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Frostsikringstemperaturen, θ4
-        C296 = C297 - (C297 - C298) / (
-                self.tempvirkningsgrad_varmegjenvinner + 0.001)  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Minste utetemperatur som ikke innebærer frostsikring av varmegjenvinneren, θ1,min
-        C283 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['jan'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'jan']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - januar
-        C284 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['feb'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'feb']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - februar
-        C285 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['mar'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'mar']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - mars
-        C286 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['apr'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'apr']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - april
-        C287 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['mai'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'mai']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - mai
-        C288 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['jun'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'jun']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - juni
-        C289 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['jul'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'jul']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - juli
-        C290 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['aug'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'aug']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - august
-        C291 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['sep'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'sep']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - september
-        C292 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['okt'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'okt']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - oktober
-        C293 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['nov'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'nov']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - november
-        C294 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                       ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['des'] * max([0,
-                                                                                                    C296 - utetemp[
-                                                                                                        'des']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - desember
-        C281 = C283 + C284 + C285 + C286 + C287 + C288 + C289 + C290 + C291 + C292 + C293 + C294  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7) - Totalt, Edefrost
+        # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Temperatur før gjenvinner på avtrekkssiden, θ3
+        # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Frostsikringstemperaturen, θ4
+        # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Minste utetemperatur som ikke innebærer frostsikring av varmegjenvinneren, θ1,min
+        # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh]
 
-        Ventilasjonsvarme = C281  # # - Energipost (1b) (Energibehov [kWh/år]) Trond Ivar Bøhn: OBS! Dette ser ikke ut til å være ventilasjonsoppvarming, men kun frostsikring. Ventilasjonsvarmetapet inngår derimot i posten romoppvarming! Spm til NVE: Brukes disse enkeltpostene for netto energibehov til noe i Enova-modulen? I så fall burde vel dette ordnes opp i?!
+        energibehov_frostsikring_av_varmegjenvinner = {}
+        for maaned in maaneder:
+            energibehov_frostsikring_av_varmegjenvinner[maaned] = 0.33 * (ventilasjonsvarmetap_timer * (
+                ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                        ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                    ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid[maaned] * max([0,
+                                                                                                 self.temp_avtrekk - (self.temp_avtrekk - self.frostsikringstemperatur) / (
+                                                                                                         self.tempvirkningsgrad_varmegjenvinner + 0.001) - utetemp[
+                                                                                                     maaned]])
+
+        # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7) - Totalt, Edefrost
+        # # - Energipost (1b) (Energibehov [kWh/år]) Trond Ivar Bøhn: OBS! Dette ser ikke ut til å være ventilasjonsoppvarming, men kun frostsikring. Ventilasjonsvarmetapet inngår derimot i posten romoppvarming! Spm til NVE: Brukes disse enkeltpostene for netto energibehov til noe i Enova-modulen? I så fall burde vel dette ordnes opp i?!
+        Ventilasjonsvarme = sum(energibehov_frostsikring_av_varmegjenvinner.values())
 
         ### energipost 3-b
         Q228 = self.temp_settpunkt_kjoeling  # NS3031 - Setpunkttemperatur for kjøling
@@ -1302,7 +1241,19 @@ class EnergiBeregning:
                                           'jul'] + oppvarmingsbehov[
                                           'aug'] + oppvarmingsbehov['sep'] + oppvarmingsbehov[
                                           'okt'] + oppvarmingsbehov['nov'] + oppvarmingsbehov[
-                                          'des'] + C281) * J308 / Q308 + self.energibehov_tappevann * self.areal_oppv * J312 / Q312)  # NS3031 - Systemvirkningsgrader - Levert elektrisitet til elektriske varmesystemer
+                                          'des'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jan'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'feb'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mar'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'apr'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mai'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jun'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jul'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'aug'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'sep'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'okt'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'nov'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'des']) * J308 / Q308 + self.energibehov_tappevann * self.areal_oppv * J312 / Q312)  # NS3031 - Systemvirkningsgrader - Levert elektrisitet til elektriske varmesystemer
         C310 = ((
                         oppvarmingsbehov[
                                           'jan'] + oppvarmingsbehov[
@@ -1314,7 +1265,19 @@ class EnergiBeregning:
                                           'jul'] + oppvarmingsbehov[
                                           'aug'] + oppvarmingsbehov['sep'] + oppvarmingsbehov[
                                           'okt'] + oppvarmingsbehov['nov'] + oppvarmingsbehov[
-                                          'des'] + C281) * J309 / Q309 + self.energibehov_tappevann * self.areal_oppv * J313 / Q313)  # NS3031 - Systemvirkningsgrader - Levert elektrisitet til varmepumpesystemer
+                                          'des'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jan'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'feb'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mar'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'apr'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mai'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jun'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jul'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'aug'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'sep'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'okt'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'nov'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'des']) * J309 / Q309 + self.energibehov_tappevann * self.areal_oppv * J313 / Q313)  # NS3031 - Systemvirkningsgrader - Levert elektrisitet til varmepumpesystemer
         C311 = ((
                         oppvarmingsbehov[
                                           'jan'] + oppvarmingsbehov[
@@ -1326,7 +1289,19 @@ class EnergiBeregning:
                                           'jul'] + oppvarmingsbehov[
                                           'aug'] + oppvarmingsbehov['sep'] + oppvarmingsbehov[
                                           'okt'] + oppvarmingsbehov['nov'] + oppvarmingsbehov[
-                                          'des'] + C281) * J310 / Q310 + self.energibehov_tappevann * self.areal_oppv * J314 / Q314)  # NS3031 - Systemvirkningsgrader - Levert elektrisitet til termiske solenergisystemer
+                                          'des'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jan'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'feb'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mar'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'apr'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mai'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jun'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jul'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'aug'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'sep'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'okt'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'nov'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'des']) * J310 / Q310 + self.energibehov_tappevann * self.areal_oppv * J314 / Q314)  # NS3031 - Systemvirkningsgrader - Levert elektrisitet til termiske solenergisystemer
         C312 = C213 / Q316  # NS3031 - Systemvirkningsgrader - Levert elektrisitet til kjølesystemer
         C307 = C308 * (
                     1 - J306) + C308 * J306 / Q306  # NS3031 - Systemvirkningsgrader - Levert elektrisitet til el-spesifikt forbruk
@@ -1350,7 +1325,19 @@ class EnergiBeregning:
                                           'jul'] + oppvarmingsbehov[
                                           'aug'] + oppvarmingsbehov['sep'] + oppvarmingsbehov[
                                           'okt'] + oppvarmingsbehov['nov'] + oppvarmingsbehov[
-                                          'des'] + C281) * J321 / Q321 + self.energibehov_tappevann * self.areal_oppv * J322 / Q322)  # NS3031 - Beregning av behov for levert olje - Levert energi i form av olje
+                                          'des'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jan'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'feb'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mar'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'apr'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mai'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jun'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jul'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'aug'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'sep'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'okt'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'nov'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'des']) * J321 / Q321 + self.energibehov_tappevann * self.areal_oppv * J322 / Q322)  # NS3031 - Beregning av behov for levert olje - Levert energi i form av olje
         Olje = C321  # # - Energivare (2) (Levert energi [kWh/år]) - Olje
 
         # energivare 3
@@ -1369,7 +1356,19 @@ class EnergiBeregning:
                                           'jul'] + oppvarmingsbehov[
                                           'aug'] + oppvarmingsbehov['sep'] + oppvarmingsbehov[
                                           'okt'] + oppvarmingsbehov['nov'] + oppvarmingsbehov[
-                                          'des'] + C281) * J327 / Q327 + self.energibehov_tappevann * self.areal_oppv * J328 / Q328)  # NS3031 - Beregning av behov for levert gass - Levert energi i form av gass
+                                          'des'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jan'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'feb'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mar'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'apr'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mai'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jun'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jul'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'aug'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'sep'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'okt'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'nov'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'des']) * J327 / Q327 + self.energibehov_tappevann * self.areal_oppv * J328 / Q328)  # NS3031 - Beregning av behov for levert gass - Levert energi i form av gass
         Gass = C327  # # - Energivare (3) (Levert energi [kWh/år]) - Gass
 
         # energivare 4
@@ -1388,7 +1387,19 @@ class EnergiBeregning:
                                           'jul'] + oppvarmingsbehov[
                                           'aug'] + oppvarmingsbehov['sep'] + oppvarmingsbehov[
                                           'okt'] + oppvarmingsbehov['nov'] + oppvarmingsbehov[
-                                          'des'] + C281) * J333 / Q333 + self.energibehov_tappevann * self.areal_oppv * J334 / Q334)  # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
+                                          'des'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jan'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'feb'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mar'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'apr'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mai'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jun'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jul'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'aug'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'sep'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'okt'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'nov'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'des']) * J333 / Q333 + self.energibehov_tappevann * self.areal_oppv * J334 / Q334)  # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
         Fjernvarme = C333  # # - Energivare (4) (Levert energi [kWh/år]) - Fjernvarme
 
         # energivare 5
@@ -1407,7 +1418,19 @@ class EnergiBeregning:
                                           'jul'] + oppvarmingsbehov[
                                           'aug'] + oppvarmingsbehov['sep'] + oppvarmingsbehov[
                                           'okt'] + oppvarmingsbehov['nov'] + oppvarmingsbehov[
-                                          'des'] + C281) * J339 / Q339 + self.energibehov_tappevann * self.areal_oppv * J340 / Q340)  # NS3031 - Beregning av behov for levert biobrensel - Levert energi i form av biobrensel
+                                          'des'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jan'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'feb'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mar'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'apr'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mai'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jun'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jul'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'aug'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'sep'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'okt'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'nov'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'des']) * J339 / Q339 + self.energibehov_tappevann * self.areal_oppv * J340 / Q340)  # NS3031 - Beregning av behov for levert biobrensel - Levert energi i form av biobrensel
         Biobrensel = C339  # # - Energivare (5) (Levert energi [kWh/år]) - Biobrensel
 
         # energivare 6
@@ -1426,7 +1449,19 @@ class EnergiBeregning:
                                           'jul'] + oppvarmingsbehov[
                                           'aug'] + oppvarmingsbehov['sep'] + oppvarmingsbehov[
                                           'okt'] + oppvarmingsbehov['nov'] + oppvarmingsbehov[
-                                          'des'] + C281) * J345 / Q345 + self.energibehov_tappevann * self.areal_oppv * J346 / Q346)  # NS3031 - Beregning av behov for levert andre energivarer - Levert energi i form av andre energivarer
+                                          'des'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jan'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'feb'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mar'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'apr'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'mai'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jun'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'jul'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'aug'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'sep'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'okt'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'nov'] + energibehov_frostsikring_av_varmegjenvinner[
+                                                             'des']) * J345 / Q345 + self.energibehov_tappevann * self.areal_oppv * J346 / Q346)  # NS3031 - Beregning av behov for levert andre energivarer - Levert energi i form av andre energivarer
         Annen_energivare = C345  # # - Energivare (6) (Levert energi [kWh/år]) - Andre energivarer
 
         Totalt_netto_energibehov = Romoppvarming + Ventilasjonsvarme + \
