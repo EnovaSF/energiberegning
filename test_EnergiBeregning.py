@@ -392,19 +392,15 @@ calc_engine = calc.EnergiBeregning(
     tid_okt=0.744,
     tid_nov=0.720,
     tid_des=0.744,
-
-
     varmekapasitet_vann=4180,
     densitet_vann=988,
     varmekapasitet_kuldebaerer=4210,
     densitet_kuldebaerer=999.8,
-
-    BygningskategoriErForretningsbygg=0,
+    Forretningsbygg=False,
     # Nima Darabi: OBS! finnes ikke i input? (1 = Forretningsbygg, 0 = Bolig)
-    REF=123456789  # Nima Darabi: OBS! Hva er verdi for #REF! i Q88
 )
 
-calc_result = calc_engine.calculate()
+calc_result = calc_engine.calculate
 
 
 class TestCalculation(unittest.TestCase):

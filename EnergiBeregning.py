@@ -413,6 +413,20 @@ class EnergiBeregning:
                'des': self.tid_des
         }
 
+        maaned_nummer = {'jan': 1,
+                    'feb': 2,
+                    'mar': 3,
+                    'apr': 4,
+                    'mai': 5,
+                    'jun': 6,
+                    'jul': 7,
+                    'aug': 8,
+                    'sep': 9,
+                    'okt': 10,
+                    'nov': 11,
+                    'des': 12
+                    }
+
         tid_drift_vent = {
             'jan': self.tid_drift_vent_jan,
             'feb': self.tid_drift_vent_feb,
@@ -743,8 +757,8 @@ class EnergiBeregning:
                                             tid_drift_oppv_belysn_utstyr[maaned] / 1000 * varmetilskudd_lys[maaned] + tid_drift_oppv_belysn_utstyr[maaned] / 1000 * varmetilskudd_utstyr[maaned] + tid_drift_person[maaned] / 1000 * varmetilskudd_person[maaned] + (
                                         0 if self.tempvirkningsgrad_varmegjenvinner <= 0 else self.varmekapasitet_luft * ((
                                                                                                                                   ventilasjonsvarmetap_timer * (
-                                                                                                                              ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                                                                                                                      ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                                                                                                              ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                                                                                                      ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                                                                                                                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * (
                                                                                                                                   (
                                                                                                                                           1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
@@ -874,235 +888,108 @@ class EnergiBeregning:
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Årsmiddeltemperatur inne, i driftstiden
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Årsmiddeltemperatur ute
-        # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - per måned
+
         varmetap_mot_grunnen_qg = {}
         for maaned in maaneder:
+            # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - per måned
             varmetap_mot_grunnen_qg[maaned] = tid[maaned] * (
-                    (stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                            self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                        max([(varmetransportkoeffisient_qg),
-                             (
-                                 varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-                2 * np.pi * (
-                        1 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - januar
+                    (stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute)
+                    + (max([(varmetransportkoeffisient_qg),(varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv)
+                    * self.temp_amplitudevar * np.cos(2 * np.pi * (maaned_nummer[maaned] - 1 - self.faseforskjell_utetemp_varmetap) / 12))
 
-        Q67 = tid['feb'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    2 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - februar
-        Q68 = tid['mar'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    3 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - mars
-        Q69 = tid['apr'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    4 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - april
-        Q70 = tid['mai'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    5 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - mai
-        Q71 = tid['jun'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    6 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - juni
-        Q72 = tid['jul'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    7 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - juli
-        Q73 = tid['aug'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    8 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - august
-        Q74 = tid['sep'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    9 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - september
-        Q75 = tid['okt'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    10 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - oktober
-        Q76 = tid['nov'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    11 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - novemeber
-        Q77 = tid['des'] * (
-                (
-                    stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg) * (
-                        self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute) + (
-                    max([(varmetransportkoeffisient_qg),
-                         (
-                             varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv) * self.temp_amplitudevar * np.cos(
-            2 * np.pi * (
-                    12 - 1 - self.faseforskjell_utetemp_varmetap) / 12))  # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - desember
-        Q64 = varmetap_mot_grunnen_qg['jan'] + Q67 + Q68 + Q69 + Q70 + Q71 + Q72 + Q73 + Q74 + Q75 + Q76 + Q77
+        # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Det regnes ikke tillegg for kuldebro mot uoppvarmet rom
 
-        J67 = 0  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Det regnes ikke tillegg for kuldebro mot uoppvarmet rom
-        # Nima Darabi: OBS! direkt verditildeling paa J67
-        J69 = self.kuldebro_normalisert  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Normalisert kuldebro
-        J70 = self.varmetapsfaktor_uoppv  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Varmetapsfaktor, b
-        J74 = self.U_mot_uoppvarmet_sone  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - U-verdi mot uoppvarmet
-        J75 = self.areal_mot_uoppvarmet  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Areal, mot uoppvarmet
-        J72 = J74 * J75  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -
-        J68 = sum([J75])  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Oppvarmet areal, uoppvarmet sone
-        J66 = J72  # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Summert UiAi for bygningsdeler
-        J64 = J70 * (J66 + J67)  # NS3031 - Varmetransmisjonstap til uoppvarmede soner, HU - Totalt, HU
-        J50 = self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert  # (Varmetapstall) - Varmetransmisjonstap, HD
-        J51 = J64  # (Varmetapstall) - Varmetransmisjonstap, HU
-        J52 = Q64  # (Varmetapstall) - Varmetap mot grunnen, et helt år
-        J53 = self.varmekapasitet_luft * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                                              ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
-                      ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * (
-                      1 - self.tempvirkningsgrad_varmegjenvinner)  # (Varmetapstall) - Ventilasjonsvarmetap, HV
-        J54 = self.varmekapasitet_luft * (self.lekkasjetall * self.terrengskjermingskoeff_e) / (
-                                1 + (self.terrengskjermingskoeff_f / self.terrengskjermingskoeff_e) * ((
-                                                                                                               self.areal_oppv * luftmengdekorreksjon_tilluft - self.areal_oppv * luftmengdekorreksjon_avtrekk) / (
-                                                                                                               self.areal_oppv * self.etasjehoyde_innvendig * self.lekkasjetall)) ** 2) * self.areal_oppv * self.etasjehoyde_innvendig  # (Varmetapstall) - Infiltrasjonsvarmetap, Hinf
-        Q46 = self.utetemp_jan  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - januar
-        Q47 = self.utetemp_feb  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - februar
-        Q48 = self.utetemp_mar  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - mars
-        Q49 = self.utetemp_apr  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - april
-        Q50 = self.utetemp_mai  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - mai
-        Q51 = self.utetemp_jun  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - juni
-        Q52 = self.utetemp_jul  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - juli
-        Q53 = self.utetemp_aug  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - august
-        Q54 = self.utetemp_sep  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - september
-        Q55 = self.utetemp_okt  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - oktober
-        Q56 = self.utetemp_nov  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - november
-        Q57 = self.utetemp_des  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - desember
-        Q59 = self.temp_settpunkt_oppvarming  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
-        Q60 = self.temp_settpunkt_oppvarming_natt  # - Temperatur (Gjennomsnittlig utetemperatur for måneden) - temp_settpunkt_oppvarming
+        # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -Varmetapsfaktor, b
+        # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - U-verdi mot uoppvarmet
+        # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Areal, mot uoppvarmet
+        # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU -
+        # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Summert UiAi for bygningsdeler
+        # NS3031 - Varmetransmisjonstap til uoppvarmede soner, HU - Totalt, HU
+        # (Varmetapstall) - Varmetransmisjonstap, HD
+        # (Varmetapstall) - Varmetransmisjonstap, HU
 
-        term49 = (J50 + J51 + J53 + J54) * (Q59 - Q46) * self.tid_drift_oppv_belysn_utstyr_jan / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q46) * (timer['jan'] - self.tid_drift_oppv_belysn_utstyr_jan) / 1000 + \
-                 varmetap_mot_grunnen_qg['jan']
-        term50 = (J50 + J51 + J53 + J54) * (Q59 - Q47) * self.tid_drift_oppv_belysn_utstyr_feb / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q47) * (timer['feb'] - self.tid_drift_oppv_belysn_utstyr_feb) / 1000 + Q67
-        term51 = (J50 + J51 + J53 + J54) * (Q59 - Q48) * self.tid_drift_oppv_belysn_utstyr_mar / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q48) * (timer['mar'] - self.tid_drift_oppv_belysn_utstyr_mar) / 1000 + Q68
-        term52 = (J50 + J51 + J53 + J54) * (Q59 - Q49) * self.tid_drift_oppv_belysn_utstyr_apr / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q49) * (timer['apr'] - self.tid_drift_oppv_belysn_utstyr_apr) / 1000 + Q69
-        term53 = (J50 + J51 + J53 + J54) * (Q59 - Q50) * self.tid_drift_oppv_belysn_utstyr_mai / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q50) * (timer['mai'] - self.tid_drift_oppv_belysn_utstyr_mai) / 1000 + Q70
-        term54 = (J50 + J51 + J53 + J54) * (Q59 - Q51) * self.tid_drift_oppv_belysn_utstyr_jun / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q51) * (timer['jun'] - self.tid_drift_oppv_belysn_utstyr_jun) / 1000 + Q71
-        term55 = (J50 + J51 + J53 + J54) * (Q59 - Q52) * self.tid_drift_oppv_belysn_utstyr_jul / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q52) * (timer['jul'] - self.tid_drift_oppv_belysn_utstyr_jul) / 1000 + Q72
-        term56 = (J50 + J51 + J53 + J54) * (Q59 - Q53) * self.tid_drift_oppv_belysn_utstyr_aug / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q53) * (timer['aug'] - self.tid_drift_oppv_belysn_utstyr_aug) / 1000 + Q73
-        term57 = (J50 + J51 + J53 + J54) * (Q59 - Q54) * self.tid_drift_oppv_belysn_utstyr_sep / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q54) * (timer['sep'] - self.tid_drift_oppv_belysn_utstyr_sep) / 1000 + Q74
-        term58 = (J50 + J51 + J53 + J54) * (Q59 - Q55) * self.tid_drift_oppv_belysn_utstyr_okt / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q55) * (timer['okt'] - self.tid_drift_oppv_belysn_utstyr_okt) / 1000 + Q75
-        term59 = (J50 + J51 + J53 + J54) * (Q59 - Q56) * self.tid_drift_oppv_belysn_utstyr_nov / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q56) * (timer['nov'] - self.tid_drift_oppv_belysn_utstyr_nov) / 1000 + Q76
-        term60 = (J50 + J51 + J53 + J54) * (Q59 - Q57) * self.tid_drift_oppv_belysn_utstyr_des / 1000 + (
-                J50 + J51 + J53 + J54) * (
-                         Q60 - Q57) * (timer['des'] - self.tid_drift_oppv_belysn_utstyr_des) / 1000 + Q77
-        C49 = 0.1 if term49 < 0 else term49  # NS3031* - Varmetap - januar
-        C50 = 0.1 if term50 < 0 else term50  # NS3031* - Varmetap - februar
-        C51 = 0.1 if term51 < 0 else term51  # NS3031* - Varmetap - mars
-        C52 = 0.1 if term52 < 0 else term52  # NS3031* - Varmetap - april
-        C53 = 0.1 if term53 < 0 else term53  # NS3031* - Varmetap - mai
-        C54 = 0.1 if term54 < 0 else term54  # NS3031* - Varmetap - juni
-        C55 = 0.1 if term55 < 0 else term55  # NS3031* - Varmetap - juli
-        C56 = 0.1 if term56 < 0 else term56  # NS3031* - Varmetap - august
-        C57 = 0.1 if term57 < 0 else term57  # NS3031* - Varmetap - september
-        C58 = 0.1 if term58 < 0 else term58  # NS3031* - Varmetap - oktober
-        C59 = 0.1 if term59 < 0 else term59  # NS3031* - Varmetap - november
-        C60 = 0.1 if term60 < 0 else term60  # NS3031* - Varmetap - desember
-        C37 = self.norm_varmekap  # NS3031 - Oppvarmingsbehov - Bygningens normaliserte varmekapasitet, C" (Wh/(m3 K))
-        C39 = J50 + J51 + J53 + J54 + (
-            stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg)  # NS3031 - Oppvarmingsbehov - Bygningens varmetransportkoeffisient [W/K]
-        C36 = C37 * self.areal_oppv / C39  # NS3031 - Oppvarmingsbehov - Varmetreghet, aH
-        C35 = 1 + C36 / 16  # NS3031 - Oppvarmingsbehov - Tidskonstant, τ
+        varmetapstall_hv = self.varmekapasitet_luft * (ventilasjonsvarmetap_timer * (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                                                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+                                   ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * (
+                                   1 - self.tempvirkningsgrad_varmegjenvinner)  # (Varmetapstall) - Ventilasjonsvarmetap, HV
+
+        varmetapstall_hinf = self.varmekapasitet_luft * (self.lekkasjetall * self.terrengskjermingskoeff_e) / (
+                1 + (self.terrengskjermingskoeff_f / self.terrengskjermingskoeff_e) * ((
+                                                                                               self.areal_oppv * luftmengdekorreksjon_tilluft - self.areal_oppv * luftmengdekorreksjon_avtrekk) / (
+                                                                                               self.areal_oppv * self.etasjehoyde_innvendig * self.lekkasjetall)) ** 2) * self.areal_oppv * self.etasjehoyde_innvendig  # (Varmetapstall) - Infiltrasjonsvarmetap, Hinf
+
+        utetemp = {
+            'jan': self.utetemp_jan,
+            'feb': self.utetemp_feb,
+            'mar': self.utetemp_mar,
+            'apr': self.utetemp_apr,
+            'mai': self.utetemp_mai,
+            'jun': self.utetemp_jun,
+            'jul': self.utetemp_jul,
+            'aug': self.utetemp_aug,
+            'sep': self.utetemp_sep,
+            'okt': self.utetemp_okt,
+            'nov': self.utetemp_nov,
+            'des': self.utetemp_des
+        }
+
+        varmetap = {}
+        for maaned in maaneder:
+            varmetap[maaned] = max(((self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                                       self.temp_settpunkt_oppvarming - utetemp[
+                                   maaned]) * tid_drift_oppv_belysn_utstyr[maaned] / 1000 + (
+                                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                                       self.temp_settpunkt_oppvarming_natt - utetemp[maaned]) * (
+                                       timer[maaned] - tid_drift_oppv_belysn_utstyr[maaned]) / 1000 + \
+                               varmetap_mot_grunnen_qg[maaned]), 0.1)
+
+        # NS3031 - Oppvarmingsbehov - Bygningens varmetransportkoeffisient [W/K]
+        oppvarmingsbehov = self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                    self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf + (
+                  stasjonaer_varmetapskoeffisient_qg if self.faseforskjell_utetemp_varmetap == 2 else stasjonaer_varmetapskoeffisient_hg)
+
+        # NS3031 - Oppvarmingsbehov - Varmetreghet, aH
+        C35 = 1 + self.norm_varmekap * self.areal_oppv / oppvarmingsbehov / 16  # NS3031 - Oppvarmingsbehov - Tidskonstant, τ
 
         Q22 = varmetilskudd[
-                  'jan'] / C49  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - januar
+                  'jan'] / varmetap[
+                  'jan']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - januar
         Q23 = varmetilskudd[
-                  'feb'] / C50  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - februar
+                  'feb'] / varmetap[
+                  'feb']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - februar
         Q24 = varmetilskudd[
-                  'mar'] / C51  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - mars
+                  'mar'] / varmetap[
+                  'mar']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - mars
         Q25 = varmetilskudd[
-                  'apr'] / C52  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - april
+                  'apr'] / varmetap[
+                  'apr']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - april
         Q26 = varmetilskudd[
-                  'mai'] / C53  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - mai
+                  'mai'] / varmetap[
+                  'mai']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - mai
         Q27 = varmetilskudd[
-                  'jun'] / C54  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - juni
+                  'jun'] / varmetap[
+                  'jun']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - juni
         Q28 = varmetilskudd[
-                  'jul'] / C55  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - juli
+                  'jul'] / varmetap[
+                  'jul']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - juli
         Q29 = varmetilskudd[
-                  'aug'] / C56  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - august
+                  'aug'] / varmetap[
+                  'aug']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - august
         Q30 = varmetilskudd[
-                  'sep'] / C57  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - september
+                  'sep'] / varmetap[
+                  'sep']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - september
         Q31 = varmetilskudd[
-                  'okt'] / C58  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - oktober
+                  'okt'] / varmetap[
+                  'okt']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - oktober
         Q32 = varmetilskudd[
-                  'nov'] / C59  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - november
+                  'nov'] / varmetap[
+                  'nov']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - november
         Q33 = varmetilskudd[
-                  'des'] / C60  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - desember
+                  'des'] / varmetap[
+                  'des']  # NS3031 - Utnyttingsfaktor, delregning - Forhold mellom varmetilskudd og varmetap, yH,i - desember
 
         J22 = 1 / Q22 if Q22 < 0 else C35 / (C35 + 1) if Q22 == 1 else (1 - Q22 ** C35) / (
                     1 - Q22 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - januar
@@ -1128,18 +1015,18 @@ class EnergiBeregning:
                     1 - Q32 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - november
         J33 = 1 / Q33 if Q33 < 0 else C35 / (C35 + 1) if Q33 == 1 else (1 - Q33 ** C35) / (
                     1 - Q33 ** (C35 + 1))  # NS3031 - Utnyttingsfaktor for måneden - desember
-        C22 = C49 - J22 * varmetilskudd['jan']  # NS3031 - Oppvarmingsbehov - januar
-        C23 = C50 - J23 * varmetilskudd['feb']  # NS3031 - Oppvarmingsbehov - februar
-        C24 = C51 - J24 * varmetilskudd['mar']  # NS3031 - Oppvarmingsbehov - mars
-        C25 = C52 - J25 * varmetilskudd['apr']  # NS3031 - Oppvarmingsbehov - april
-        C26 = C53 - J26 * varmetilskudd['mai']  # NS3031 - Oppvarmingsbehov - mai
-        C27 = C54 - J27 * varmetilskudd['jun']  # NS3031 - Oppvarmingsbehov - juni
-        C28 = C55 - J28 * varmetilskudd['jul']  # NS3031 - Oppvarmingsbehov - juli
-        C29 = C56 - J29 * varmetilskudd['aug']  # NS3031 - Oppvarmingsbehov - august
-        C30 = C57 - J30 * varmetilskudd['sep']  # NS3031 - Oppvarmingsbehov - september
-        C31 = C58 - J31 * varmetilskudd['okt']  # NS3031 - Oppvarmingsbehov - oktober
-        C32 = C59 - J32 * varmetilskudd['nov']  # NS3031 - Oppvarmingsbehov - november
-        C33 = C60 - J33 * varmetilskudd['des']  # NS3031 - Oppvarmingsbehov - desember
+        C22 = varmetap['jan'] - J22 * varmetilskudd['jan']  # NS3031 - Oppvarmingsbehov - januar
+        C23 = varmetap['feb'] - J23 * varmetilskudd['feb']  # NS3031 - Oppvarmingsbehov - februar
+        C24 = varmetap['mar'] - J24 * varmetilskudd['mar']  # NS3031 - Oppvarmingsbehov - mars
+        C25 = varmetap['apr'] - J25 * varmetilskudd['apr']  # NS3031 - Oppvarmingsbehov - april
+        C26 = varmetap['mai'] - J26 * varmetilskudd['mai']  # NS3031 - Oppvarmingsbehov - mai
+        C27 = varmetap['jun'] - J27 * varmetilskudd['jun']  # NS3031 - Oppvarmingsbehov - juni
+        C28 = varmetap['jul'] - J28 * varmetilskudd['jul']  # NS3031 - Oppvarmingsbehov - juli
+        C29 = varmetap['aug'] - J29 * varmetilskudd['aug']  # NS3031 - Oppvarmingsbehov - august
+        C30 = varmetap['sep'] - J30 * varmetilskudd['sep']  # NS3031 - Oppvarmingsbehov - september
+        C31 = varmetap['okt'] - J31 * varmetilskudd['okt']  # NS3031 - Oppvarmingsbehov - oktober
+        C32 = varmetap['nov'] - J32 * varmetilskudd['nov']  # NS3031 - Oppvarmingsbehov - november
+        C33 = varmetap['des'] - J33 * varmetilskudd['des']  # NS3031 - Oppvarmingsbehov - desember
         C20 = C22 + C23 + C24 + C25 + C26 + C27 + C28 + C29 + C30 + C31 + C32 + C33  # NS3031 - Oppvarmingsbehov - Årlig energibehov
         Romoppvarming = C20  # # - Energipost (1a) (Energibehov [kWh/år]) - Romoppvarming
 
@@ -1150,65 +1037,77 @@ class EnergiBeregning:
         C296 = C297 - (C297 - C298) / (
                 self.tempvirkningsgrad_varmegjenvinner + 0.001)  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Minste utetemperatur som ikke innebærer frostsikring av varmegjenvinneren, θ1,min
         C283 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['jan'] * max([0,
-                                                                                                    C296 - Q46])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - januar
+                                                                                                    C296 - utetemp[
+                                                                                                        'jan']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - januar
         C284 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['feb'] * max([0,
-                                                                                                    C296 - Q47])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - februar
+                                                                                                    C296 - utetemp[
+                                                                                                        'feb']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - februar
         C285 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['mar'] * max([0,
-                                                                                                    C296 - Q48])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - mars
+                                                                                                    C296 - utetemp[
+                                                                                                        'mar']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - mars
         C286 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['apr'] * max([0,
-                                                                                                    C296 - Q49])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - april
+                                                                                                    C296 - utetemp[
+                                                                                                        'apr']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - april
         C287 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['mai'] * max([0,
-                                                                                                    C296 - Q50])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - mai
+                                                                                                    C296 - utetemp[
+                                                                                                        'mai']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - mai
         C288 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['jun'] * max([0,
-                                                                                                    C296 - Q51])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - juni
+                                                                                                    C296 - utetemp[
+                                                                                                        'jun']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - juni
         C289 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['jul'] * max([0,
-                                                                                                    C296 - Q52])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - juli
+                                                                                                    C296 - utetemp[
+                                                                                                        'jul']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - juli
         C290 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['aug'] * max([0,
-                                                                                                    C296 - Q53])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - august
+                                                                                                    C296 - utetemp[
+                                                                                                        'aug']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - august
         C291 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['sep'] * max([0,
-                                                                                                    C296 - Q54])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - september
+                                                                                                    C296 - utetemp[
+                                                                                                        'sep']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - september
         C292 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['okt'] * max([0,
-                                                                                                    C296 - Q55])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - oktober
+                                                                                                    C296 - utetemp[
+                                                                                                        'okt']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - oktober
         C293 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['nov'] * max([0,
-                                                                                                    C296 - Q56])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - november
+                                                                                                    C296 - utetemp[
+                                                                                                        'nov']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - november
         C294 = 0.33 * (ventilasjonsvarmetap_timer * (
-            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
-                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg == 0 else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
+            ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_i_driftstid) * self.areal_oppv + mean_tid_drift_ventilasjon * (
+                           ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                        ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * tid['des'] * max([0,
-                                                                                                    C296 - Q57])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - desember
+                                                                                                    C296 - utetemp[
+                                                                                                        'des']])  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - desember
         C281 = C283 + C284 + C285 + C286 + C287 + C288 + C289 + C290 + C291 + C292 + C293 + C294  # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7) - Totalt, Edefrost
 
         Ventilasjonsvarme = C281  # # - Energipost (1b) (Energibehov [kWh/år]) Trond Ivar Bøhn: OBS! Dette ser ikke ut til å være ventilasjonsoppvarming, men kun frostsikring. Ventilasjonsvarmetapet inngår derimot i posten romoppvarming! Spm til NVE: Brukes disse enkeltpostene for netto energibehov til noe i Enova-modulen? I så fall burde vel dette ordnes opp i?!
@@ -1216,52 +1115,76 @@ class EnergiBeregning:
         ### energipost 3-b
         Q228 = self.temp_settpunkt_kjoeling  # NS3031 - Setpunkttemperatur for kjøling
 
-        Q215 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q215 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'jan'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - januar
-        Q216 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q216 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'feb'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - februar
-        Q217 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q217 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'mar'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mars
-        Q218 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q218 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'apr'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - april
-        Q219 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q219 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'mai'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mai
-        Q220 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q220 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'jun'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juni
-        Q221 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q221 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'jul'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juli
-        Q222 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q222 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'aug'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - august
-        Q223 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q223 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'sep'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - september
-        Q224 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q224 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'okt'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - oktober
-        Q225 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q225 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'nov'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - november
-        Q226 = (J50 + J51 + J53 + J54) * (
-                Q228 - Q46) * tid[
+        Q226 = (
+                       self.U_tak * self.areal_tak + self.U_vegg_oest * self.areal_vegg_oest + self.U_vegg_vest * self.areal_vegg_vest + self.U_vegg_soer * self.areal_vegg_soer + self.U_vegg_nord * self.areal_vegg_nord + self.U_gulv_mot_det_fri * self.areal_gulv_mot_det_fri + self.U_vindu_oest * areal_vindu_oest + self.U_vindu_vest * areal_vindu_vest + self.U_vindu_soer * areal_vindu_soer + self.U_vindu_nord * areal_vindu_nord + self.U_vindu_tak * areal_vindu_tak + self.U_dor * self.areal_dor + self.areal_oppv * self.kuldebro_normalisert + self.varmetapsfaktor_uoppv * (
+                       self.U_mot_uoppvarmet_sone * self.areal_mot_uoppvarmet + 0) + varmetapstall_hv + varmetapstall_hinf) * (
+                       Q228 - utetemp['jan']) * tid[
                    'des'] + varmetap_mot_grunnen_qg[
                    'jan']  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - desember
         Q213 = Q215 + Q216 + Q217 + Q218 + Q219 + Q220 + Q221 + Q222 + Q223 + Q224 + Q225 + Q226  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - Total
