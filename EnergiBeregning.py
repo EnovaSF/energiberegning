@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 import statistics
-import numpy as np
-
+import math
 
 @dataclass
 class Output:
@@ -480,7 +479,7 @@ class EnergiBeregning:
         for maaned in maaneder:
             timer[maaned] = tid[maaned] * 1000
 
-        mean_timer_per_aar = np.mean(list(timer.values()))
+        mean_timer_per_aar = statistics.mean(list(timer.values()))
 
         # - Timer i driftstid for ventilasjon (Timer for måneden)
         tid_drift_uvent = {}
@@ -488,7 +487,7 @@ class EnergiBeregning:
             tid_drift_uvent[maaned] = timer[maaned] - tid_drift_vent[maaned]
 
         # - Timer i driftstid for ventilasjon (Timer for måneden) - AVERAGE
-        mean_tid_drift_ventilasjon = np.mean(list(tid_drift_uvent.values()))
+        mean_tid_drift_ventilasjon = statistics.mean(list(tid_drift_uvent.values()))
 
         # Vifter
         spesifikk_i_driftstid = self.luftmengde_spesifikk_i_driftstid * self.areal_oppv * self.vifteeffekt_spesifikk_i_driftstid
@@ -638,7 +637,7 @@ class EnergiBeregning:
                 1 - arealfraksjon_karm_tak)
 
         # NS3031* - Ventilasjonsvarmetap, HV - Antall timer i måneden i driftstiden, ton
-        ventilasjonsvarmetap_timer = np.mean(list(tid_drift_vent.values()))
+        ventilasjonsvarmetap_timer = statistics.mean(list(tid_drift_vent.values()))
 
         # NS3031* - Ventilasjonsvarmetap, HV - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig
         ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg = (
@@ -658,7 +657,7 @@ class EnergiBeregning:
         # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmegjenvinnerens temperaturvirkningsgrad
         # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Oppvarmed del av BRA (m2)
         # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Varmetilskudd fra vifter
-        tid_drift_gjsnitt = (np.mean(list(tid_drift_vent.values())))
+        tid_drift_gjsnitt = (statistics.mean(list(tid_drift_vent.values())))
 
         tid_drift_oppv_belysn_utstyr = {
             'jan': self.tid_drift_oppv_belysn_utstyr_jan,
@@ -771,15 +770,15 @@ class EnergiBeregning:
                                                                     ventilasjonsvarmetapfaktor_bolig_vs_forretningsbygg if self.Forretningsbygg else self.luftmengde_spesifikk_utenfor_driftstid) * self.areal_oppv) / (
                                                                 ventilasjonsvarmetap_timer + mean_tid_drift_ventilasjon) * (
                                                                 (
-                                                                        1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * np.mean(
+                                                                        1 - self.tempvirkningsgrad_varmegjenvinner) * 0.37 * statistics.mean(
                                                             [(
                                                                 self.vifteeffekt_spesifikk_i_driftstid),
                                                                 (
-                                                                    self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * np.mean(
+                                                                    self.vifteeffekt_spesifikk_utenfor_driftstid)]) + self.tempvirkningsgrad_varmegjenvinner * 0.37 * statistics.mean(
                                                             [(
                                                                 self.vifteeffekt_spesifikk_i_driftstid),
                                                                 (
-                                                                    self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * np.mean(
+                                                                    self.vifteeffekt_spesifikk_utenfor_driftstid)]))) / self.areal_oppv) / 1000 * statistics.mean(
                                         [tid_drift_gjsnitt, mean_timer_per_aar])) * self.areal_oppv
 
         # NS3031 - Varmetransmisjonstap gjennom konstruksjoner mot det fri, HD - tak
@@ -837,46 +836,46 @@ class EnergiBeregning:
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Karakteristisk dimensjon for gulvet, B'
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Vegg mot grunn, Ubw
-        varmetap_mot_grunnen_ubv = 2 * self.varmekonduktivitet_grunn / (np.pi * self.oppfyllingshoyde_kjellervegg) * (
+        varmetap_mot_grunnen_ubv = 2 * self.varmekonduktivitet_grunn / (math.pi * self.oppfyllingshoyde_kjellervegg) * (
                 1 + (
                 (0.5 * (self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon)) / (
-                self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon + self.oppfyllingshoyde_kjellervegg))) * np.log(
+                self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon + self.oppfyllingshoyde_kjellervegg))) * math.log(
             self.oppfyllingshoyde_kjellervegg / (self.varmekonduktivitet_grunn / self.U_kjellerveggskonstruksjon) + 1)
 
         ## NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For gulv mot grunnen, vertikal kantisolasjon (D' = D)
         varmetransportkoeffisient_qg = 0.37 * self.omkrets_gulv * self.varmekonduktivitet_grunn * (
-                (1 - np.exp(-(self.kantisol_horisontal_dybde / self.dybde_periodisk_nedtrengning))) * np.log(
+                (1 - math.exp(-(self.kantisol_horisontal_dybde / self.dybde_periodisk_nedtrengning))) * math.log(
             self.dybde_periodisk_nedtrengning / (
                     self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon + self.kantisol_tykkelse * (
-                    self.varmekonduktivitet_grunn / self.varmekonduktivitet_kantisol - 1))) + np.exp(
-            -(self.kantisol_horisontal_dybde / self.dybde_periodisk_nedtrengning)) * np.log(
+                    self.varmekonduktivitet_grunn / self.varmekonduktivitet_kantisol - 1))) + math.exp(
+            -(self.kantisol_horisontal_dybde / self.dybde_periodisk_nedtrengning)) * math.log(
             self.dybde_periodisk_nedtrengning / (
                     self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon) + 1))
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For gulv mot grunnen, horisontal kantisolasjon (D' = 2 x D)
         varmetapskoeffisient_hpe = 0.37 * self.omkrets_gulv * self.varmekonduktivitet_grunn * (
-                (1 - np.exp(-(2 * self.kantisol_vertikal_bredde / self.dybde_periodisk_nedtrengning))) * np.log(
+                (1 - math.exp(-(2 * self.kantisol_vertikal_bredde / self.dybde_periodisk_nedtrengning))) * math.log(
             self.dybde_periodisk_nedtrengning / (
                     self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon + self.kantisol_tykkelse * (
-                    self.varmekonduktivitet_grunn / self.varmekonduktivitet_kantisol - 1))) + np.exp(
-            -(2 * self.kantisol_vertikal_bredde / self.dybde_periodisk_nedtrengning)) * np.log(
+                    self.varmekonduktivitet_grunn / self.varmekonduktivitet_kantisol - 1))) + math.exp(
+            -(2 * self.kantisol_vertikal_bredde / self.dybde_periodisk_nedtrengning)) * math.log(
             self.dybde_periodisk_nedtrengning / (
                     self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon) + 1))
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For vegg og gulv mot grunnen
         varmetapskoeffisient_hpe_vegg_og_gulv = 0.37 * self.omkrets_gulv * self.varmekonduktivitet_grunn * (
-                (1 - np.exp(-(self.oppfyllingshoyde_kjellervegg / self.dybde_periodisk_nedtrengning))) * np.log(
+                (1 - math.exp(-(self.oppfyllingshoyde_kjellervegg / self.dybde_periodisk_nedtrengning))) * math.log(
             self.dybde_periodisk_nedtrengning / (
-                    self.varmekonduktivitet_grunn / self.U_kjellerveggskonstruksjon) + 1) + np.exp(
-            -(self.oppfyllingshoyde_kjellervegg / self.dybde_periodisk_nedtrengning)) * np.log(
+                    self.varmekonduktivitet_grunn / self.U_kjellerveggskonstruksjon) + 1) + math.exp(
+            -(self.oppfyllingshoyde_kjellervegg / self.dybde_periodisk_nedtrengning)) * math.log(
             self.dybde_periodisk_nedtrengning / (
                     self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon) + 1))
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'<dt + 0,5*z)
         varmetapskoeffisient_ug = 2 * self.varmekonduktivitet_grunn / (
-                np.pi * self.areal_gulv_kjeller / (0.5 * self.omkrets_gulv) + (
-                self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon) * 0.5 * self.oppfyllingshoyde_kjellervegg) * np.log(
-            (np.pi * self.areal_gulv_kjeller / (0.5 * self.omkrets_gulv)) / (
+                math.pi * self.areal_gulv_kjeller / (0.5 * self.omkrets_gulv) + (
+                self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon) * 0.5 * self.oppfyllingshoyde_kjellervegg) * math.log(
+            (math.pi * self.areal_gulv_kjeller / (0.5 * self.omkrets_gulv)) / (
                     self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon + 0.5 * self.oppfyllingshoyde_kjellervegg) + 1)
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'>dt + 0,5*z)
@@ -887,9 +886,9 @@ class EnergiBeregning:
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Stasjonær varmetransportkoeffisient, Hg] - For gulv mot grunnen
         stasjonaer_varmetapskoeffisient_qg = (varmetapskoeffisient_ug if self.areal_gulv_kjeller / (
                 0.5 * self.omkrets_gulv) > self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon + 0.5 * self.oppfyllingshoyde_kjellervegg else varmetap_mot_grunnen_qg_gulv_mot_grunn) * self.areal_gulv_kjeller + -(
-                self.varmekonduktivitet_grunn / np.pi) * (
-                                                     np.log(self.kantisol_horisontal_dybde / (
-                                                             self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon) + 1) - np.log(
+                self.varmekonduktivitet_grunn / math.pi) * (
+                                                     math.log(self.kantisol_horisontal_dybde / (
+                                                             self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon) + 1) - math.log(
                                                  self.kantisol_horisontal_dybde / (
                                                          self.tykkelse_grunnmur + self.varmekonduktivitet_grunn / self.U_gulvkonstruksjon + self.kantisol_tykkelse * (
                                                          self.varmekonduktivitet_grunn / self.varmekonduktivitet_kantisol - 1)) + 1)) * self.omkrets_gulv
@@ -909,8 +908,8 @@ class EnergiBeregning:
                             self.aarsmiddeltemp_inne - self.aarsmiddeltemp_ute)
                     + (max([(varmetransportkoeffisient_qg), (
                 varmetapskoeffisient_hpe)]) if self.faseforskjell_utetemp_varmetap == 2 else varmetapskoeffisient_hpe_vegg_og_gulv)
-                    * self.temp_amplitudevar * np.cos(
-                2 * np.pi * (maaned_nummer[maaned] - 1 - self.faseforskjell_utetemp_varmetap) / 12))
+                    * self.temp_amplitudevar * math.cos(
+                2 * math.pi * (maaned_nummer[maaned] - 1 - self.faseforskjell_utetemp_varmetap) / 12))
 
         # NS3031* - Varmetransmisjonstap til uoppvarmede soner, HU - Det regnes ikke tillegg for kuldebro mot uoppvarmet rom
 
