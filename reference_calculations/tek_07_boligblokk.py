@@ -347,7 +347,7 @@ tek_07_boligblokk = calc.EnergiBeregning(
     densitet_vann=988,
     varmekapasitet_kuldebaerer=4210,
     densitet_kuldebaerer=999.8,
-    BygningskategoriErForretningsbygg=False
+    BygningskategoriErForretningsbygg=False,
 )
 
 tek_07_boligblokk_expected_output = calc.Output(
@@ -370,5 +370,5 @@ tek_07_boligblokk_expected_output = calc.Output(
     Primaerenergi=361_197,
     CO2_utslipp=77_208,
     Energi_kostnader=201_521,
-    Energi_politisk=321_706
+    Energi_politisk=321_706,
 )

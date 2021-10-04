@@ -351,7 +351,7 @@ ashrae_besttest_650 = calc.EnergiBeregning(
     densitet_vann=988,
     varmekapasitet_kuldebaerer=4210,
     densitet_kuldebaerer=999.8,
-    BygningskategoriErForretningsbygg=False
+    BygningskategoriErForretningsbygg=False,
 )
 
 ashrae_besttest_650_expected_output = calc.Output(
@@ -374,5 +374,5 @@ ashrae_besttest_650_expected_output = calc.Output(
     Primaerenergi=10562,  # TODO AssertionError: 10560 != 10562
     CO2_utslipp=401,
     Energi_kostnader=5633,  # TODO AssertionError: 5632 != 5633
-    Energi_politisk=8450  # TODO AssertionError: 8448 != 8450
+    Energi_politisk=8450,  # TODO AssertionError: 8448 != 8450
 )

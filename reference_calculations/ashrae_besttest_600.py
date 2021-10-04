@@ -374,5 +374,5 @@ ashrae_besttest_600_expected_output = calc.Output(
     Primaerenergi=11_453,  # TODO Should be 11452 rounding error?
     CO2_utslipp=435,
     Energi_kostnader=6108,
-    Energi_politisk=9162
+    Energi_politisk=9162,
 )

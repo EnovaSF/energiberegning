@@ -347,7 +347,7 @@ tek_07_barnehage = calc.EnergiBeregning(
     densitet_vann=988,
     varmekapasitet_kuldebaerer=4210,
     densitet_kuldebaerer=999.8,
-    BygningskategoriErForretningsbygg=False
+    BygningskategoriErForretningsbygg=False,
 )
 
 tek_07_barnehage_expected_output = calc.Output(
@@ -370,5 +370,5 @@ tek_07_barnehage_expected_output = calc.Output(
     Primaerenergi=36_757,
     CO2_utslipp=7_927,
     Energi_kostnader=20_302,
-    Energi_politisk=32_230
+    Energi_politisk=32_230,
 )
