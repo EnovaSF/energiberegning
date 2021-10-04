@@ -371,5 +371,5 @@ tek_07_smaahus_expected_output = calc.Output(
     Primaerenergi=47613,
     CO2_utslipp=9989,
     Energi_kostnader=26986,
-    Energi_politisk=43526
+    Energi_politisk=43526,
 )

@@ -374,5 +374,5 @@ ashrae_besttest_930_expected_output = calc.Output(
     Primaerenergi=9991,  # TODO AssertionError: 9989 != 9991
     CO2_utslipp=380,
     Energi_kostnader=5329,  # TODO AssertionError: 5327 != 5329
-    Energi_politisk=7993  # TODO AssertionError: 7991 != 7993
+    Energi_politisk=7993,  # TODO AssertionError: 7991 != 7993
 )
