@@ -1637,6 +1637,7 @@ class EnergiBeregning:
             self.BygningskategoriErForretningsbygg
         )  # NS3031* - Ventilasjonsvarmetap, HV - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig
         term1 = (1.6 - 0.007 * (self.areal_oppv - 50)) if self.areal_oppv < 110 else 1.2
+
         X74 = (
             term1 if X78 == 0 else X76
         )  # NS3031* - Ventilasjonsvarmetap, HV - Arealkorreksjon for bolig, på spesifikk luftmengde for ventilasjon i driftstid
@@ -2559,38 +2560,38 @@ class EnergiBeregning:
             Q228 - Q46
         ) * C197 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - januar
         Q216 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C198 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - februar
+            Q228 - Q47
+        ) * C198 + Q67  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - februar
         Q217 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C199 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mars
+            Q228 - Q48
+        ) * C199 + Q68  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mars
         Q218 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C200 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - april
+            Q228 - Q49
+        ) * C200 + Q69  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - april
         Q219 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C201 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mai
+            Q228 - Q50
+        ) * C201 + Q70  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - mai
         Q220 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C202 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juni
+            Q228 - Q51
+        ) * C202 + Q71  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juni
         Q221 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C203 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juli
+            Q228 - Q52
+        ) * C203 + Q72  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - juli
         Q222 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C204 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - august
+            Q228 - Q53
+        ) * C204 + Q73  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - august
         Q223 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C205 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - september
+            Q228 - Q54
+        ) * C205 + Q74  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - september
         Q224 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C206 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - oktober
+            Q228 - Q55
+        ) * C206 + Q75  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - oktober
         Q225 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C207 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - november
+            Q228 - Q56
+        ) * C207 + Q76  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - november
         Q226 = (J50 + J51 + J53 + J54) * (
-            Q228 - Q46
-        ) * C208 + Q66  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - desember
+            Q228 - Q57
+        ) * C208 + Q77  # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - desember
         Q213 = (
             Q215
             + Q216
@@ -2767,18 +2768,42 @@ class EnergiBeregning:
 
         C231 = self.areal_avkjoelt_andel
 
-        C215 = (0 if J215 - X215 * Q215 < 0 else J215 - X215 * Q215) * C231
-        C216 = (0 if J216 - X216 * Q216 < 0 else J216 - X216 * Q216) * C231
-        C217 = (0 if J217 - X217 * Q217 < 0 else J217 - X217 * Q217) * C231
-        C218 = (0 if J218 - X218 * Q218 < 0 else J218 - X218 * Q218) * C231
-        C219 = (0 if J219 - X219 * Q219 < 0 else J219 - X219 * Q219) * C231
-        C220 = (0 if J220 - X220 * Q220 < 0 else J220 - X220 * Q220) * C231
-        C221 = (0 if J221 - X220 * Q220 < 0 else J220 - X220 * Q220) * C231
-        C222 = (0 if J222 - X221 * Q221 < 0 else J221 - X221 * Q221) * C231
-        C223 = (0 if J223 - X222 * Q222 < 0 else J222 - X222 * Q222) * C231
-        C224 = (0 if J224 - X223 * Q223 < 0 else J223 - X223 * Q223) * C231
-        C225 = (0 if J225 - X224 * Q224 < 0 else J224 - X224 * Q224) * C231
-        C226 = (0 if J226 - X225 * Q225 < 0 else J225 - X225 * Q225) * C231
+        C215 = (
+            0 if J215 - X215 * Q215 < 0 else J215 - X215 * Q215
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - januar
+        C216 = (
+            0 if J216 - X216 * Q216 < 0 else J216 - X216 * Q216
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - februar
+        C217 = (
+            0 if J217 - X217 * Q217 < 0 else J217 - X217 * Q217
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mars
+        C218 = (
+            0 if J218 - X218 * Q218 < 0 else J218 - X218 * Q218
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - april
+        C219 = (
+            0 if J219 - X219 * Q219 < 0 else J219 - X219 * Q219
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mai
+        C220 = (
+            0 if J220 - X220 * Q220 < 0 else J220 - X220 * Q220
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juni
+        C221 = (
+            0 if J221 - X221 * Q221 < 0 else J221 - X221 * Q221
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juli
+        C222 = (
+            0 if J222 - X222 * Q222 < 0 else J222 - X222 * Q222
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - august
+        C223 = (
+            0 if J223 - X223 * Q223 < 0 else J223 - X223 * Q223
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - september
+        C224 = (
+            0 if J224 - X224 * Q224 < 0 else J224 - X224 * Q224
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - oktober
+        C225 = (
+            0 if J225 - X225 * Q225 < 0 else J225 - X225 * Q225
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - november
+        C226 = (
+            0 if J226 - X226 * Q226 < 0 else J226 - X226 * Q226
+        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - desember
         C213 = (
             C215
             + C216
@@ -2852,56 +2877,6 @@ class EnergiBeregning:
         Pumper = C258  # # - Energipost (3b) (Energibehov [kWh/år]) - Pumper
 
         ### energipost 6
-        C215 = (
-            0 if J215 - X215 * Q215 < 0 else J215 - X215 * Q215
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - januar
-        C216 = (
-            0 if J216 - X216 * Q216 < 0 else J216 - X216 * Q216
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - februar
-        C217 = (
-            0 if J217 - X217 * Q217 < 0 else J217 - X217 * Q215
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mars
-        C218 = (
-            0 if J218 - X218 * Q218 < 0 else J218 - X218 * Q216
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - april
-        C219 = (
-            0 if J219 - X219 * Q219 < 0 else J219 - X219 * Q215
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - mai
-        C220 = (
-            0 if J220 - X220 * Q220 < 0 else J220 - X220 * Q220
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juni
-        C221 = (
-            0 if J221 - X221 * Q221 < 0 else J221 - X221 * Q221
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - juli
-        C222 = (
-            0 if J222 - X222 * Q222 < 0 else J222 - X222 * Q222
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - august
-        C223 = (
-            0 if J223 - X223 * Q223 < 0 else J223 - X223 * Q223
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - september
-        C224 = (
-            0 if J224 - X224 * Q224 < 0 else J224 - X224 * Q224
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - oktober
-        C225 = (
-            0 if J225 - X225 * Q225 < 0 else J225 - X225 * Q225
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - november
-        C226 = (
-            0 if J226 - X226 * Q226 < 0 else J226 - X226 * Q226
-        ) * C231  # NS3031 - Energibehov for kjøling (6.1.2) [kWh] - desember
-        C213 = (
-            C215
-            + C216
-            + C217
-            + C218
-            + C219
-            + C220
-            + C221
-            + C222
-            + C223
-            + C224
-            + C225
-            + C226
-        )
         Kjoeling = C213  # # - Energipost (6) (Energibehov [kWh/år]) - Kjoeling
 
         Totalt_netto_energibehov = (
