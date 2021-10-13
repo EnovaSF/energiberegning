@@ -348,7 +348,7 @@ tek_07_kontorbygg_True = calc.EnergiBeregning(
     varmekapasitet_kuldebaerer=4210,
 
     densitet_kuldebaerer=999.8,
-    BygningskategoriErForretningsbygg=True,
+    ForretningsBygg=True,
 )
 
 tek_07_kontorbygg_True_expected_output = calc.Output(
@@ -373,4 +373,3 @@ tek_07_kontorbygg_True_expected_output = calc.Output(
     Energi_kostnader=2112607,
     Energi_politisk=3287354 ,
 )
-

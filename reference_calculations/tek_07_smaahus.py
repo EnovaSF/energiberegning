@@ -348,7 +348,7 @@ tek_07_smaahus = calc.EnergiBeregning(
     densitet_vann=988,
     varmekapasitet_kuldebaerer=4210,
     densitet_kuldebaerer=999.8,
-    BygningskategoriErForretningsbygg=False,
+    ForretningsBygg=False,
 )
 
 tek_07_smaahus_expected_output = calc.Output(
