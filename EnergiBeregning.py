@@ -1,7 +1,6 @@
 from dataclasses import dataclass
 import numpy as np
 
-
 @dataclass
 class Output:
     """This class holds the calculation result, one field per value"""
@@ -3270,7 +3269,12 @@ class EnergiBeregning:
         )
 
         Totalt_levert_energi = (
-            Elektrisitet + Olje + Gass + Fjernvarme + Biobrensel + Annen_energivare
+            Elektrisitet
+            + Olje
+            + Gass
+            + Fjernvarme
+            + Biobrensel
+            + Annen_energivare
         )
 
         return Output(
