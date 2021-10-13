@@ -3,6 +3,7 @@ from reference_calculations.tek_07_smaahus import *
 from reference_calculations.tek_07_boligblokk import *
 from reference_calculations.tek_07_barnehage import *
 from reference_calculations.tek_07_kontorbygg import *
+from reference_calculations.tek_07_kontorbygg_True import *
 from reference_calculations.ashrae_besttest_600 import *
 from reference_calculations.ashrae_besttest_610 import *
 from reference_calculations.ashrae_besttest_620 import *
@@ -17,18 +18,30 @@ from reference_calculations.ashrae_besttest_940 import *
 from reference_calculations.ashrae_besttest_950 import *
 
 calc_results = [
-#    ("TEK07 - Småhus", tek_07_smaahus.calculate(), tek_07_smaahus_expected_output),
-#    (
-#        "TEK07 - Boligblokk",
-#        tek_07_boligblokk.calculate(),
-#        tek_07_boligblokk_expected_output,
-#    ),
-#    (
-#        "TEK07 - Barnehage",
-#        tek_07_barnehage.calculate(),
-#       tek_07_barnehage_expected_output,
-#    ),
-    ("TEK07 - Kontorbygg", tek_07_kontorbygg.calculate(), tek_07_kontorbygg_expected_output), # TODO fix
+    (
+        "TEK07 - Småhus",
+        tek_07_smaahus.calculate(),
+        tek_07_smaahus_expected_output),
+    (
+        "TEK07 - Boligblokk",
+        tek_07_boligblokk.calculate(),
+        tek_07_boligblokk_expected_output,
+    ),
+    (
+        "TEK07 - Barnehage",
+        tek_07_barnehage.calculate(),
+       tek_07_barnehage_expected_output,
+    ),
+    (
+       "TEK07 - Kontorbygg",
+        tek_07_kontorbygg.calculate(),
+        tek_07_kontorbygg_expected_output,
+     ),
+    (
+        "TEK07 - Kontorbygg True",
+        tek_07_kontorbygg_True.calculate(),
+        tek_07_kontorbygg_True_expected_output,
+    ),
     (
         "ASHRAE BESTTEST 600",
         ashrae_besttest_600.calculate(),
@@ -36,39 +49,39 @@ calc_results = [
     ),
     (
         "ASHRAE BESTTEST 610",
-        ashrae_besttest_610.calculate(),
-        ashrae_besttest_610_expected_output,
-    ),
-    (
-        "ASHRAE BESTTEST 900",
-        ashrae_besttest_900.calculate(),
-        ashrae_besttest_900_expected_output,
-    ),
-    (
-        "ASHRAE BESTTEST 910",
-        ashrae_besttest_910.calculate(),
-        ashrae_besttest_910_expected_output,
-    ),
-    (
-        "ASHRAE BESTTEST 620",
-        ashrae_besttest_620.calculate(),
-        ashrae_besttest_620_expected_output,
-    ),
-    (
-        "ASHRAE BESTTEST 920",
-        ashrae_besttest_920.calculate(),
-        ashrae_besttest_920_expected_output,
-    ),
-    (
-        "ASHRAE BESTTEST 630",
-        ashrae_besttest_630.calculate(),
-        ashrae_besttest_630_expected_output,
-    ),
-    (
-        "ASHRAE BESTTEST 930",
-        ashrae_besttest_930.calculate(),
-        ashrae_besttest_930_expected_output,
-    ),
+         ashrae_besttest_610.calculate(),
+         ashrae_besttest_610_expected_output,
+     ),
+     (
+         "ASHRAE BESTTEST 900",
+         ashrae_besttest_900.calculate(),
+         ashrae_besttest_900_expected_output,
+     ),
+     (
+         "ASHRAE BESTTEST 910",
+         ashrae_besttest_910.calculate(),
+         ashrae_besttest_910_expected_output,
+     ),
+     (
+         "ASHRAE BESTTEST 620",
+         ashrae_besttest_620.calculate(),
+         ashrae_besttest_620_expected_output,
+     ),
+     (
+         "ASHRAE BESTTEST 920",
+         ashrae_besttest_920.calculate(),
+         ashrae_besttest_920_expected_output,
+     ),
+     (
+         "ASHRAE BESTTEST 630",
+         ashrae_besttest_630.calculate(),
+         ashrae_besttest_630_expected_output,
+     ),
+     (
+         "ASHRAE BESTTEST 930",
+         ashrae_besttest_930.calculate(),
+         ashrae_besttest_930_expected_output,
+     ),
     (
         "ASHRAE BESTTEST 640",
         ashrae_besttest_640.calculate(),
@@ -122,15 +135,15 @@ class TestCalculation(unittest.TestCase):
             with self.subTest(category):
                 self.assertEqual(expected_result.Vifter, round(calc_result.Vifter))
 
-    def test_pumper(self):
-        for (category, calc_result, expected_result) in calc_results:
-            with self.subTest(category):
-                self.assertEqual(expected_result.Pumper, round(calc_result.Pumper))
-
     def test_belysning(self):
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(expected_result.Belysning, round(calc_result.Belysning))
+
+    def test_pumper(self):
+        for (category, calc_result, expected_result) in calc_results:
+            with self.subTest(category):
+                self.assertEqual(expected_result.Pumper, round(calc_result.Pumper))
 
     def test_teknisk_utstyr(self):
         for (category, calc_result, expected_result) in calc_results:
