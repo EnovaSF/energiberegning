@@ -351,7 +351,7 @@ ashrae_besttest_910 = calc.EnergiBeregning(
     densitet_vann=988,
     varmekapasitet_kuldebaerer=4210,
     densitet_kuldebaerer=999.8,
-    BygningskategoriErForretningsbygg=False,
+    ForretningsBygg=False,
 )
 
 ashrae_besttest_910_expected_output = calc.Output(
