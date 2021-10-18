@@ -2,7 +2,7 @@ import EnergiBeregning as calc
 
 tek_07_barnehage = calc.EnergiBeregning(
     areal_oppv=200,
-    norm_varmekap=64.00,
+    norm_varmekap=64,
     kuldebro_normalisert=0.03,
     temp_settpunkt_oppvarming=21.00,
     temp_settpunkt_oppvarming_natt=21.00,

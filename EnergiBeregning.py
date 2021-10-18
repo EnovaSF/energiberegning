@@ -1,5 +1,4 @@
 from dataclasses import dataclass
-import numpy as np
 import math
 import statistics
 
@@ -29,7 +28,7 @@ class Output:
     Energi_kostnader: float
     Energi_politisk: float
 
-    def __str__(self):
+    def __str__(self) -> str:
         return "Romoppvarming: {0.Romoppvarming},Ventilasjonsvarme: {0.Ventilasjonsvarme}, \
 		Varmtvann: {0.Varmtvann}, Vifter: {0.Vifter}, \
 		Pumper: {0.Pumper}, Belysning: {0.Belysning}, \
@@ -401,7 +400,7 @@ class EnergiBeregning:
     densitet_kuldebaerer: float  # NS3031* - Energibehov, pumper (Kjøling) - Densitet for kuldebærer
     ForretningsBygg: bool  # NS3031* - Ventilasjonsvarmetap, HV - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig
 
-    def calculate(self):
+    def calculate(self) -> Output:
 
         maaneder = [
             "jan",
@@ -1225,7 +1224,7 @@ class EnergiBeregning:
                     else varmetap_vegg_og_gulv_mot_grunn_dynamisk_varmetransportkoeff_hpe
                 )
                 * (self.temp_amplitudevar)
-                * np.cos(
+                * math.cos(
                     2
                     * math.pi
                     * (

@@ -2,7 +2,7 @@ import EnergiBeregning as calc
 
 tek_07_boligblokk = calc.EnergiBeregning(
     areal_oppv=2000,
-    norm_varmekap=117.00,
+    norm_varmekap=117,
     kuldebro_normalisert=0.06,
     temp_settpunkt_oppvarming=21.00,
     temp_settpunkt_oppvarming_natt=19.00,

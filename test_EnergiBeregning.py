@@ -105,14 +105,14 @@ calc_results = [
 class TestCalculation(unittest.TestCase):
 
     # energipost
-    def test_romoppvarming(self):
+    def test_romoppvarming(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
                     expected_result.Romoppvarming, round(calc_result.Romoppvarming)
                 )
 
-    def test_ventilasjonsvarme(self):
+    def test_ventilasjonsvarme(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
@@ -120,43 +120,43 @@ class TestCalculation(unittest.TestCase):
                     round(calc_result.Ventilasjonsvarme),
                 )
 
-    def test_varmtvann(self):
+    def test_varmtvann(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
                     expected_result.Varmtvann, round(calc_result.Varmtvann)
                 )
 
-    def test_vifter(self):
+    def test_vifter(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(expected_result.Vifter, round(calc_result.Vifter))
 
-    def test_belysning(self):
+    def test_belysning(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
                     expected_result.Belysning, round(calc_result.Belysning)
                 )
 
-    def test_pumper(self):
+    def test_pumper(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(expected_result.Pumper, round(calc_result.Pumper))
 
-    def test_teknisk_utstyr(self):
+    def test_teknisk_utstyr(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
                     expected_result.Teknisk_utstyr, round(calc_result.Teknisk_utstyr)
                 )
 
-    def test_kjoeling(self):
+    def test_kjoeling(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(expected_result.Kjoeling, round(calc_result.Kjoeling))
 
-    def test_totalt_netto_energibehov(self):
+    def test_totalt_netto_energibehov(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
@@ -165,38 +165,38 @@ class TestCalculation(unittest.TestCase):
                 )
 
     # energivare
-    def test_elektrisitet(self):
+    def test_elektrisitet(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
                     expected_result.Elektrisitet, round(calc_result.Elektrisitet)
                 )
 
-    def test_olje(self):
+    def test_olje(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(expected_result.Olje, round(calc_result.Olje))
 
-    def test_gass(self):
+    def test_gass(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(expected_result.Gass, round(calc_result.Gass))
 
-    def test_fjernvarme(self):
+    def test_fjernvarme(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
                     expected_result.Fjernvarme, round(calc_result.Fjernvarme)
                 )
 
-    def test_biobrensel(self):
+    def test_biobrensel(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
                     expected_result.Biobrensel, round(calc_result.Biobrensel)
                 )
 
-    def test_annen_energivare(self):
+    def test_annen_energivare(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
@@ -204,7 +204,7 @@ class TestCalculation(unittest.TestCase):
                     round(calc_result.Annen_energivare),
                 )
 
-    def test_totalt_levert_energi(self):
+    def test_totalt_levert_energi(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
@@ -213,21 +213,21 @@ class TestCalculation(unittest.TestCase):
                 )
 
     # energivare
-    def test_primaerenergi(self):
+    def test_primaerenergi(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
                     expected_result.Primaerenergi, round(calc_result.Primaerenergi)
                 )
 
-    def test_test_co2_utslipp(self):
+    def test_test_co2_utslipp(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
                     expected_result.CO2_utslipp, round(calc_result.CO2_utslipp)
                 )
 
-    def test_energikostnader(self):
+    def test_energikostnader(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
@@ -235,7 +235,7 @@ class TestCalculation(unittest.TestCase):
                     round(calc_result.Energi_kostnader),
                 )
 
-    def test_energi_politisk(self):
+    def test_energi_politisk(self) -> None:
         for (category, calc_result, expected_result) in calc_results:
             with self.subTest(category):
                 self.assertEqual(
