@@ -1,8 +1,9 @@
 from dataclasses import dataclass
+from dataclasses_json import dataclass_json
 import math
 import statistics
 
-
+@dataclass_json
 @dataclass
 class Output:
     """This class holds the calculation result, one field per value"""
@@ -47,7 +48,7 @@ class Output:
             self
         )
 
-
+@dataclass_json
 @dataclass
 class EnergiBeregning:
     """This class wraps all the calculations"""

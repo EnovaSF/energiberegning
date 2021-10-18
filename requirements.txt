@@ -2,3 +2,4 @@ mypy
 jupyter==1.0.0
 networkx==2.6.3
 numpy==1.21.2
+dataclasses_json==0.5.6
