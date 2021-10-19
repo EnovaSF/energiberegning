@@ -36,5 +36,4 @@ jobs:
     #    flake8 . --count --exit-zero --max-complexity=10 --max-line-length=127 --statistics
     - name: Run tests
       run: |
-      #   python -m unittest discover .
         python test_Energiberegning.py
