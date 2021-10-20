@@ -8,43 +8,43 @@ import statistics
 class Output:
     """This class holds the calculation result, one field per value"""
 
-    Romoppvarming: float
-    Ventilasjonsvarme: float
-    Varmtvann: float
-    Vifter: float
-    Pumper: float
-    Belysning: float
-    Teknisk_utstyr: float
-    Kjoeling: float
-    Totalt_netto_energibehov: float
-    Elektrisitet: float
-    Olje: float
-    Gass: float
-    Fjernvarme: float
-    Biobrensel: float
-    Annen_energivare: float
-    Totalt_levert_energi: float
-    Primaerenergi: float
-    CO2_utslipp: float
-    Energi_kostnader: float
-    Energi_politisk: float
+    romoppvarming: float
+    ventilasjonsvarme: float
+    varmtvann: float
+    vifter: float
+    pumper: float
+    belysning: float
+    teknisk_utstyr: float
+    kjoeling: float
+    totalt_netto_energibehov: float
+    elektrisitet: float
+    olje: float
+    gass: float
+    fjernvarme: float
+    biobrensel: float
+    annen_energivare: float
+    totalt_levert_energi: float
+    primaerenergi: float
+    co2_utslipp: float
+    energi_kostnader: float
+    energi_politisk: float
 
     def __str__(self) -> str:
-        return "Romoppvarming: {0.Romoppvarming},Ventilasjonsvarme: {0.Ventilasjonsvarme}, \
-		Varmtvann: {0.Varmtvann}, Vifter: {0.Vifter}, \
-		Pumper: {0.Pumper}, Belysning: {0.Belysning}, \
-		Teknisk_utstyr: {0.Teknisk_utstyr}, Kjoeling: {0.Kjoeling}, \
-		Totalt_netto_energibehov: {0.Totalt_netto_energibehov}, \
-		Elektrisitet: {0.Elektrisitet}, \
-		Olje: {0.Olje}, \
-		Gass: {0.Gass}, \
-		Fjernvarme: {0.Fjernvarme}, \
-		Biobrensel: {0.Biobrensel},\
-		Annen_energivare: {0.Annen_energivare}, \
-		Totalt_levert_energi: {0.Totalt_levert_energi},\
-        Primaerenergi: {0.Primaerenergi},\
-        CO2_utslipp: {0.CO2_utslipp},\
-        Energi_kostnader: {0.Energi_kostnader}".format(
+        return "romoppvarming: {0.romoppvarming},Ventilasjonsvarme: {0.ventilasjonsvarme}, \
+		Varmtvann: {0.varmtvann}, Vifter: {0.vifter}, \
+		Pumper: {0.pumper}, Belysning: {0.belysning}, \
+		Teknisk_utstyr: {0.teknisk_utstyr}, Kjoeling: {0.kjoeling}, \
+		Totalt_netto_energibehov: {0.totalt_netto_energibehov}, \
+		Elektrisitet: {0.elektrisitet}, \
+		Olje: {0.olje}, \
+		Gass: {0.gass}, \
+		Fjernvarme: {0.fjernvarme}, \
+		Biobrensel: {0.biobrensel},\
+		Annen_energivare: {0.annen_energivare}, \
+		Totalt_levert_energi: {0.totalt_levert_energi},\
+        Primaerenergi: {0.primaerenergi},\
+        CO2_utslipp: {0.co2_utslipp},\
+        Energi_kostnader: {0.energi_kostnader}".format(
             self
         )
 

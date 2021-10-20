@@ -355,24 +355,24 @@ ashrae_besttest_620 = calc.EnergiBeregning(
 )
 
 ashrae_besttest_620_expected_output = calc.Output(
-    Romoppvarming=6900,  # TODO AssertionError: 6899 != 6900
-    Ventilasjonsvarme=0,
-    Varmtvann=0,
-    Vifter=0,
-    Belysning=0,
-    Pumper=0,
-    Teknisk_utstyr=0,
-    Kjoeling=0,
-    Totalt_netto_energibehov=6900,  # TODO AssertionError: 6899 != 6900
-    Elektrisitet=7041,  # TODO AssertionError: 7040 != 7041
-    Olje=0,
-    Gass=0,
-    Fjernvarme=0,
-    Biobrensel=0,
-    Annen_energivare=0,
-    Totalt_levert_energi=7041,  # TODO AssertionError: 7040 != 7041
-    Primaerenergi=10562,  # TODO AssertionError: 10560 != 10562
-    CO2_utslipp=401,
-    Energi_kostnader=5633,  # AssertionError: 5632 != 5633
-    Energi_politisk=8450,  # TODO AssertionError: 8448 != 8450
+    romoppvarming=6900,  # TODO AssertionError: 6899 != 6900
+    ventilasjonsvarme=0,
+    varmtvann=0,
+    vifter=0,
+    belysning=0,
+    pumper=0,
+    teknisk_utstyr=0,
+    kjoeling=0,
+    totalt_netto_energibehov=6900,  # TODO AssertionError: 6899 != 6900
+    elektrisitet=7041,  # TODO AssertionError: 7040 != 7041
+    olje=0,
+    gass=0,
+    fjernvarme=0,
+    biobrensel=0,
+    annen_energivare=0,
+    totalt_levert_energi=7041,  # TODO AssertionError: 7040 != 7041
+    primaerenergi=10562,  # TODO AssertionError: 10560 != 10562
+    co2_utslipp=401,
+    energi_kostnader=5633,  # AssertionError: 5632 != 5633
+    energi_politisk=8450,  # TODO AssertionError: 8448 != 8450
 )
