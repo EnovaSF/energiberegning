@@ -355,24 +355,24 @@ ashrae_besttest_610 = calc.EnergiBeregning(
 )
 
 ashrae_besttest_610_expected_output = calc.Output(
-    Romoppvarming=7897,
-    Ventilasjonsvarme=0,
-    Varmtvann=0,
-    Vifter=0,
-    Belysning=0,
-    Pumper=0,
-    Teknisk_utstyr=0,
-    Kjoeling=0,
-    Totalt_netto_energibehov=7897,
-    Elektrisitet=8058,
-    Olje=0,
-    Gass=0,
-    Fjernvarme=0,
-    Biobrensel=0,
-    Annen_energivare=0,
-    Totalt_levert_energi=8058,
-    Primaerenergi=12087,
-    CO2_utslipp=459,
-    Energi_kostnader=6447,  # TODO AssertionError: 6446 != 6447
-    Energi_politisk=9670,  # TODO AssertionError: 9669 != 9670
+    romoppvarming=7897,
+    ventilasjonsvarme=0,
+    varmtvann=0,
+    vifter=0,
+    belysning=0,
+    pumper=0,
+    teknisk_utstyr=0,
+    kjoeling=0,
+    totalt_netto_energibehov=7897,
+    elektrisitet=8058,
+    olje=0,
+    gass=0,
+    fjernvarme=0,
+    biobrensel=0,
+    annen_energivare=0,
+    totalt_levert_energi=8058,
+    primaerenergi=12087,
+    co2_utslipp=459,
+    energi_kostnader=6447,  # TODO AssertionError: 6446 != 6447
+    energi_politisk=9670,  # TODO AssertionError: 9669 != 9670
 )
