@@ -1,9 +1,10 @@
 from dataclasses import dataclass
-from dataclasses_json import dataclass_json
+from dataclasses_json import dataclass_json, LetterCase
 import math
 import statistics
 
-@dataclass_json
+
+@dataclass_json(letter_case=LetterCase.SNAKE)
 @dataclass
 class Output:
     """This class holds the calculation result, one field per value"""
@@ -48,7 +49,8 @@ class Output:
             self
         )
 
-@dataclass_json
+
+@dataclass_json(letter_case=LetterCase.SNAKE)
 @dataclass
 class EnergiBeregning:
     """This class wraps all the calculations"""
@@ -591,21 +593,21 @@ class EnergiBeregning:
         # - Driftstid for ventilasjon - Oppvarmed del av BRA
         # - Driftstid for ventilasjon - Luftmengde i driftstiden
         luftmengde_i_driftstiden = (
-            self.luftmengde_spesifikk_i_driftstid * self.areal_oppv
+                self.luftmengde_spesifikk_i_driftstid * self.areal_oppv
         )
 
         # NS3031 - Energibehov for vifter og pumper - per maaned
         energibehov_vifter_og_pumper = {}
         for maaned in maaneder:
             energibehov_vifter_og_pumper[maaned] = (
-                luftmengde_i_driftstiden
-                * tid_drift_vent[maaned]
-                * self.vifteeffekt_spesifikk_i_driftstid
-                + self.luftmengde_spesifikk_utenfor_driftstid
-                * self.areal_oppv
-                * timer_i_drift[maaned]
-                * self.vifteeffekt_spesifikk_utenfor_driftstid
-            ) / 3600
+                                                           luftmengde_i_driftstiden
+                                                           * tid_drift_vent[maaned]
+                                                           * self.vifteeffekt_spesifikk_i_driftstid
+                                                           + self.luftmengde_spesifikk_utenfor_driftstid
+                                                           * self.areal_oppv
+                                                           * timer_i_drift[maaned]
+                                                           * self.vifteeffekt_spesifikk_utenfor_driftstid
+                                                   ) / 3600
 
         # NS3031 - Energibehov for vifter og pumper (Vifter) - Totalt, Efan
         # # - Energipost (3a) (Energibehov [kWh/år]) - Vifter
@@ -731,7 +733,7 @@ class EnergiBeregning:
         # Total solfaktor for kombinasjon av glass og kunstig solskjerming, månedlig gj.snitt (tak)
         # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, tak
         total_solfaktor_gjennomsnitt = (
-            self.areal_vindu_tak * total_solfaktor * (1 - self.arealfraksjon_karm_tak)
+                self.areal_vindu_tak * total_solfaktor * (1 - self.arealfraksjon_karm_tak)
         )
 
         total_solfaktor_gjennomsnitt_ost = {}
@@ -741,77 +743,77 @@ class EnergiBeregning:
         for maaned in maaneder:
             # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, øst
             total_solfaktor_gjennomsnitt_ost[maaned] = (
-                self.areal_vindu_oest
-                * (
-                    (1 - sol_tidsvariabel_ost_vest[maaned]) * self.solfaktor_vindu_oest
-                    + sol_tidsvariabel_ost_vest[maaned]
-                    * self.solfaktor_total_glass_skjerming_oest
-                )
-                * (1 - self.arealfraksjon_karm_oest)
+                    self.areal_vindu_oest
+                    * (
+                            (1 - sol_tidsvariabel_ost_vest[maaned]) * self.solfaktor_vindu_oest
+                            + sol_tidsvariabel_ost_vest[maaned]
+                            * self.solfaktor_total_glass_skjerming_oest
+                    )
+                    * (1 - self.arealfraksjon_karm_oest)
             )
 
             # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, vest
             total_solfaktor_gjennomsnitt_ost_vest[maaned] = (
-                self.areal_vindu_vest
-                * (
-                    (1 - sol_tidsvariabel_ost_vest[maaned]) * self.solfaktor_vindu_vest
-                    + sol_tidsvariabel_ost_vest[maaned]
-                    * self.solfaktor_total_glass_skjerming_vest
-                )
-                * (1 - self.arealfraksjon_karm_vest)
+                    self.areal_vindu_vest
+                    * (
+                            (1 - sol_tidsvariabel_ost_vest[maaned]) * self.solfaktor_vindu_vest
+                            + sol_tidsvariabel_ost_vest[maaned]
+                            * self.solfaktor_total_glass_skjerming_vest
+                    )
+                    * (1 - self.arealfraksjon_karm_vest)
             )
 
             # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, sør
             total_solfaktor_gjennomsnitt_sor[maaned] = (
-                self.areal_vindu_soer
-                * (
-                    (1 - sol_tidsvariabel_sor[maaned]) * self.solfaktor_vindu_soer
-                    + sol_tidsvariabel_sor[maaned]
-                    * self.solfaktor_total_glass_skjerming_soer
-                )
-                * (1 - self.arealfraksjon_karm_soer)
+                    self.areal_vindu_soer
+                    * (
+                            (1 - sol_tidsvariabel_sor[maaned]) * self.solfaktor_vindu_soer
+                            + sol_tidsvariabel_sor[maaned]
+                            * self.solfaktor_total_glass_skjerming_soer
+                    )
+                    * (1 - self.arealfraksjon_karm_soer)
             )
 
             # - Total solfaktor, gjennomsnitt - Effektivt vindusareal for soltilskudd, nord
             total_solfaktor_gjennomsnitt_nord[maaned] = (
-                self.areal_vindu_nord
-                * (
-                    (1 - sol_tidsvariabel_nord[maaned]) * self.solfaktor_vindu_nord
-                    + sol_tidsvariabel_nord[maaned]
-                    * self.solfaktor_total_glass_skjerming_nord
-                )
-                * (1 - self.arealfraksjon_karm_nord)
+                    self.areal_vindu_nord
+                    * (
+                            (1 - sol_tidsvariabel_nord[maaned]) * self.solfaktor_vindu_nord
+                            + sol_tidsvariabel_nord[maaned]
+                            * self.solfaktor_total_glass_skjerming_nord
+                    )
+                    * (1 - self.arealfraksjon_karm_nord)
             )
 
         # NS3031 - Varmettilskudd fra sol Totalt, (Qsol, i) [kWh] - januar
         varmetilskudd_fra_sol_totalt = {}
         for maaned in maaneder:
             varmetilskudd_fra_sol_totalt[maaned] = tid[maaned] * (
-                straalingsfluks_soer[maaned]
-                * total_solfaktor_gjennomsnitt_ost[maaned]
-                * (self.solskjermingsfaktor_horisont_oest)
-                * self.solskjermingsfaktor_overheng_oest
-                * self.solskjermingsfaktor_finner_oest
-                + straalingsfluks_ostvest[maaned]
-                * total_solfaktor_gjennomsnitt_ost_vest[maaned]
-                * (self.solskjermingsfaktor_horisont_vest)
-                * (self.solskjermingsfaktor_overheng_vest)
-                * self.solskjermingsfaktor_finner_vest
-                + straalingsfluks_ostvest[maaned]
-                * total_solfaktor_gjennomsnitt_sor[maaned]
-                * (self.solskjermingsfaktor_horisont_soer)
-                * self.solskjermingsfaktor_overheng_soer
-                * self.solskjermingsfaktor_finner_soer
-                + straalingsfluks_nord[maaned]
-                * (self.solskjermingsfaktor_horisont_nord)
-                * (self.solskjermingsfaktor_overheng_nord)
-                * self.solskjermingsfaktor_finner_nord
-                * total_solfaktor_gjennomsnitt_nord[maaned]
-                + straalingsfluks_tak[maaned]
-                * (total_solfaktor_gjennomsnitt)
-                * self.solskjermingsfaktor_horisont_tak
-                * self.solskjermingsfaktor_overheng_tak
-                * self.solskjermingsfaktor_finner_tak
+                    straalingsfluks_soer[maaned]
+                    * total_solfaktor_gjennomsnitt_ost[maaned]
+                    * (self.solskjermingsfaktor_horisont_oest)
+                    * self.solskjermingsfaktor_overheng_oest
+                    * self.solskjermingsfaktor_finner_oest
+                    + straalingsfluks_ostvest[maaned]
+                    * total_solfaktor_gjennomsnitt_ost_vest[maaned]
+                    * (self.solskjermingsfaktor_horisont_vest)
+                    * (self.solskjermingsfaktor_overheng_vest)
+                    * self.solskjermingsfaktor_finner_vest
+                    + straalingsfluks_ostvest[maaned]
+                    * total_solfaktor_gjennomsnitt_sor[maaned]
+                    * (self.solskjermingsfaktor_horisont_soer)
+                    * self.solskjermingsfaktor_overheng_soer
+                    * self.solskjermingsfaktor_finner_soer
+                    + straalingsfluks_nord[maaned]
+                    * (self.solskjermingsfaktor_horisont_nord)
+                    * (self.solskjermingsfaktor_overheng_nord)
+                    * self.solskjermingsfaktor_finner_nord
+                    * total_solfaktor_gjennomsnitt_nord[maaned]
+                    + straalingsfluks_tak[maaned]
+                    * (total_solfaktor_gjennomsnitt)
+                    * self.solskjermingsfaktor_horisont_tak
+                    * self.solskjermingsfaktor_overheng_tak
+                    * self.solskjermingsfaktor_finner_tak
             )
 
         # NS3031* - Ventilasjonsvarmetap, HV - Antall timer i måneden i driftstiden, ton
@@ -836,17 +838,20 @@ class EnergiBeregning:
 
         # NS3031* - Ventilasjonsvarmetap, HV - Gjennomsnittlig ventilasjonsmengde
         ventilasjonsvarmetap_gjennomsnittlig_ventilasjonsmengde = (
-            ventilasjonsvarmetap_timer_i_drift
-            * (arealkorreksjon_bolig_ventilasjon_i_driftstid * self.areal_oppv)
-            + mean_timer_i_driftstid_ventilasjon
-            * (arealkorreksjon_bolig_ventilasjon_utenfor_driftstid * self.areal_oppv)
-        ) / (ventilasjonsvarmetap_timer_i_drift + mean_timer_i_driftstid_ventilasjon)
+                                                                          ventilasjonsvarmetap_timer_i_drift
+                                                                          * (
+                                                                                      arealkorreksjon_bolig_ventilasjon_i_driftstid * self.areal_oppv)
+                                                                          + mean_timer_i_driftstid_ventilasjon
+                                                                          * (
+                                                                                      arealkorreksjon_bolig_ventilasjon_utenfor_driftstid * self.areal_oppv)
+                                                                  ) / (
+                                                                              ventilasjonsvarmetap_timer_i_drift + mean_timer_i_driftstid_ventilasjon)
 
         # NS3031* - Ventilasjonsvarmetap, HV - Totalt, HV
         ventilasjonsvarmetap_totalt = (
-            (self.varmekapasitet_luft)
-            * ventilasjonsvarmetap_gjennomsnittlig_ventilasjonsmengde
-            * (1 - (self.tempvirkningsgrad_varmegjenvinner))
+                (self.varmekapasitet_luft)
+                * ventilasjonsvarmetap_gjennomsnittlig_ventilasjonsmengde
+                * (1 - (self.tempvirkningsgrad_varmegjenvinner))
         )
 
         # - Spesifikk gjennomsnittlig varmetilskudd fra vifter - Temperaturøkning over avtrekksvifte
@@ -863,39 +868,40 @@ class EnergiBeregning:
             0
             if (self.tempvirkningsgrad_varmegjenvinner) <= 0
             else self.varmekapasitet_luft
-            * (
-                ventilasjonsvarmetap_gjennomsnittlig_ventilasjonsmengde
-                * (
-                    (1 - (self.tempvirkningsgrad_varmegjenvinner))
-                    * mean_varmetilskudd_fra_vifter
-                    + (self.tempvirkningsgrad_varmegjenvinner)
-                    * mean_varmetilskudd_fra_vifter
-                )
-            )
-            / (self.areal_oppv)
+                 * (
+                         ventilasjonsvarmetap_gjennomsnittlig_ventilasjonsmengde
+                         * (
+                                 (1 - (self.tempvirkningsgrad_varmegjenvinner))
+                                 * mean_varmetilskudd_fra_vifter
+                                 + (self.tempvirkningsgrad_varmegjenvinner)
+                                 * mean_varmetilskudd_fra_vifter
+                         )
+                 )
+                 / (self.areal_oppv)
         )
 
         # NS3031 - Internt varmettilskudd (6.1.1.2.1) - Totalt, Qint, i
         internt_varmetilskudd = {}
         for maaned in maaneder:
             internt_varmetilskudd[maaned] = (
-                tid_drift_oppv_belysn_utstyr[maaned] / 1000 * varmetilskudd_lys[maaned]
-                + tid_drift_oppv_belysn_utstyr[maaned]
-                / 1000
-                * varmetilskudd_utstyr[maaned]
-                + tid_drift_person[maaned] / 1000 * varmetilskudd_person[maaned]
-                + spesifikk_gjsnitt_varmetilskudd_fra_vifter
-                / 1000
-                * statistics.mean(
-                    [(ventilasjonsvarmetap_timer_i_drift), mean_timer_per_maaned]
-                )
-            ) * self.areal_oppv
+                                                    tid_drift_oppv_belysn_utstyr[maaned] / 1000 * varmetilskudd_lys[
+                                                maaned]
+                                                    + tid_drift_oppv_belysn_utstyr[maaned]
+                                                    / 1000
+                                                    * varmetilskudd_utstyr[maaned]
+                                                    + tid_drift_person[maaned] / 1000 * varmetilskudd_person[maaned]
+                                                    + spesifikk_gjsnitt_varmetilskudd_fra_vifter
+                                                    / 1000
+                                                    * statistics.mean(
+                                                [(ventilasjonsvarmetap_timer_i_drift), mean_timer_per_maaned]
+                                            )
+                                            ) * self.areal_oppv
 
         # NS3031 - Varmettilskudd
         varmetilskudd = {}
         for maaned in maaneder:
             varmetilskudd[maaned] = (
-                varmetilskudd_fra_sol_totalt[maaned] + internt_varmetilskudd[maaned]
+                    varmetilskudd_fra_sol_totalt[maaned] + internt_varmetilskudd[maaned]
             )
 
         # Timer utenfor driftstid for oppvarming
@@ -947,25 +953,25 @@ class EnergiBeregning:
 
         # NS3031 - Infiltrasjonsvarmetap, Hinf (6.1.1.1.5) - Luftskifte for infiltrasjon
         luftskifte_for_infiltrasjon = (
-            (self.lekkasjetall) * (self.terrengskjermingskoeff_e)
-        ) / (
-            1
-            + ((self.terrengskjermingskoeff_f) / (self.terrengskjermingskoeff_e))
-            * (
-                (
-                    (
-                        self.areal_oppv
-                        * arealkorreksjon_luftmengde0_tilluft_mekanisk_ventilasjon
-                    )
-                    - (
-                        self.areal_oppv
-                        * arealkorreksjon_luftmengde0_avtrekksluftmengde_mekanisk_ventilasjon
-                    )
-                )
-                / (oppvarmet_luftvolum * (self.lekkasjetall))
-            )
-            ** 2
-        )
+                                              (self.lekkasjetall) * (self.terrengskjermingskoeff_e)
+                                      ) / (
+                                              1
+                                              + ((self.terrengskjermingskoeff_f) / (self.terrengskjermingskoeff_e))
+                                              * (
+                                                      (
+                                                              (
+                                                                      self.areal_oppv
+                                                                      * arealkorreksjon_luftmengde0_tilluft_mekanisk_ventilasjon
+                                                              )
+                                                              - (
+                                                                      self.areal_oppv
+                                                                      * arealkorreksjon_luftmengde0_avtrekksluftmengde_mekanisk_ventilasjon
+                                                              )
+                                                      )
+                                                      / (oppvarmet_luftvolum * (self.lekkasjetall))
+                                              )
+                                              ** 2
+                                      )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Ekvivalent tykkelse for gulvet, dt
         varmetap_mot_grunn_tykkelse_gulv_dt = (self.tykkelse_grunnmur) + (
@@ -974,7 +980,7 @@ class EnergiBeregning:
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Ekvivalent tykkelse for kantisolasjon, d'
         varmetap_mot_grunn_tykkelse_kantisolasjon_d = (self.kantisol_tykkelse) * (
-            (self.varmekonduktivitet_grunn) / (self.varmekonduktivitet_kantisol) - 1
+                (self.varmekonduktivitet_grunn) / (self.varmekonduktivitet_kantisol) - 1
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Ekvivalent tykkelse for kjellerveggene, dw
@@ -984,257 +990,258 @@ class EnergiBeregning:
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Lineær varmegjennomgangs-koeffisient, horisontal kantisolasjon
         linear_varmegjennomgangs_koeff_horisontal_kantisolasjon = -(
-            (self.varmekonduktivitet_grunn) / math.pi
+                (self.varmekonduktivitet_grunn) / math.pi
         ) * (
-            math.log(
-                (self.kantisol_horisontal_dybde) / varmetap_mot_grunn_tykkelse_gulv_dt
-                + 1
-            )
-            - math.log(
-                (self.kantisol_horisontal_dybde)
-                / (
-                    varmetap_mot_grunn_tykkelse_gulv_dt
-                    + varmetap_mot_grunn_tykkelse_kantisolasjon_d
-                )
-                + 1
-            )
-        )
+                                                                          math.log(
+                                                                              (
+                                                                                  self.kantisol_horisontal_dybde) / varmetap_mot_grunn_tykkelse_gulv_dt
+                                                                              + 1
+                                                                          )
+                                                                          - math.log(
+                                                                      (self.kantisol_horisontal_dybde)
+                                                                      / (
+                                                                              varmetap_mot_grunn_tykkelse_gulv_dt
+                                                                              + varmetap_mot_grunn_tykkelse_kantisolasjon_d
+                                                                      )
+                                                                      + 1
+                                                                  )
+                                                                  )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Lineær varmegjennomgangs-koeffisient, vertikal kantisolasjon
         linear_varmegjennomgangs_koeff_vertikal_kantisolasjon = -(
-            (self.varmekonduktivitet_grunn) / math.pi
+                (self.varmekonduktivitet_grunn) / math.pi
         ) * (
-            math.log(
-                2
-                * (self.kantisol_vertikal_bredde)
-                / varmetap_mot_grunn_tykkelse_gulv_dt
-                + 1
-            )
-            - math.log(
-                2
-                * (self.kantisol_vertikal_bredde)
-                / (
-                    varmetap_mot_grunn_tykkelse_gulv_dt
-                    + varmetap_mot_grunn_tykkelse_kantisolasjon_d
-                )
-                + 1
-            )
-        )
+                                                                        math.log(
+                                                                            2
+                                                                            * (self.kantisol_vertikal_bredde)
+                                                                            / varmetap_mot_grunn_tykkelse_gulv_dt
+                                                                            + 1
+                                                                        )
+                                                                        - math.log(
+                                                                    2
+                                                                    * (self.kantisol_vertikal_bredde)
+                                                                    / (
+                                                                            varmetap_mot_grunn_tykkelse_gulv_dt
+                                                                            + varmetap_mot_grunn_tykkelse_kantisolasjon_d
+                                                                    )
+                                                                    + 1
+                                                                )
+                                                                )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Karakteristisk dimensjon for gulvet, B'
         karakteristisk_dimensjon_gulv_b = (self.areal_gulv_kjeller) / (
-            0.5 * (self.omkrets_gulv)
+                0.5 * (self.omkrets_gulv)
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Vegg mot grunn, Ubw
         varmetap_vegg_mot_grunn_ubw = (
-            2
-            * (self.varmekonduktivitet_grunn)
-            / (math.pi * (self.oppfyllingshoyde_kjellervegg))
-            * (
-                1
-                + (
-                    (0.5 * varmetap_mot_grunn_tykkelse_gulv_dt)
-                    / (
-                        varmetap_mot_grunn_tykkelse_gulv_dt
-                        + (self.oppfyllingshoyde_kjellervegg)
-                    )
+                2
+                * (self.varmekonduktivitet_grunn)
+                / (math.pi * (self.oppfyllingshoyde_kjellervegg))
+                * (
+                        1
+                        + (
+                                (0.5 * varmetap_mot_grunn_tykkelse_gulv_dt)
+                                / (
+                                        varmetap_mot_grunn_tykkelse_gulv_dt
+                                        + (self.oppfyllingshoyde_kjellervegg)
+                                )
+                        )
                 )
-            )
-            * math.log(
-                (self.oppfyllingshoyde_kjellervegg)
-                / varmetap_mot_grunn_tykkelse_kjellervegg_dw
-                + 1
-            )
+                * math.log(
+            (self.oppfyllingshoyde_kjellervegg)
+            / varmetap_mot_grunn_tykkelse_kjellervegg_dw
+            + 1
+        )
         )
 
         ## NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For gulv mot grunnen, vertikal kantisolasjon (D' = D)
         varmetap_gulv_mot_grunn_vertikal_dynamisk_varmetransportkoeff_hpe = (
-            0.37
-            * (self.omkrets_gulv)
-            * (self.varmekonduktivitet_grunn)
-            * (
-                (
-                    1
-                    - math.exp(
-                        -(
-                            (self.kantisol_horisontal_dybde)
-                            / (self.dybde_periodisk_nedtrengning)
+                0.37
+                * (self.omkrets_gulv)
+                * (self.varmekonduktivitet_grunn)
+                * (
+                        (
+                                1
+                                - math.exp(
+                            -(
+                                    (self.kantisol_horisontal_dybde)
+                                    / (self.dybde_periodisk_nedtrengning)
+                            )
                         )
-                    )
-                )
-                * math.log(
+                        )
+                        * math.log(
                     (self.dybde_periodisk_nedtrengning)
                     / (
-                        varmetap_mot_grunn_tykkelse_gulv_dt
-                        + varmetap_mot_grunn_tykkelse_kantisolasjon_d
+                            varmetap_mot_grunn_tykkelse_gulv_dt
+                            + varmetap_mot_grunn_tykkelse_kantisolasjon_d
                     )
                 )
-                + math.exp(
+                        + math.exp(
                     -(
-                        (self.kantisol_horisontal_dybde)
-                        / (self.dybde_periodisk_nedtrengning)
+                            (self.kantisol_horisontal_dybde)
+                            / (self.dybde_periodisk_nedtrengning)
                     )
                 )
-                * math.log(
+                        * math.log(
                     (self.dybde_periodisk_nedtrengning)
                     / varmetap_mot_grunn_tykkelse_gulv_dt
                     + 1
                 )
-            )
+                )
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For gulv mot grunnen, horisontal kantisolasjon (D' = 2 x D)
         varmetap_gulv_mot_grunn_horisontal_dynamisk_varmetransportkoeff_hpe = (
-            0.37
-            * (self.omkrets_gulv)
-            * (self.varmekonduktivitet_grunn)
-            * (
-                (
-                    1
-                    - math.exp(
-                        -(
+                0.37
+                * (self.omkrets_gulv)
+                * (self.varmekonduktivitet_grunn)
+                * (
+                        (
+                                1
+                                - math.exp(
+                            -(
+                                    2
+                                    * (self.kantisol_vertikal_bredde)
+                                    / (self.dybde_periodisk_nedtrengning)
+                            )
+                        )
+                        )
+                        * math.log(
+                    (self.dybde_periodisk_nedtrengning)
+                    / (
+                            varmetap_mot_grunn_tykkelse_gulv_dt
+                            + varmetap_mot_grunn_tykkelse_kantisolasjon_d
+                    )
+                )
+                        + math.exp(
+                    -(
                             2
                             * (self.kantisol_vertikal_bredde)
                             / (self.dybde_periodisk_nedtrengning)
-                        )
                     )
                 )
-                * math.log(
-                    (self.dybde_periodisk_nedtrengning)
-                    / (
-                        varmetap_mot_grunn_tykkelse_gulv_dt
-                        + varmetap_mot_grunn_tykkelse_kantisolasjon_d
-                    )
-                )
-                + math.exp(
-                    -(
-                        2
-                        * (self.kantisol_vertikal_bredde)
-                        / (self.dybde_periodisk_nedtrengning)
-                    )
-                )
-                * math.log(
+                        * math.log(
                     (self.dybde_periodisk_nedtrengning)
                     / varmetap_mot_grunn_tykkelse_gulv_dt
                     + 1
                 )
-            )
+                )
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For vegg og gulv mot grunnen
         varmetap_vegg_og_gulv_mot_grunn_dynamisk_varmetransportkoeff_hpe = (
-            0.37
-            * (self.omkrets_gulv)
-            * (self.varmekonduktivitet_grunn)
-            * (
-                (
-                    1
-                    - math.exp(
-                        -(
-                            (self.oppfyllingshoyde_kjellervegg)
-                            / (self.dybde_periodisk_nedtrengning)
+                0.37
+                * (self.omkrets_gulv)
+                * (self.varmekonduktivitet_grunn)
+                * (
+                        (
+                                1
+                                - math.exp(
+                            -(
+                                    (self.oppfyllingshoyde_kjellervegg)
+                                    / (self.dybde_periodisk_nedtrengning)
+                            )
                         )
-                    )
-                )
-                * math.log(
+                        )
+                        * math.log(
                     (self.dybde_periodisk_nedtrengning)
                     / varmetap_mot_grunn_tykkelse_kjellervegg_dw
                     + 1
                 )
-                + math.exp(
+                        + math.exp(
                     -(
-                        (self.oppfyllingshoyde_kjellervegg)
-                        / (self.dybde_periodisk_nedtrengning)
+                            (self.oppfyllingshoyde_kjellervegg)
+                            / (self.dybde_periodisk_nedtrengning)
                     )
                 )
-                * math.log(
+                        * math.log(
                     (self.dybde_periodisk_nedtrengning)
                     / varmetap_mot_grunn_tykkelse_gulv_dt
                     + 1
                 )
-            )
+                )
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'<dt + 0,5*z)
         varmetap_gulv_mot_grunn_qg_ug_b_lt_dt = (
-            2
-            * (self.varmekonduktivitet_grunn)
-            / (
-                math.pi * karakteristisk_dimensjon_gulv_b
-                + varmetap_mot_grunn_tykkelse_gulv_dt
-                * 0.5
-                * (self.oppfyllingshoyde_kjellervegg)
-            )
-            * math.log(
-                (math.pi * karakteristisk_dimensjon_gulv_b)
+                2
+                * (self.varmekonduktivitet_grunn)
                 / (
+                        math.pi * karakteristisk_dimensjon_gulv_b
+                        + varmetap_mot_grunn_tykkelse_gulv_dt
+                        * 0.5
+                        * (self.oppfyllingshoyde_kjellervegg)
+                )
+                * math.log(
+            (math.pi * karakteristisk_dimensjon_gulv_b)
+            / (
                     varmetap_mot_grunn_tykkelse_gulv_dt
                     + 0.5 * (self.oppfyllingshoyde_kjellervegg)
-                )
-                + 1
             )
+            + 1
+        )
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'>dt + 0,5*z)
         varmetap_gulv_mot_grunn_qg_ug_b_bt_dt = (self.varmekonduktivitet_grunn) / (
-            0.457 * karakteristisk_dimensjon_gulv_b
-            + varmetap_mot_grunn_tykkelse_gulv_dt
-            + 0.5 * (self.oppfyllingshoyde_kjellervegg)
+                0.457 * karakteristisk_dimensjon_gulv_b
+                + varmetap_mot_grunn_tykkelse_gulv_dt
+                + 0.5 * (self.oppfyllingshoyde_kjellervegg)
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Stasjonær varmetransportkoeffisient, Hg] - For gulv mot grunnen
         varmetap_gulv_mot_grunn_stasjonar_varmetrans_koeff_hg = (
             varmetap_gulv_mot_grunn_qg_ug_b_lt_dt
             if karakteristisk_dimensjon_gulv_b
-            > varmetap_mot_grunn_tykkelse_gulv_dt
-            + 0.5 * (self.oppfyllingshoyde_kjellervegg)
+               > varmetap_mot_grunn_tykkelse_gulv_dt
+               + 0.5 * (self.oppfyllingshoyde_kjellervegg)
             else varmetap_gulv_mot_grunn_qg_ug_b_bt_dt
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Stasjonær varmetransportkoeffisient, Hg] - For vegg og gulv mot grunnen
         varmetap_vegg_mot_grunn_stasjonar_varmetrans_koeff_hg = (
-            varmetap_gulv_mot_grunn_stasjonar_varmetrans_koeff_hg
-            * (self.areal_gulv_kjeller)
-            + (self.oppfyllingshoyde_kjellervegg)
-            * (self.omkrets_gulv)
-            * varmetap_vegg_mot_grunn_ubw
+                varmetap_gulv_mot_grunn_stasjonar_varmetrans_koeff_hg
+                * (self.areal_gulv_kjeller)
+                + (self.oppfyllingshoyde_kjellervegg)
+                * (self.omkrets_gulv)
+                * varmetap_vegg_mot_grunn_ubw
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3)
         varmetap_mot_grunn = {}
         for maaned in maaneder:
             varmetap_mot_grunn[maaned] = tid[maaned] * (
-                (
-                    varmetap_gulv_mot_grunn_stasjonar_varmetrans_koeff_hg
-                    * (self.areal_gulv_kjeller)
-                    + linear_varmegjennomgangs_koeff_horisontal_kantisolasjon
-                    * (self.omkrets_gulv)
-                    if (self.faseforskjell_utetemp_varmetap) == 2
-                    else varmetap_vegg_mot_grunn_stasjonar_varmetrans_koeff_hg
-                )
-                * ((self.aarsmiddeltemp_inne) - (self.aarsmiddeltemp_ute))
-                + (
-                    max(
-                        [
-                            varmetap_gulv_mot_grunn_vertikal_dynamisk_varmetransportkoeff_hpe,
-                            varmetap_gulv_mot_grunn_horisontal_dynamisk_varmetransportkoeff_hpe,
-                        ]
+                    (
+                        varmetap_gulv_mot_grunn_stasjonar_varmetrans_koeff_hg
+                        * (self.areal_gulv_kjeller)
+                        + linear_varmegjennomgangs_koeff_horisontal_kantisolasjon
+                        * (self.omkrets_gulv)
+                        if (self.faseforskjell_utetemp_varmetap) == 2
+                        else varmetap_vegg_mot_grunn_stasjonar_varmetrans_koeff_hg
                     )
-                    if (self.faseforskjell_utetemp_varmetap) == 2
-                    else varmetap_vegg_og_gulv_mot_grunn_dynamisk_varmetransportkoeff_hpe
-                )
-                * (self.temp_amplitudevar)
-                * math.cos(
-                    2
-                    * math.pi
-                    * (
+                    * ((self.aarsmiddeltemp_inne) - (self.aarsmiddeltemp_ute))
+                    + (
+                        max(
+                            [
+                                varmetap_gulv_mot_grunn_vertikal_dynamisk_varmetransportkoeff_hpe,
+                                varmetap_gulv_mot_grunn_horisontal_dynamisk_varmetransportkoeff_hpe,
+                            ]
+                        )
+                        if (self.faseforskjell_utetemp_varmetap) == 2
+                        else varmetap_vegg_og_gulv_mot_grunn_dynamisk_varmetransportkoeff_hpe
+                    )
+                    * (self.temp_amplitudevar)
+                    * math.cos(
+                2
+                * math.pi
+                * (
                         maaned_nummer[maaned]
                         - 1
                         - (self.faseforskjell_utetemp_varmetap)
-                    )
-                    / 12
                 )
+                / 12
+            )
             )
 
         # (Varmetapstall) - Varmetap mot grunnen, et helt år
@@ -1250,82 +1257,82 @@ class EnergiBeregning:
 
         # NS3031 - Varmetransmisjonstap til uoppvarmede soner, HU - Totalt, HU
         varmetransmisjonstap_uoppvarmede_soner_hu_total = (
-            self.varmetapsfaktor_uoppv
-        ) * (
-            varmetransmisjonstap_uoppvarmede_soner_hu
-            + varmetransmisjonstap_uppvarmede_soner
-        )
+                                                              self.varmetapsfaktor_uoppv
+                                                          ) * (
+                                                                  varmetransmisjonstap_uoppvarmede_soner_hu
+                                                                  + varmetransmisjonstap_uppvarmede_soner
+                                                          )
 
         # (Varmetapstall) - Varmetransmisjonstap, HD
         varmetapstall_hd = (
-            (self.U_tak) * (self.areal_tak)
-            + (self.U_vegg_oest) * (self.areal_vegg_oest)
-            + (self.U_vegg_vest) * (self.areal_vegg_vest)
-            + (self.U_vegg_soer) * (self.areal_vegg_soer)
-            + (self.U_vegg_nord) * (self.areal_vegg_nord)
-            + (self.U_gulv_mot_det_fri) * (self.areal_gulv_mot_det_fri)
-            + (self.U_vindu_oest) * (self.areal_vindu_oest)
-            + (self.U_vindu_vest) * (self.areal_vindu_vest)
-            + (self.U_vindu_soer) * (self.areal_vindu_soer)
-            + (self.U_vindu_nord) * (self.areal_vindu_nord)
-            # TODO check: This will always be 0 as no windows will be placed on the roof according to the Wizard
-            + (self.U_vindu_tak) * (self.areal_vindu_tak)
-            + (self.U_dor) * (self.areal_dor)
-        ) + (self.areal_oppv) * (self.kuldebro_normalisert)
+                                   (self.U_tak) * (self.areal_tak)
+                                   + (self.U_vegg_oest) * (self.areal_vegg_oest)
+                                   + (self.U_vegg_vest) * (self.areal_vegg_vest)
+                                   + (self.U_vegg_soer) * (self.areal_vegg_soer)
+                                   + (self.U_vegg_nord) * (self.areal_vegg_nord)
+                                   + (self.U_gulv_mot_det_fri) * (self.areal_gulv_mot_det_fri)
+                                   + (self.U_vindu_oest) * (self.areal_vindu_oest)
+                                   + (self.U_vindu_vest) * (self.areal_vindu_vest)
+                                   + (self.U_vindu_soer) * (self.areal_vindu_soer)
+                                   + (self.U_vindu_nord) * (self.areal_vindu_nord)
+                                   # TODO check: This will always be 0 as no windows will be placed on the roof according to the Wizard
+                                   + (self.U_vindu_tak) * (self.areal_vindu_tak)
+                                   + (self.U_dor) * (self.areal_dor)
+                           ) + (self.areal_oppv) * (self.kuldebro_normalisert)
 
         # (Varmetapstall) - Infiltrasjonsvarmetap, Hinf
         varmetapstall_infiltrasjonsvarmetap_hinf = (
-            (self.varmekapasitet_luft)
-            * luftskifte_for_infiltrasjon
-            * oppvarmet_luftvolum
+                (self.varmekapasitet_luft)
+                * luftskifte_for_infiltrasjon
+                * oppvarmet_luftvolum
         )
 
         # NS3031* - Varmetap
         varmetap = {}
         for maaned in maaneder:
             _varmetap = (
-                (
-                    varmetapstall_hd
-                    + varmetransmisjonstap_uoppvarmede_soner_hu_total
-                    + ventilasjonsvarmetap_totalt
-                    + varmetapstall_infiltrasjonsvarmetap_hinf
-                )
-                * (self.temp_settpunkt_oppvarming - utetemp[maaned])
-                * tid_drift_oppv_belysn_utstyr[maaned]
-                / 1000
-                + (
-                    varmetapstall_hd
-                    + varmetransmisjonstap_uoppvarmede_soner_hu_total
-                    + ventilasjonsvarmetap_totalt
-                    + varmetapstall_infiltrasjonsvarmetap_hinf
-                )
-                * (self.temp_settpunkt_oppvarming_natt - utetemp[maaned])
-                * (timer[maaned] - tid_drift_oppv_belysn_utstyr[maaned])
-                / 1000
-                + varmetap_mot_grunn[maaned]
+                    (
+                            varmetapstall_hd
+                            + varmetransmisjonstap_uoppvarmede_soner_hu_total
+                            + ventilasjonsvarmetap_totalt
+                            + varmetapstall_infiltrasjonsvarmetap_hinf
+                    )
+                    * (self.temp_settpunkt_oppvarming - utetemp[maaned])
+                    * tid_drift_oppv_belysn_utstyr[maaned]
+                    / 1000
+                    + (
+                            varmetapstall_hd
+                            + varmetransmisjonstap_uoppvarmede_soner_hu_total
+                            + ventilasjonsvarmetap_totalt
+                            + varmetapstall_infiltrasjonsvarmetap_hinf
+                    )
+                    * (self.temp_settpunkt_oppvarming_natt - utetemp[maaned])
+                    * (timer[maaned] - tid_drift_oppv_belysn_utstyr[maaned])
+                    / 1000
+                    + varmetap_mot_grunn[maaned]
             )
             # Varmetap default 0.1 if negative
             varmetap[maaned] = _varmetap if _varmetap >= 0 else 0.1
 
         # NS3031 - Oppvarmingsbehov - Bygningens varmetransportkoeffisient [W/K]
         varmetransportkoeff_wk = (
-            varmetapstall_hd
-            + varmetransmisjonstap_uoppvarmede_soner_hu_total
-            + ventilasjonsvarmetap_totalt
-            + varmetapstall_infiltrasjonsvarmetap_hinf
-            + (
-                varmetap_gulv_mot_grunn_stasjonar_varmetrans_koeff_hg
-                * (self.areal_gulv_kjeller)
-                + linear_varmegjennomgangs_koeff_horisontal_kantisolasjon
-                * (self.omkrets_gulv)
-                if (self.faseforskjell_utetemp_varmetap) == 2
-                else varmetap_vegg_mot_grunn_stasjonar_varmetrans_koeff_hg
-            )
+                varmetapstall_hd
+                + varmetransmisjonstap_uoppvarmede_soner_hu_total
+                + ventilasjonsvarmetap_totalt
+                + varmetapstall_infiltrasjonsvarmetap_hinf
+                + (
+                    varmetap_gulv_mot_grunn_stasjonar_varmetrans_koeff_hg
+                    * (self.areal_gulv_kjeller)
+                    + linear_varmegjennomgangs_koeff_horisontal_kantisolasjon
+                    * (self.omkrets_gulv)
+                    if (self.faseforskjell_utetemp_varmetap) == 2
+                    else varmetap_vegg_mot_grunn_stasjonar_varmetrans_koeff_hg
+                )
         )
 
         # NS3031 - Oppvarmingsbehov - Varmetreghet, aH
         varmetreghet_ah = (
-            (self.norm_varmekap) * self.areal_oppv / varmetransportkoeff_wk
+                (self.norm_varmekap) * self.areal_oppv / varmetransportkoeff_wk
         )
 
         # NS3031 - Oppvarmingsbehov - Tidskonstant, τ
@@ -1343,15 +1350,15 @@ class EnergiBeregning:
                 else oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1)
                 if _varmetilskudd_vs_varmetap == 1
                 else (1 - _varmetilskudd_vs_varmetap ** oppvarmingsbehov_tidskonstant)
-                / (
-                    1
-                    - _varmetilskudd_vs_varmetap ** (oppvarmingsbehov_tidskonstant + 1)
-                )
+                     / (
+                             1
+                             - _varmetilskudd_vs_varmetap ** (oppvarmingsbehov_tidskonstant + 1)
+                     )
             )
 
             # NS3031 - Oppvarmingsbehov
             oppvarmingsbehov[maaned] = (
-                varmetap[maaned] - _utnyttingsfaktor * varmetilskudd[maaned]
+                    varmetap[maaned] - _utnyttingsfaktor * varmetilskudd[maaned]
             )
 
         # # - Energipost (1a) (Energibehov [kWh/år]) - Romoppvarming
@@ -1362,17 +1369,17 @@ class EnergiBeregning:
 
         # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [°C] - Minste utetemperatur som ikke innebærer frostsikring av varmegjenvinneren, θ1,min
         energibehov_frostsikring_C = (self.temp_avtrekk) - (
-            (self.temp_avtrekk) - (self.frostsikringstemperatur)
+                (self.temp_avtrekk) - (self.frostsikringstemperatur)
         ) / (self.tempvirkningsgrad_varmegjenvinner + 0.001)
 
         energibehov_frostsikring = {}
         for maaned in maaneder:
             # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7 - Totalt, E_defrost) [kWh] - januar
             energibehov_frostsikring[maaned] = (
-                0.33
-                * ventilasjonsvarmetap_gjennomsnittlig_ventilasjonsmengde
-                * tid[maaned]
-                * max([0, energibehov_frostsikring_C - utetemp[maaned]])
+                    0.33
+                    * ventilasjonsvarmetap_gjennomsnittlig_ventilasjonsmengde
+                    * tid[maaned]
+                    * max([0, energibehov_frostsikring_C - utetemp[maaned]])
             )
 
         # NS3031 - Energibehov for frostsikring av varmegjenvinner (6.1.7) - Totalt, Edefrost
@@ -1385,15 +1392,15 @@ class EnergiBeregning:
         kjolebehov = {}
         for maaned in maaneder:
             kjolebehov[maaned] = (
-                varmetapstall_hd
-                + varmetransmisjonstap_uoppvarmede_soner_hu_total
-                + ventilasjonsvarmetap_totalt
-                + varmetapstall_infiltrasjonsvarmetap_hinf
-            ) * (self.temp_settpunkt_kjoeling - utetemp[maaned]) * tid[
-                maaned
-            ] + varmetap_mot_grunn[
-                maaned
-            ]
+                                         varmetapstall_hd
+                                         + varmetransmisjonstap_uoppvarmede_soner_hu_total
+                                         + ventilasjonsvarmetap_totalt
+                                         + varmetapstall_infiltrasjonsvarmetap_hinf
+                                 ) * (self.temp_settpunkt_kjoeling - utetemp[maaned]) * tid[
+                                     maaned
+                                 ] + varmetap_mot_grunn[
+                                     maaned
+                                 ]
         # NS3031 - "Kjølebehov" (beregnet fra varmetap med setpunkttemp. for kjøling) (6.1.1.1) [Varmetap, QC,ls] - Total
         kjolebehov_totalt = sum(kjolebehov.values())
 
@@ -1410,18 +1417,18 @@ class EnergiBeregning:
                     oppvarmingsbehov_tidskonstant / (oppvarmingsbehov_tidskonstant + 1)
                     if (_varmetilskudd) == 1
                     else (1 - (_varmetilskudd) ** oppvarmingsbehov_tidskonstant)
-                    / (1 - (_varmetilskudd) ** (oppvarmingsbehov_tidskonstant + 1))
+                         / (1 - (_varmetilskudd) ** (oppvarmingsbehov_tidskonstant + 1))
                 )
             )
 
             # NS3031 - Energibehov for kjøling (6.1.2) [kWh]
             energibehov_kjoling[maaned] = (
-                0
-                if varmetilskudd[maaned] - utnyttingsfaktor[maaned] * kjolebehov[maaned]
-                < 0
-                else varmetilskudd[maaned]
-                - utnyttingsfaktor[maaned] * kjolebehov[maaned]
-            ) * self.areal_avkjoelt_andel
+                                              0
+                                              if varmetilskudd[maaned] - utnyttingsfaktor[maaned] * kjolebehov[maaned]
+                                                 < 0
+                                              else varmetilskudd[maaned]
+                                                   - utnyttingsfaktor[maaned] * kjolebehov[maaned]
+                                          ) * self.areal_avkjoelt_andel
 
         energibehov_kjoling_total = sum(energibehov_kjoling.values())
 
@@ -1430,20 +1437,20 @@ class EnergiBeregning:
 
         # NS3031* - Energibehov, pumper (Oppvarming) - Sirkulert vannmengde gjennom pumpen
         pumper_oppvarming_sirkulert_vannmengde = (
-            pumper_oppvarming_varmebehov
-            / (
-                (self.temp_differanse_veskekrets_oppvarming)
-                * (self.varmekapasitet_vann)
-                * (self.densitet_vann)
-            )
-            * 1000
+                pumper_oppvarming_varmebehov
+                / (
+                        (self.temp_differanse_veskekrets_oppvarming)
+                        * (self.varmekapasitet_vann)
+                        * (self.densitet_vann)
+                )
+                * 1000
         )
 
         # NS3031* - Energibehov, pumper (Oppvarming) - Totalt, Ep
         energibehov_pumper_totalt = (
-            pumper_oppvarming_sirkulert_vannmengde
-            * (self.pumpeeffekt_spesifikk_oppv)
-            * (self.tid_drift_pumpe_oppv)
+                pumper_oppvarming_sirkulert_vannmengde
+                * (self.pumpeeffekt_spesifikk_oppv)
+                * (self.tid_drift_pumpe_oppv)
         )
 
         # NS3031* - Energibehov, pumper (Kjøling) - Kjølebehov
@@ -1451,20 +1458,20 @@ class EnergiBeregning:
 
         # NS3031* - Energibehov, pumper (Kjøling) - Sirkulert vannmengde gjennom pumpen
         pumper_kjoling_sirkulert_vannmengde = (
-            pumper_kjolebehov
-            / (
-                (self.temp_differanse_veskekrets_kjoling)
-                * (self.varmekapasitet_kuldebaerer)
-                * (self.densitet_kuldebaerer)
-            )
-            * 1000
+                pumper_kjolebehov
+                / (
+                        (self.temp_differanse_veskekrets_kjoling)
+                        * (self.varmekapasitet_kuldebaerer)
+                        * (self.densitet_kuldebaerer)
+                )
+                * 1000
         )
 
         # NS3031* - Energibehov, pumper (Kjøling) - Totalt, Ep
         pumper_kjoling_totalt = (
-            pumper_kjoling_sirkulert_vannmengde
-            * (self.pumpeeffekt_spesifikk_kjoling)
-            * (self.tid_drift_pumpe_kjoling)
+                pumper_kjoling_sirkulert_vannmengde
+                * (self.pumpeeffekt_spesifikk_kjoling)
+                * (self.tid_drift_pumpe_kjoling)
         )
 
         # NS3031 - Energibehov for vifter og pumper (Pumper) - Totalt, Ep
@@ -1476,14 +1483,14 @@ class EnergiBeregning:
         Kjoeling = energibehov_kjoling_total
 
         Totalt_netto_energibehov = (
-            Romoppvarming
-            + Ventilasjonsvarme
-            + Varmtvann
-            + Vifter
-            + Pumper
-            + Belysning
-            + Teknisk_utstyr
-            + Kjoeling
+                Romoppvarming
+                + Ventilasjonsvarme
+                + Varmtvann
+                + Vifter
+                + Pumper
+                + Belysning
+                + Teknisk_utstyr
+                + Kjoeling
         )
 
         # energivare 1
@@ -1510,44 +1517,44 @@ class EnergiBeregning:
 
         # NS3031 - Systemvirkningsgrader - Netto el-spesifikt forbruk
         netto_el_spesifikt_forbruk = (
-            Vifter
-            + (Pumper)
-            + (self.energibehov_belysning) * (self.areal_oppv)
-            + (self.energibehov_utstyr) * (self.areal_oppv)
+                Vifter
+                + (Pumper)
+                + (self.energibehov_belysning) * (self.areal_oppv)
+                + (self.energibehov_utstyr) * (self.areal_oppv)
         )
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til elektriske varmesystemer
         levert_el_til_varmesystemer = (Romoppvarming + Ventilasjonsvarme) * (
             self.el_er_andel_energi_oppv_ventilasjon
         ) / (self.systemvirkningsgrad_elektrisk_oppv_ventilasjon) + (
-            (self.energibehov_tappevann) * (self.areal_oppv)
-        ) * (
-            self.el_er_andel_energi_tappevann_varme
-        ) / (
-            self.systemvirkningsgrad_elektrisk_tappevann_varme
-        )
+                                              (self.energibehov_tappevann) * (self.areal_oppv)
+                                      ) * (
+                                          self.el_er_andel_energi_tappevann_varme
+                                      ) / (
+                                          self.systemvirkningsgrad_elektrisk_tappevann_varme
+                                      )
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til varmepumpesystemer
         levert_el_varmepumpesystemer = (Romoppvarming + Ventilasjonsvarme) * (
             self.el_hp_andel_energi_oppv_ventilasjon
         ) / (self.systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon) + (
-            (self.energibehov_tappevann) * (self.areal_oppv)
-        ) * (
-            self.el_hp_andel_energi_tappevann_varme
-        ) / (
-            self.systemvirkningsgrad_varmepumpeanlegg_tappevann_varme
-        )
+                                               (self.energibehov_tappevann) * (self.areal_oppv)
+                                       ) * (
+                                           self.el_hp_andel_energi_tappevann_varme
+                                       ) / (
+                                           self.systemvirkningsgrad_varmepumpeanlegg_tappevann_varme
+                                       )
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til termiske solenergisystemer
         levert_elektrisitet_termisk_solenergi = (Romoppvarming + Ventilasjonsvarme) * (
             self.el_Tsol_andel_energi_oppv_ventilasjon
         ) / (self.systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon) + (
-            (self.energibehov_tappevann) * (self.areal_oppv)
-        ) * (
-            self.el_Tsol_andel_energi_tappevann_varme
-        ) / (
-            self.systemvirkningsgrad_solfanger_termisk_tappevann_varme
-        )
+                                                        (self.energibehov_tappevann) * (self.areal_oppv)
+                                                ) * (
+                                                    self.el_Tsol_andel_energi_tappevann_varme
+                                                ) / (
+                                                    self.systemvirkningsgrad_solfanger_termisk_tappevann_varme
+                                                )
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til kjølesystemer
         levert_el_kjolseystemer = energibehov_kjoling_total / (
@@ -1556,20 +1563,20 @@ class EnergiBeregning:
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til el-spesifikt forbruk
         levert_el_spesifikt_forbruk = netto_el_spesifikt_forbruk * (
-            1 - (self.el_solcelle_andel_el_spesifikt_forbruk)
+                1 - (self.el_solcelle_andel_el_spesifikt_forbruk)
         ) + netto_el_spesifikt_forbruk * (
-            self.el_solcelle_andel_el_spesifikt_forbruk
-        ) / (
-            self.systemvirkningsgrad_solcelle
-        )
+                                          self.el_solcelle_andel_el_spesifikt_forbruk
+                                      ) / (
+                                          self.systemvirkningsgrad_solcelle
+                                      )
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet
         Elektrisitet = (
-            levert_el_spesifikt_forbruk
-            + levert_el_til_varmesystemer
-            + levert_el_varmepumpesystemer
-            + levert_elektrisitet_termisk_solenergi
-            + levert_el_kjolseystemer
+                levert_el_spesifikt_forbruk
+                + levert_el_til_varmesystemer
+                + levert_el_varmepumpesystemer
+                + levert_elektrisitet_termisk_solenergi
+                + levert_el_kjolseystemer
         )
 
         # energivare 2
@@ -1578,12 +1585,12 @@ class EnergiBeregning:
         Olje = (Romoppvarming + Ventilasjonsvarme) * (
             self.olje_andel_energi_oppv_ventilasjon
         ) / (self.systemvirkningsgrad_olje_oppv_ventilasjon) + (
-            (self.energibehov_tappevann) * (self.areal_oppv)
-        ) * (
-            self.olje_andel_energi_tappevann_varme
-        ) / (
-            self.systemvirkningsgrad_olje_tappevann_varme
-        )
+                       (self.energibehov_tappevann) * (self.areal_oppv)
+               ) * (
+                   self.olje_andel_energi_tappevann_varme
+               ) / (
+                   self.systemvirkningsgrad_olje_tappevann_varme
+               )
 
         # energivare 3
         # NS3031 - Beregning av behov for levert gass - Levert energi i form av gass
@@ -1591,12 +1598,12 @@ class EnergiBeregning:
         Gass = (Romoppvarming + Ventilasjonsvarme) * (
             self.gass_andel_energi_oppv_ventilasjon
         ) / (self.systemvirkningsgrad_gass_oppv_ventilasjon) + (
-            (self.energibehov_tappevann) * (self.areal_oppv)
-        ) * (
-            self.gass_andel_energi_tappevann_varme
-        ) / (
-            self.systemvirkningsgrad_gass_tappevann_varme
-        )
+                       (self.energibehov_tappevann) * (self.areal_oppv)
+               ) * (
+                   self.gass_andel_energi_tappevann_varme
+               ) / (
+                   self.systemvirkningsgrad_gass_tappevann_varme
+               )
 
         # energivare 4
         # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
@@ -1604,12 +1611,12 @@ class EnergiBeregning:
         fjernvarme = (Romoppvarming + Ventilasjonsvarme) * (
             self.fjernvarme_andel_energi_oppv_ventilasjon
         ) / (self.systemvirkningsgrad_fjernvarme_oppv_ventilasjon) + (
-            (self.energibehov_tappevann) * (self.areal_oppv)
-        ) * (
-            self.fjernvarme_andel_energi_tappevann_varme
-        ) / (
-            self.systemvirkningsgrad_fjernvarme_tappevann
-        )
+                             (self.energibehov_tappevann) * (self.areal_oppv)
+                     ) * (
+                         self.fjernvarme_andel_energi_tappevann_varme
+                     ) / (
+                         self.systemvirkningsgrad_fjernvarme_tappevann
+                     )
 
         # energivare 5
         # NS3031 - Beregning av behov for levert biobrensel - Levert energi i form av biobrensel
@@ -1617,12 +1624,12 @@ class EnergiBeregning:
         Biobrensel = (Romoppvarming + Ventilasjonsvarme) * (
             self.bio_andel_energi_oppv_ventilasjon
         ) / (self.systemvirkningsgrad_bio_oppv_ventilasjon) + (
-            (self.energibehov_tappevann) * (self.areal_oppv)
-        ) * (
-            self.bio_andel_energi_tappevann_varme
-        ) / (
-            self.systemvirkningsgrad_bio_tappevann
-        )
+                             (self.energibehov_tappevann) * (self.areal_oppv)
+                     ) * (
+                         self.bio_andel_energi_tappevann_varme
+                     ) / (
+                         self.systemvirkningsgrad_bio_tappevann
+                     )
 
         # energivare 6
         # NS3031 - Beregning av behov for levert andre energivarer - Levert energi i form av andre energivarer
@@ -1630,12 +1637,12 @@ class EnergiBeregning:
         Annen_energivare = (Romoppvarming + Ventilasjonsvarme) * (
             self.annet_andel_energi_oppv_ventilasjon
         ) / (self.systemvirkningsgrad_annet_oppv_ventilasjon) + (
-            (self.energibehov_tappevann) * (self.areal_oppv)
-        ) * (
-            self.annet_andel_energi_tappevann_varme
-        ) / (
-            self.systemvirkningsgrad_annet_tappevann
-        )
+                                   (self.energibehov_tappevann) * (self.areal_oppv)
+                           ) * (
+                               self.annet_andel_energi_tappevann_varme
+                           ) / (
+                               self.systemvirkningsgrad_annet_tappevann
+                           )
 
         # Primaerenergi
         # NS3031 (8.1) - Primærenergibehov - Elektrisitet (kWh)
@@ -1727,57 +1734,57 @@ class EnergiBeregning:
 
         # Energivare - Primærenergi behov [kWh/år]
         Primaerenergi = (
-            primaerenergibehov_el
-            + primaerenergibehov_olje
-            + primaerenergibehov_gass
-            + primaerenergibehov_fjernvarme
-            + primaerenergibehov_biobrensel
-            + primaerenergibehov_andre_energivarer
+                primaerenergibehov_el
+                + primaerenergibehov_olje
+                + primaerenergibehov_gass
+                + primaerenergibehov_fjernvarme
+                + primaerenergibehov_biobrensel
+                + primaerenergibehov_andre_energivarer
         )
 
         # Energivare - CO2-utslipp [kg/år]
         CO2_utslipp = (
-            co2_utslipp_el
-            + co2_utslipp_olje
-            + co2_utslipp_gass
-            + co2_utslipp_fjernvarme
-            + co2_utslipp_biobrensel
-            + co2_utslipp_annen_energivare
+                co2_utslipp_el
+                + co2_utslipp_olje
+                + co2_utslipp_gass
+                + co2_utslipp_fjernvarme
+                + co2_utslipp_biobrensel
+                + co2_utslipp_annen_energivare
         )
 
         # Energivare - Energi-kostnader [kr/år]
         Energi_kostnader = (
-            energikostnader_utslipp_el
-            + energikostnader_utslipp_olje
-            + energikostnader_utslipp_gass
-            + energikostnader_utslipp_fjernvarme
-            + energikostnader_utslipp_biobrensel
-            + energikostnader_utslipp_andre_energivarer
+                energikostnader_utslipp_el
+                + energikostnader_utslipp_olje
+                + energikostnader_utslipp_gass
+                + energikostnader_utslipp_fjernvarme
+                + energikostnader_utslipp_biobrensel
+                + energikostnader_utslipp_andre_energivarer
         )
 
         # Energivare - Energi-politisk vektet levert energi [kWh/år]
         Energi_politisk = (
-            energipolitisk_utslipp_el
-            + energipolitisk_utslipp_olje
-            + energipolitisk_utslipp_gass
-            + energipolitisk_utslipp_fjernvarme
-            + energipolitisk_utslipp_biobrensel
-            + energipolitisk_utslipp_andre_energivarer
+                energipolitisk_utslipp_el
+                + energipolitisk_utslipp_olje
+                + energipolitisk_utslipp_gass
+                + energipolitisk_utslipp_fjernvarme
+                + energipolitisk_utslipp_biobrensel
+                + energipolitisk_utslipp_andre_energivarer
         )
 
         Totalt_netto_energibehov = (
-            Romoppvarming
-            + Ventilasjonsvarme
-            + Varmtvann
-            + Vifter
-            + Pumper
-            + Belysning
-            + Teknisk_utstyr
-            + Kjoeling
+                Romoppvarming
+                + Ventilasjonsvarme
+                + Varmtvann
+                + Vifter
+                + Pumper
+                + Belysning
+                + Teknisk_utstyr
+                + Kjoeling
         )
 
         Totalt_levert_energi = (
-            Elektrisitet + Olje + Gass + fjernvarme + Biobrensel + Annen_energivare
+                Elektrisitet + Olje + Gass + fjernvarme + Biobrensel + Annen_energivare
         )
 
         return Output(

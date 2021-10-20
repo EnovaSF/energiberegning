@@ -17,4 +17,4 @@ def main(req: func.HttpRequest) -> func.HttpResponse:
             f"Could not parse request body, key not found: {str(e)}", status_code=400
         )
 
-    return func.HttpResponse(body=calc.calculate().to_json(), status_code=200)
+    return func.HttpResponse(body=calc.calculate().to_json(), status_code=200, mimetype="application/json")
