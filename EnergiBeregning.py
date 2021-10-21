@@ -1809,3 +1809,7 @@ class EnergiBeregning:
             Energi_kostnader,
             Energi_politisk,
         )
+
+if __name__ == "__main__":
+    from reference_calculations.tek_07_smaahus import tek_07_smaahus as smaahus
+    print(smaahus.calculate().to_json())
