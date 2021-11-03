@@ -1812,4 +1812,4 @@ class EnergiBeregning:
 
 if __name__ == "__main__":
     from reference_calculations.tek_07_smaahus import tek_07_smaahus as smaahus
-    print(smaahus.calculate().to_json())
+    print(smaahus.calculate().to_json())  # type: ignore
