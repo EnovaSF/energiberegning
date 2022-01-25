@@ -400,8 +400,14 @@ Resultatet:
 ### Python
 Koden kan også kjøres med Python: 
 
+Først må avhengigheter installeres 
+```shell
+pip -r install requirements.txt 
+```
+
 For å kjøre en [eksempelberegning](reference_calculations/tek_07_smaahus.py) 
 ```shell
+
 python EnergiBeregning.py
 ```
 
