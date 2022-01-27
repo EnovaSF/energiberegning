@@ -403,6 +403,10 @@ class EnergiBeregning:
     densitet_kuldebaerer: float  # NS3031* - Energibehov, pumper (Kjøling) - Densitet for kuldebærer
     ForretningsBygg: bool  # NS3031* - Ventilasjonsvarmetap, HV - Hvorvidt bygningen tilhører kategorien forretningsbygg eller bolig
 
+    @staticmethod
+    def __divide_or_zero(n: float, d: float) -> float:
+        return n / d if n != 0 and d != 0 else 0
+
     def calculate(self) -> Output:
 
         maaneder = [
@@ -1457,15 +1461,13 @@ class EnergiBeregning:
         pumper_kjolebehov = energibehov_kjoling_total / 8760 * 1000
 
         # NS3031* - Energibehov, pumper (Kjøling) - Sirkulert vannmengde gjennom pumpen
-        pumper_kjoling_sirkulert_vannmengde = (
-                pumper_kjolebehov
-                / (
+        pumper_kjoling_sirkulert_vannmengde = self.__divide_or_zero(
+                pumper_kjolebehov * 1000
+                , (
                         (self.temp_differanse_veskekrets_kjoling)
                         * (self.varmekapasitet_kuldebaerer)
                         * (self.densitet_kuldebaerer)
-                )
-                * 1000
-        )
+                ))
 
         # NS3031* - Energibehov, pumper (Kjøling) - Totalt, Ep
         pumper_kjoling_totalt = (
@@ -1524,51 +1526,49 @@ class EnergiBeregning:
         )
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til elektriske varmesystemer
-        levert_el_til_varmesystemer = (Romoppvarming + Ventilasjonsvarme) * (
+        levert_el_til_varmesystemer = self.__divide_or_zero((Romoppvarming + Ventilasjonsvarme) * (
             self.el_er_andel_energi_oppv_ventilasjon
-        ) / (self.systemvirkningsgrad_elektrisk_oppv_ventilasjon) + (
+        ),(self.systemvirkningsgrad_elektrisk_oppv_ventilasjon)) + self.__divide_or_zero((
                                               (self.energibehov_tappevann) * (self.areal_oppv)
                                       ) * (
                                           self.el_er_andel_energi_tappevann_varme
-                                      ) / (
+                                      ),(
                                           self.systemvirkningsgrad_elektrisk_tappevann_varme
-                                      )
+                                      ))
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til varmepumpesystemer
-        levert_el_varmepumpesystemer = (Romoppvarming + Ventilasjonsvarme) * (
+        levert_el_varmepumpesystemer = self.__divide_or_zero((Romoppvarming + Ventilasjonsvarme) * (
             self.el_hp_andel_energi_oppv_ventilasjon
-        ) / (self.systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon) + (
+        ), (self.systemvirkningsgrad_varmepumpeanlegg_oppv_ventilasjon)) + self.__divide_or_zero((
                                                (self.energibehov_tappevann) * (self.areal_oppv)
                                        ) * (
                                            self.el_hp_andel_energi_tappevann_varme
-                                       ) / (
+                                       ), (
                                            self.systemvirkningsgrad_varmepumpeanlegg_tappevann_varme
-                                       )
+                                       ))
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til termiske solenergisystemer
-        levert_elektrisitet_termisk_solenergi = (Romoppvarming + Ventilasjonsvarme) * (
+        levert_elektrisitet_termisk_solenergi = self.__divide_or_zero((Romoppvarming + Ventilasjonsvarme) * (
             self.el_Tsol_andel_energi_oppv_ventilasjon
-        ) / (self.systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon) + (
+        ), (self.systemvirkningsgrad_solfanger_termisk_oppv_ventilasjon)) + self.__divide_or_zero((
                                                         (self.energibehov_tappevann) * (self.areal_oppv)
                                                 ) * (
                                                     self.el_Tsol_andel_energi_tappevann_varme
-                                                ) / (
+                                                ), (
                                                     self.systemvirkningsgrad_solfanger_termisk_tappevann_varme
-                                                )
+                                                ))
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til kjølesystemer
-        levert_el_kjolseystemer = energibehov_kjoling_total / (
-            self.effektfaktor_kjoeleanlegg
-        )
+        levert_el_kjolseystemer = self.__divide_or_zero(energibehov_kjoling_total, self.effektfaktor_kjoeleanlegg)
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet til el-spesifikt forbruk
         levert_el_spesifikt_forbruk = netto_el_spesifikt_forbruk * (
                 1 - (self.el_solcelle_andel_el_spesifikt_forbruk)
-        ) + netto_el_spesifikt_forbruk * (
+        ) + self.__divide_or_zero(netto_el_spesifikt_forbruk * (
                                           self.el_solcelle_andel_el_spesifikt_forbruk
-                                      ) / (
+                                      ), (
                                           self.systemvirkningsgrad_solcelle
-                                      )
+                                      ))
 
         # NS3031 - Systemvirkningsgrader - Levert elektrisitet
         Elektrisitet = (
@@ -1582,67 +1582,65 @@ class EnergiBeregning:
         # energivare 2
         # NS3031 - Beregning av behov for levert olje - Levert energi i form av olje
         # # - Energivare (2) (Levert energi [kWh/år]) - Olje
-        Olje = (Romoppvarming + Ventilasjonsvarme) * (
+        Olje = self.__divide_or_zero((Romoppvarming + Ventilasjonsvarme) * (
             self.olje_andel_energi_oppv_ventilasjon
-        ) / (self.systemvirkningsgrad_olje_oppv_ventilasjon) + (
+        ), (self.systemvirkningsgrad_olje_oppv_ventilasjon)) + self.__divide_or_zero(((
                        (self.energibehov_tappevann) * (self.areal_oppv)
                ) * (
                    self.olje_andel_energi_tappevann_varme
-               ) / (
-                   self.systemvirkningsgrad_olje_tappevann_varme
-               )
+               )), self.systemvirkningsgrad_olje_tappevann_varme)
 
         # energivare 3
         # NS3031 - Beregning av behov for levert gass - Levert energi i form av gass
         # # - Energivare (3) (Levert energi [kWh/år]) - Gass
-        Gass = (Romoppvarming + Ventilasjonsvarme) * (
+        Gass = self.__divide_or_zero((Romoppvarming + Ventilasjonsvarme) * (
             self.gass_andel_energi_oppv_ventilasjon
-        ) / (self.systemvirkningsgrad_gass_oppv_ventilasjon) + (
+        ), (self.systemvirkningsgrad_gass_oppv_ventilasjon)) + self.__divide_or_zero((
                        (self.energibehov_tappevann) * (self.areal_oppv)
                ) * (
                    self.gass_andel_energi_tappevann_varme
-               ) / (
+               ), (
                    self.systemvirkningsgrad_gass_tappevann_varme
-               )
+               ))
 
         # energivare 4
         # NS3031 - Beregning av behov for levert fjernvarme - Levert energi i form av fjernvarme
         # # - Energivare (4) (Levert energi [kWh/år]) - Fjernvarme
-        fjernvarme = (Romoppvarming + Ventilasjonsvarme) * (
+        fjernvarme = self.__divide_or_zero((Romoppvarming + Ventilasjonsvarme) * (
             self.fjernvarme_andel_energi_oppv_ventilasjon
-        ) / (self.systemvirkningsgrad_fjernvarme_oppv_ventilasjon) + (
+        ), (self.systemvirkningsgrad_fjernvarme_oppv_ventilasjon)) + self.__divide_or_zero((
                              (self.energibehov_tappevann) * (self.areal_oppv)
                      ) * (
                          self.fjernvarme_andel_energi_tappevann_varme
-                     ) / (
+                     ), (
                          self.systemvirkningsgrad_fjernvarme_tappevann
-                     )
+                     ))
 
         # energivare 5
         # NS3031 - Beregning av behov for levert biobrensel - Levert energi i form av biobrensel
         # # - Energivare (5) (Levert energi [kWh/år]) - Biobrensel
-        Biobrensel = (Romoppvarming + Ventilasjonsvarme) * (
+        Biobrensel = self.__divide_or_zero((Romoppvarming + Ventilasjonsvarme) * (
             self.bio_andel_energi_oppv_ventilasjon
-        ) / (self.systemvirkningsgrad_bio_oppv_ventilasjon) + (
+        ), (self.systemvirkningsgrad_bio_oppv_ventilasjon)) + self.__divide_or_zero((
                              (self.energibehov_tappevann) * (self.areal_oppv)
                      ) * (
                          self.bio_andel_energi_tappevann_varme
-                     ) / (
+                     ), (
                          self.systemvirkningsgrad_bio_tappevann
-                     )
+                     ))
 
         # energivare 6
         # NS3031 - Beregning av behov for levert andre energivarer - Levert energi i form av andre energivarer
         # # - Energivare (6) (Levert energi [kWh/år]) - Andre energivarer
-        Annen_energivare = (Romoppvarming + Ventilasjonsvarme) * (
+        Annen_energivare = self.__divide_or_zero((Romoppvarming + Ventilasjonsvarme) * (
             self.annet_andel_energi_oppv_ventilasjon
-        ) / (self.systemvirkningsgrad_annet_oppv_ventilasjon) + (
+        ), (self.systemvirkningsgrad_annet_oppv_ventilasjon)) + self.__divide_or_zero((
                                    (self.energibehov_tappevann) * (self.areal_oppv)
                            ) * (
                                self.annet_andel_energi_tappevann_varme
-                           ) / (
+                           ), (
                                self.systemvirkningsgrad_annet_tappevann
-                           )
+                           ))
 
         # Primaerenergi
         # NS3031 (8.1) - Primærenergibehov - Elektrisitet (kWh)
