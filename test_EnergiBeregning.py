@@ -16,6 +16,7 @@ from reference_calculations.ashrae_besttest_920 import *
 from reference_calculations.ashrae_besttest_930 import *
 from reference_calculations.ashrae_besttest_940 import *
 from reference_calculations.ashrae_besttest_950 import *
+from reference_calculations.divide_by_zero import *
 
 calc_results = [
     ("TEK07 - Småhus", tek_07_smaahus.calculate(), tek_07_smaahus_expected_output),
@@ -98,6 +99,11 @@ calc_results = [
         "ASHRAE BESTTEST 950",
         ashrae_besttest_950.calculate(),
         ashrae_besttest_950_expected_output,
+    ),
+    (
+        "Divide By Zero",
+        divide_by_zero.calculate(),
+        divide_by_zero_expected_output,
     ),
 ]
 
