@@ -974,9 +974,7 @@ class EnergiBeregning:
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Ekvivalent tykkelse for gulvet, dt
-        varmetap_mot_grunn_tykkelse_gulv_dt = (self.tykkelse_grunnmur) + (
-            self.varmekonduktivitet_grunn
-        ) / (self.U_gulvkonstruksjon)
+        varmetap_mot_grunn_tykkelse_gulv_dt = (self.tykkelse_grunnmur) + (self.__divide_or_zero(self.varmekonduktivitet_grunn ,self.U_gulvkonstruksjon))
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Ekvivalent tykkelse for kantisolasjon, d'
         varmetap_mot_grunn_tykkelse_kantisolasjon_d = (self.kantisol_tykkelse) * (
@@ -996,15 +994,15 @@ class EnergiBeregning:
             (self.varmekonduktivitet_grunn) / math.pi
         ) * (
             math.log(
-                (self.kantisol_horisontal_dybde) / varmetap_mot_grunn_tykkelse_gulv_dt
+                self.__divide_or_zero(self.kantisol_horisontal_dybde, varmetap_mot_grunn_tykkelse_gulv_dt)
                 + 1
             )
             - math.log(
-                (self.kantisol_horisontal_dybde)
-                / (
+                self.__divide_or_zero(self.kantisol_horisontal_dybde
+                , (
                     varmetap_mot_grunn_tykkelse_gulv_dt
                     + varmetap_mot_grunn_tykkelse_kantisolasjon_d
-                )
+                ))
                 + 1
             )
         )
@@ -1015,17 +1013,17 @@ class EnergiBeregning:
         ) * (
             math.log(
                 2
-                * (self.kantisol_vertikal_bredde)
-                / varmetap_mot_grunn_tykkelse_gulv_dt
+                * self.__divide_or_zero(self.kantisol_vertikal_bredde
+                , varmetap_mot_grunn_tykkelse_gulv_dt)
                 + 1
             )
             - math.log(
                 2
-                * (self.kantisol_vertikal_bredde)
-                / (
+                * self.__divide_or_zero(self.kantisol_vertikal_bredde
+                , (
                     varmetap_mot_grunn_tykkelse_gulv_dt
                     + varmetap_mot_grunn_tykkelse_kantisolasjon_d
-                )
+                ))
                 + 1
             )
         )
@@ -1063,78 +1061,84 @@ class EnergiBeregning:
         )
 
         ## NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For gulv mot grunnen, vertikal kantisolasjon (D' = D)
-        varmetap_gulv_mot_grunn_vertikal_dynamisk_varmetransportkoeff_hpe = (
-            0.37
-            * (self.omkrets_gulv)
-            * (self.varmekonduktivitet_grunn)
-            * (
-                (
-                    1
-                    - math.exp(
-                        -(
-                            (self.kantisol_horisontal_dybde)
-                            / (self.dybde_periodisk_nedtrengning)
+        if varmetap_mot_grunn_tykkelse_gulv_dt > 0 or varmetap_mot_grunn_tykkelse_kantisolasjon_d > 0:
+            varmetap_gulv_mot_grunn_vertikal_dynamisk_varmetransportkoeff_hpe = (
+                0.37
+                * (self.omkrets_gulv)
+                * (self.varmekonduktivitet_grunn)
+                * (
+                    (
+                        1
+                        - math.exp(
+                            -(
+                                (self.kantisol_horisontal_dybde)
+                                / (self.dybde_periodisk_nedtrengning)
+                            )
                         )
                     )
-                )
-                * math.log(
-                    (self.dybde_periodisk_nedtrengning)
-                    / (
-                        varmetap_mot_grunn_tykkelse_gulv_dt
-                        + varmetap_mot_grunn_tykkelse_kantisolasjon_d
+                    * math.log(
+                        self.__divide_or_zero(self.dybde_periodisk_nedtrengning
+                        , (
+                            varmetap_mot_grunn_tykkelse_gulv_dt
+                            + varmetap_mot_grunn_tykkelse_kantisolasjon_d
+                        ))
                     )
-                )
-                + math.exp(
-                    -(
-                        (self.kantisol_horisontal_dybde)
-                        / (self.dybde_periodisk_nedtrengning)
+                    + math.exp(
+                        -(
+                            self.__divide_or_zero(self.kantisol_horisontal_dybde
+                            , self.dybde_periodisk_nedtrengning)
+                        )
                     )
-                )
-                * math.log(
-                    (self.dybde_periodisk_nedtrengning)
-                    / varmetap_mot_grunn_tykkelse_gulv_dt
-                    + 1
+                    * math.log(
+                        self.__divide_or_zero(self.dybde_periodisk_nedtrengning
+                        , varmetap_mot_grunn_tykkelse_gulv_dt)
+                        + 1
+                    )
                 )
             )
-        )
+        else:
+            varmetap_gulv_mot_grunn_vertikal_dynamisk_varmetransportkoeff_hpe = 0
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For gulv mot grunnen, horisontal kantisolasjon (D' = 2 x D)
-        varmetap_gulv_mot_grunn_horisontal_dynamisk_varmetransportkoeff_hpe = (
-            0.37
-            * (self.omkrets_gulv)
-            * (self.varmekonduktivitet_grunn)
-            * (
-                (
-                    1
-                    - math.exp(
+        if varmetap_mot_grunn_tykkelse_gulv_dt > 0 or varmetap_mot_grunn_tykkelse_kantisolasjon_d > 0:
+            varmetap_gulv_mot_grunn_horisontal_dynamisk_varmetransportkoeff_hpe = (
+                0.37
+                * (self.omkrets_gulv)
+                * (self.varmekonduktivitet_grunn)
+                * (
+                    (
+                        1
+                        - math.exp(
+                            -(
+                                2
+                                * (self.kantisol_vertikal_bredde)
+                                / (self.dybde_periodisk_nedtrengning)
+                            )
+                        )
+                    )
+                    * math.log(
+                        (self.dybde_periodisk_nedtrengning)
+                        / (
+                            varmetap_mot_grunn_tykkelse_gulv_dt
+                            + varmetap_mot_grunn_tykkelse_kantisolasjon_d
+                        )
+                    )
+                    + math.exp(
                         -(
                             2
                             * (self.kantisol_vertikal_bredde)
                             / (self.dybde_periodisk_nedtrengning)
                         )
                     )
-                )
-                * math.log(
-                    (self.dybde_periodisk_nedtrengning)
-                    / (
-                        varmetap_mot_grunn_tykkelse_gulv_dt
-                        + varmetap_mot_grunn_tykkelse_kantisolasjon_d
+                    * math.log(
+                        (self.dybde_periodisk_nedtrengning)
+                        / varmetap_mot_grunn_tykkelse_gulv_dt
+                        + 1
                     )
-                )
-                + math.exp(
-                    -(
-                        2
-                        * (self.kantisol_vertikal_bredde)
-                        / (self.dybde_periodisk_nedtrengning)
-                    )
-                )
-                * math.log(
-                    (self.dybde_periodisk_nedtrengning)
-                    / varmetap_mot_grunn_tykkelse_gulv_dt
-                    + 1
                 )
             )
-        )
+        else:
+            varmetap_gulv_mot_grunn_horisontal_dynamisk_varmetransportkoeff_hpe = 0
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) [Dynamisk Varmetransportkoeffisient, Hpe] - For vegg og gulv mot grunnen
         varmetap_vegg_og_gulv_mot_grunn_dynamisk_varmetransportkoeff_hpe = (
@@ -1152,8 +1156,8 @@ class EnergiBeregning:
                     )
                 )
                 * math.log(
-                    (self.dybde_periodisk_nedtrengning)
-                    / varmetap_mot_grunn_tykkelse_kjellervegg_dw
+                    self.__divide_or_zero(self.dybde_periodisk_nedtrengning
+                    , varmetap_mot_grunn_tykkelse_kjellervegg_dw)
                     + 1
                 )
                 + math.exp(
@@ -1163,8 +1167,8 @@ class EnergiBeregning:
                     )
                 )
                 * math.log(
-                    (self.dybde_periodisk_nedtrengning)
-                    / varmetap_mot_grunn_tykkelse_gulv_dt
+                    self.__divide_or_zero(self.dybde_periodisk_nedtrengning
+                    , varmetap_mot_grunn_tykkelse_gulv_dt)
                     + 1
                 )
             )
@@ -1173,8 +1177,8 @@ class EnergiBeregning:
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'<dt + 0,5*z)
         varmetap_gulv_mot_grunn_qg_ug_b_lt_dt = (
             2
-            * (self.varmekonduktivitet_grunn)
-            / (
+            * self.__divide_or_zero(self.varmekonduktivitet_grunn
+            ,
                 math.pi * karakteristisk_dimensjon_gulv_b
                 + varmetap_mot_grunn_tykkelse_gulv_dt
                 * 0.5
@@ -1193,7 +1197,7 @@ class EnergiBeregning:
         )
 
         # NS3031 - Varmetap mot grunnen, Qg (6.1.1.1.3) - Gulv mot grunn, Ug (Hvis B'>dt + 0,5*z)
-        varmetap_gulv_mot_grunn_qg_ug_b_bt_dt = (self.varmekonduktivitet_grunn) / (
+        varmetap_gulv_mot_grunn_qg_ug_b_bt_dt = self.__divide_or_zero(self.varmekonduktivitet_grunn,
             0.457 * karakteristisk_dimensjon_gulv_b
             + varmetap_mot_grunn_tykkelse_gulv_dt
             + 0.5 * (self.oppfyllingshoyde_kjellervegg)
