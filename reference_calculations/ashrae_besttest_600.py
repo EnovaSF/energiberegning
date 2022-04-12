@@ -375,4 +375,5 @@ ashrae_besttest_600_expected_output = calc.Output(
     co2_utslipp=435,
     energi_kostnader=6108,
     energi_politisk=9162,
+    varmetransportkoeff_wk=131
 )

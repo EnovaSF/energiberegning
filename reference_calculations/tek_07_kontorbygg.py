@@ -371,4 +371,5 @@ tek_07_kontorbygg_expected_output = calc.Output(
     co2_utslipp=712635,
     energi_kostnader=1647213,
     energi_politisk=2505515,
+    varmetransportkoeff_wk=10423
 )
