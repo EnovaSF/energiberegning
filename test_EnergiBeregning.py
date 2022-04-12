@@ -170,6 +170,14 @@ class TestCalculation(unittest.TestCase):
                     round(calc_result.totalt_netto_energibehov),
                 )
 
+    def test_varmetransportkoeff_wk(self) -> None:
+        for (category, calc_result, expected_result) in calc_results:
+            with self.subTest(category):
+                self.assertEqual(
+                    expected_result.varmetransportkoeff_wk,
+                    round(calc_result.varmetransportkoeff_wk),
+                )
+
     # energivare
     def test_elektrisitet(self) -> None:
         for (category, calc_result, expected_result) in calc_results:

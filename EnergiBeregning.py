@@ -29,6 +29,7 @@ class Output:
     co2_utslipp: float
     energi_kostnader: float
     energi_politisk: float
+    varmetransportkoeff_wk: float
 
     def __str__(self) -> str:
         return "romoppvarming: {0.romoppvarming},Ventilasjonsvarme: {0.ventilasjonsvarme}, \
@@ -1821,6 +1822,7 @@ class EnergiBeregning:
             CO2_utslipp,
             Energi_kostnader,
             Energi_politisk,
+            varmetransportkoeff_wk
         )
 
 

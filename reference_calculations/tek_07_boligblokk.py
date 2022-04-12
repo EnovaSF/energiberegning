@@ -371,4 +371,5 @@ tek_07_boligblokk_expected_output = calc.Output(
     co2_utslipp=77_208,
     energi_kostnader=201_521,
     energi_politisk=321_706,
+    varmetransportkoeff_wk=1435
 )

@@ -372,4 +372,5 @@ divide_by_zero_expected_output = calc.Output(
     co2_utslipp=5407,
     energi_kostnader=12328,
     energi_politisk=18617,
+    varmetransportkoeff_wk=192
 )

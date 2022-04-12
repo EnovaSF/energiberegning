@@ -375,4 +375,5 @@ ashrae_besttest_610_expected_output = calc.Output(
     co2_utslipp=459,
     energi_kostnader=6447,  # TODO AssertionError: 6446 != 6447
     energi_politisk=9670,  # TODO AssertionError: 9669 != 9670
+    varmetransportkoeff_wk=131
 )

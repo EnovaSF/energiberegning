@@ -372,4 +372,5 @@ tek_07_smaahus_expected_output = calc.Output(
     co2_utslipp=9989,
     energi_kostnader=26986,
     energi_politisk=43526,
+    varmetransportkoeff_wk=192
 )

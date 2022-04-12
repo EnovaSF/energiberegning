@@ -371,4 +371,5 @@ tek_07_barnehage_expected_output = calc.Output(
     co2_utslipp=7_927,
     energi_kostnader=20_302,
     energi_politisk=32_230,
+    varmetransportkoeff_wk=192
 )
